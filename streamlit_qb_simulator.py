@@ -274,7 +274,7 @@ def main():
     """Main Streamlit app"""
     
     # Header
-    st.markdown('<h1 class="main-header">🏈 QB Pre-Snap Decision Simulator</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">🏈 QB Pre-Snap Simulator</h1>', unsafe_allow_html=True)
     st.markdown("**Test your quarterback decision-making skills by reading defenses and calling the right plays!**")
     
     # Load engines
