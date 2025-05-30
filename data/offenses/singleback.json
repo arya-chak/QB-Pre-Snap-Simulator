@@ -1,0 +1,405 @@
+{
+  "formation_name": "Singleback",
+  "personnel": "1 QB, 1 RB, 1 TE, 3 WR",
+  "personnel_package": "11 Personnel",
+  "description": "Balanced formation with running back directly behind quarterback - versatile for both run and pass with three receiver threat",
+  "alignment": {
+    "quarterback": "under_center",
+    "running_back": "7_yards_behind_qb",
+    "tight_end": "on_line_strong_side",
+    "x_receiver": "split_wide_weak_side",
+    "z_receiver": "split_wide_strong_side",
+    "slot_receiver": "inside_alignment_strong_side"
+  },
+  "passing_plays": {
+    "slant_flat": {
+      "name": "Slant-Flat Concept",
+      "concept": "Quick slant with flat route underneath for high-low stretch",
+      "routes": {
+        "X_receiver": "slant_route_6_yards",
+        "Z_receiver": "comeback_route_12_yards",
+        "slot_receiver": "slant_route_6_yards",
+        "tight_end": "flat_route_4_yards",
+        "running_back": "checkdown_safety_valve"
+      },
+      "protection": "5_man_protection_rb_check_release",
+      "target_yards": 7,
+      "time_to_throw": "quick",
+      "best_against": [
+        "cover_2_zone_underneath_soft",
+        "cover_3_zone_linebacker_drops",
+        "man_coverage_with_cushion",
+        "blitz_packages_hot_route"
+      ],
+      "worst_against": [
+        "cover_0_man_press_coverage",
+        "robber_coverage_short_middle",
+        "cover_1_man_tight_coverage",
+        "aggressive_jam_coverage"
+      ],
+      "strengths": [
+        "quick_release_vs_pressure",
+        "high_low_stretch_linebackers",
+        "multiple_underneath_options",
+        "good_vs_soft_coverage"
+      ],
+      "weaknesses": [
+        "limited_vs_press_coverage",
+        "vulnerable_to_robber",
+        "requires_timing",
+        "limited_deep_threat"
+      ]
+    },
+    "stick_concept": {
+      "name": "Stick Concept",
+      "concept": "Receiver sits in hole between linebackers and safeties",
+      "routes": {
+        "X_receiver": "comeback_route_14_yards",
+        "Z_receiver": "stick_route_10_yards",
+        "slot_receiver": "out_route_8_yards",
+        "tight_end": "drag_route_6_yards",
+        "running_back": "swing_route_outlet"
+      },
+      "protection": "6_man_protection_rb_in_backfield",
+      "target_yards": 10,
+      "time_to_throw": "intermediate",
+      "best_against": [
+        "cover_2_zone_linebacker_holes",
+        "cover_3_zone_underneath_windows",
+        "soft_zone_coverage",
+        "prevent_defense"
+      ],
+      "worst_against": [
+        "cover_1_man_tight_coverage",
+        "cover_4_quarters_underneath_help",
+        "robber_coverage_middle",
+        "aggressive_man_coverage"
+      ],
+      "strengths": [
+        "finds_soft_spots_in_zones",
+        "multiple_route_options",
+        "reliable_intermediate_concept",
+        "good_vs_zone_coverage"
+      ],
+      "weaknesses": [
+        "vulnerable_to_man_coverage",
+        "requires_route_adjustments",
+        "can_be_slow_developing",
+        "limited_vs_tight_coverage"
+      ]
+    },
+    "trips_stick": {
+      "name": "Trips Stick",
+      "concept": "Three receivers bunch to one side with stick route",
+      "routes": {
+        "X_receiver": "comeback_route_16_yards",
+        "Z_receiver": "stick_route_12_yards",
+        "slot_receiver": "arrow_route_8_yards",
+        "tight_end": "out_route_10_yards",
+        "running_back": "checkdown_route"
+      },
+      "protection": "6_man_protection_slide_weak",
+      "target_yards": 11,
+      "time_to_throw": "intermediate",
+      "best_against": [
+        "cover_2_zone_trips_side_overload",
+        "man_coverage_natural_picks",
+        "cover_3_zone_underneath",
+        "weak_side_focused_defense"
+      ],
+      "worst_against": [
+        "cover_4_quarters_deep_help",
+        "robber_coverage_trips_side",
+        "bracket_coverage_trips",
+        "aggressive_bump_coverage"
+      ],
+      "strengths": [
+        "overloads_one_side",
+        "creates_natural_picks",
+        "multiple_levels",
+        "good_vs_man_coverage"
+      ],
+      "weaknesses": [
+        "vulnerable_to_robber",
+        "can_be_bracketed",
+        "requires_timing",
+        "limited_backside_options"
+      ]
+    },
+    "pa_boot": {
+      "name": "Play Action Boot",
+      "concept": "Fake handoff, quarterback rolls out with flood routes",
+      "routes": {
+        "X_receiver": "deep_comeback_18_yards",
+        "Z_receiver": "out_route_12_yards",
+        "slot_receiver": "arrow_route_10_yards",
+        "tight_end": "drag_route_8_yards",
+        "running_back": "swing_route_outlet"
+      },
+      "protection": "bootleg_protection_rollout",
+      "target_yards": 14,
+      "time_to_throw": "intermediate",
+      "best_against": [
+        "aggressive_run_support_linebackers",
+        "cover_2_zone_run_focused",
+        "hard_charging_pass_rush",
+        "inside_focused_defense"
+      ],
+      "worst_against": [
+        "cover_0_man_no_help",
+        "disciplined_edge_rush",
+        "cover_1_man_tight_coverage",
+        "spy_linebacker"
+      ],
+      "strengths": [
+        "exploits_run_fake",
+        "gets_qb_outside_pocket",
+        "flood_routes_to_rollout_side",
+        "good_vs_aggressive_defense"
+      ],
+      "weaknesses": [
+        "vulnerable_to_edge_rush",
+        "limited_backside_options",
+        "requires_mobile_qb",
+        "can_be_slow_developing"
+      ]
+    },
+    "deep_dig": {
+      "name": "Deep Dig Concept",
+      "concept": "Deep crossing route with vertical stretch",
+      "routes": {
+        "X_receiver": "dig_route_16_yards",
+        "Z_receiver": "post_route_20_yards",
+        "slot_receiver": "vertical_seam_18_yards",
+        "tight_end": "drag_route_8_yards",
+        "running_back": "checkdown_safety_valve"
+      },
+      "protection": "7_man_protection_max_protect",
+      "target_yards": 16,
+      "time_to_throw": "long_developing",
+      "best_against": [
+        "cover_2_zone_deep_middle_hole",
+        "cover_3_zone_crossing_routes",
+        "man_coverage_crossing_picks",
+        "aggressive_underneath_coverage"
+      ],
+      "worst_against": [
+        "cover_4_quarters_deep_help",
+        "cover_0_man_press_no_help",
+        "robber_coverage_crossing_routes",
+        "aggressive_pass_rush"
+      ],
+      "strengths": [
+        "crossing_routes_create_picks",
+        "deep_middle_attack",
+        "multiple_levels",
+        "max_protection"
+      ],
+      "weaknesses": [
+        "long_developing_routes",
+        "vulnerable_to_robber",
+        "requires_time",
+        "limited_quick_options"
+      ]
+    }
+  },
+  "running_plays": {
+    "inside_zone": {
+      "name": "Inside Zone",
+      "concept": "Zone blocking scheme targeting interior gaps",
+      "blocking_scheme": "inside_zone_blocking",
+      "ball_carrier": "running_back",
+      "lead_blocker": "none",
+      "target_gap": "A_gap_or_B_gap",
+      "target_yards": 4,
+      "best_against": [
+        "nickel_defense_light_box",
+        "dime_defense_six_dbs",
+        "cover_0_aggressive_coverage",
+        "overpursuit_linebackers"
+      ],
+      "worst_against": [
+        "46_defense_heavy_box",
+        "5-2_defense_gap_control",
+        "a_gap_blitz_packages",
+        "penetrating_defensive_line"
+      ],
+      "strengths": [
+        "simple_blocking_scheme",
+        "creates_natural_cutback_lanes",
+        "good_vs_light_box",
+        "adaptable_to_defense"
+      ],
+      "weaknesses": [
+        "vulnerable_to_penetration",
+        "limited_vs_heavy_box",
+        "requires_good_back_vision",
+        "can_be_predictable"
+      ]
+    },
+    "outside_zone": {
+      "name": "Outside Zone",
+      "concept": "Zone blocking scheme attacking perimeter",
+      "blocking_scheme": "outside_zone_stretch",
+      "ball_carrier": "running_back",
+      "lead_blocker": "none", 
+      "target_gap": "C_gap_or_outside",
+      "target_yards": 5,
+      "best_against": [
+        "pinched_defensive_line",
+        "aggressive_inside_linebackers",
+        "heavy_inside_rush",
+        "cover_0_man_inside_focus"
+      ],
+      "worst_against": [
+        "disciplined_edge_setting",
+        "fast_outside_linebackers",
+        "corner_run_support",
+        "string_out_defense"
+      ],
+      "strengths": [
+        "attacks_edge_of_defense",
+        "creates_cutback_opportunities",
+        "good_vs_inside_focused_defense",
+        "gets_rb_in_space"
+      ],
+      "weaknesses": [
+        "vulnerable_to_edge_setting",
+        "can_be_strung_out",
+        "requires_athletic_line",
+        "limited_vs_disciplined_edge"
+      ]
+    },
+    "draw_play": {
+      "name": "Draw Play",
+      "concept": "Delayed handoff through pass rush lanes",
+      "blocking_scheme": "pass_protection_draw",
+      "ball_carrier": "running_back",
+      "lead_blocker": "none",
+      "target_gap": "varies_rushing_lanes",
+      "target_yards": 6,
+      "best_against": [
+        "aggressive_pass_rush",
+        "cover_0_all_out_blitz",
+        "nickel_defense_pass_rush",
+        "dime_defense_light_box"
+      ],
+      "worst_against": [
+        "disciplined_rush_lanes",
+        "5-2_defense_gap_control",
+        "spy_linebacker",
+        "controlled_pass_rush"
+      ],
+      "strengths": [
+        "exploits_aggressive_rush",
+        "delayed_timing_confuses",
+        "good_vs_blitz",
+        "surprise_element"
+      ],
+      "weaknesses": [
+        "requires_rushing_lanes",
+        "vulnerable_to_spy",
+        "timing_dependent",
+        "limited_vs_disciplined_rush"
+      ]
+    },
+    "power_o": {
+      "name": "Power O",
+      "concept": "Power running with pulling guard",
+      "blocking_scheme": "power_gap_pulling_guard",
+      "ball_carrier": "running_back",
+      "lead_blocker": "pulling_guard",
+      "target_gap": "C_gap_strong_side",
+      "target_yards": 4,
+      "best_against": [
+        "nickel_defense_light_box",
+        "soft_edge_setting",
+        "overpursuit_defense",
+        "cover_0_aggressive_coverage"
+      ],
+      "worst_against": [
+        "46_defense_heavy_box",
+        "disciplined_edge_setting",
+        "fast_flowing_linebackers",
+        "penetrating_defensive_line"
+      ],
+      "strengths": [
+        "extra_blocker_at_point_of_attack",
+        "physical_power_running",
+        "good_short_yardage",
+        "creates_natural_hole"
+      ],
+      "weaknesses": [
+        "can_be_slow_developing",
+        "vulnerable_to_penetration",
+        "predictable_gap",
+        "requires_execution"
+      ]
+    },
+    "counter": {
+      "name": "Counter",
+      "concept": "Misdirection with pulling guards",
+      "blocking_scheme": "counter_pulling_guards",
+      "ball_carrier": "running_back",
+      "lead_blocker": "pulling_guard",
+      "target_gap": "weak_side_B_gap",
+      "target_yards": 6,
+      "best_against": [
+        "overpursuit_linebackers",
+        "aggressive_flow_defense",
+        "fast_flowing_linebackers",
+        "run_support_strong_side"
+      ],
+      "worst_against": [
+        "disciplined_linebacker_play",
+        "penetrating_weak_side_rush",
+        "spy_linebacker",
+        "gap_control_defense"
+      ],
+      "strengths": [
+        "misdirection_element",
+        "exploits_overpursuit",
+        "pulling_guards_create_holes",
+        "big_play_potential"
+      ],
+      "weaknesses": [
+        "requires_perfect_timing",
+        "vulnerable_to_penetration",
+        "can_be_slow_developing",
+        "limited_vs_disciplined_defense"
+      ]
+    }
+  },
+  "formation_strengths": [
+    "balanced_run_pass_threat",
+    "three_receiver_flexibility",
+    "modern_personnel_package",
+    "versatile_route_concepts",
+    "good_vs_base_defenses",
+    "multiple_formation_adjustments"
+  ],
+  "formation_weaknesses": [
+    "vulnerable_to_nickel_dime",
+    "limited_vs_heavy_blitz",
+    "no_extra_protection",
+    "predictable_in_obvious_situations",
+    "limited_power_running_capability",
+    "struggles_vs_modern_speed_defenses"
+  ],
+  "optimal_situations": [
+    "balanced_down_and_distance",
+    "first_and_second_down",
+    "intermediate_yardage_situations",
+    "vs_base_defense_packages",
+    "play_action_situations",
+    "standard_field_position"
+  ],
+  "vulnerable_to": [
+    "nickel_defense_extra_db",
+    "dime_defense_pass_coverage",
+    "cover_0_aggressive_blitz",
+    "heavy_box_run_support",
+    "modern_hybrid_defenders",
+    "speed_based_pass_rush"
+  ]
+}

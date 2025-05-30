@@ -1,0 +1,404 @@
+{
+  "formation_name": "Trips",
+  "personnel": "1 QB, 1 RB, 1 TE, 3 WR",
+  "personnel_package": "11 Personnel",
+  "description": "Three receivers aligned to one side creating numerical advantage - excellent for overload concepts and high-low stretches",
+  "alignment": {
+    "quarterback": "shotgun_5_yards_back",
+    "running_back": "beside_qb_or_offset",
+    "trips_receivers": "three_receivers_bunched_one_side",
+    "x_receiver": "split_wide_backside",
+    "tight_end": "can_be_part_of_trips_or_backside"
+  },
+  "passing_plays": {
+    "trips_stick": {
+      "name": "Trips Stick",
+      "concept": "Outside receiver sits in zone hole, inside routes underneath",
+      "routes": {
+        "X_receiver": "comeback_route_16_yards",
+        "trips_outside": "stick_route_12_yards",
+        "trips_middle": "arrow_route_8_yards",
+        "trips_inside": "drag_route_6_yards",
+        "running_back": "checkdown_safety_valve"
+      },
+      "protection": "6_man_protection_slide_weak",
+      "target_yards": 11,
+      "time_to_throw": "intermediate",
+      "best_against": [
+        "cover_2_zone_trips_overload",
+        "cover_3_zone_underneath_holes",
+        "man_coverage_natural_picks",
+        "single_high_safety_coverage"
+      ],
+      "worst_against": [
+        "cover_4_quarters_deep_help",
+        "robber_coverage_trips_side",
+        "bracket_coverage_trips",
+        "aggressive_bump_coverage"
+      ],
+      "strengths": [
+        "overloads_trips_side",
+        "multiple_route_levels",
+        "creates_natural_picks",
+        "finds_holes_in_zones"
+      ],
+      "weaknesses": [
+        "vulnerable_to_robber",
+        "can_be_bracketed",
+        "backside_limited",
+        "requires_timing"
+      ]
+    },
+    "smash_7": {
+      "name": "Smash 7 (Trips)",
+      "concept": "High-low stretch with speed out and corner route from trips",
+      "routes": {
+        "X_receiver": "fade_route_20_yards",
+        "trips_outside": "corner_route_14_yards",
+        "trips_middle": "speed_out_6_yards",
+        "trips_inside": "slant_route_6_yards",
+        "running_back": "swing_route_outlet"
+      },
+      "protection": "6_man_protection_rb_check",
+      "target_yards": 10,
+      "time_to_throw": "quick_to_intermediate",
+      "best_against": [
+        "cover_2_zone_corner_leverage",
+        "soft_corner_coverage_trips",
+        "single_high_safety",
+        "man_coverage_underneath"
+      ],
+      "worst_against": [
+        "cover_4_quarters_deep_help",
+        "hard_corner_coverage",
+        "bracket_coverage_outside",
+        "robber_coverage_underneath"
+      ],
+      "strengths": [
+        "high_low_stretch_corner",
+        "multiple_quick_options",
+        "exploits_leverage",
+        "backside_fade_option"
+      ],
+      "weaknesses": [
+        "vulnerable_to_hard_coverage",
+        "limited_vs_brackets",
+        "requires_timing",
+        "predictable_concept"
+      ]
+    },
+    "flood_concept": {
+      "name": "Flood Concept",
+      "concept": "All trips receivers attack same level to overload coverage",
+      "routes": {
+        "X_receiver": "comeback_route_15_yards",
+        "trips_outside": "out_route_12_yards",
+        "trips_middle": "out_route_10_yards",
+        "trips_inside": "arrow_route_8_yards",
+        "running_back": "swing_route_trips_side"
+      },
+      "protection": "6_man_protection_max_protect",
+      "target_yards": 10,
+      "time_to_throw": "intermediate",
+      "best_against": [
+        "man_coverage_trips_overload",
+        "cover_3_zone_horizontal_stress",
+        "single_safety_help",
+        "aggressive_press_coverage"
+      ],
+      "worst_against": [
+        "cover_2_zone_underneath_help",
+        "robber_coverage_flood_routes",
+        "bracket_coverage_trips",
+        "zone_coverage_trips_side"
+      ],
+      "strengths": [
+        "horizontal_overload",
+        "multiple_options_same_level",
+        "creates_picks_naturally",
+        "good_vs_man_coverage"
+      ],
+      "weaknesses": [
+        "vulnerable_to_zone_coverage",
+        "can_be_bracketed",
+        "limited_vertical_stretch",
+        "requires_timing"
+      ]
+    },
+    "four_verticals_trips": {
+      "name": "Four Verticals (Trips)",
+      "concept": "Three verticals from trips plus backside vertical",
+      "routes": {
+        "X_receiver": "vertical_seam_20_yards",
+        "trips_outside": "vertical_seam_18_yards",
+        "trips_middle": "vertical_seam_16_yards",
+        "trips_inside": "vertical_seam_14_yards",
+        "running_back": "checkdown_safety_valve"
+      },
+      "protection": "6_man_protection_max_protect",
+      "target_yards": 17,
+      "time_to_throw": "long_developing",
+      "best_against": [
+        "cover_2_zone_deep_holes",
+        "single_high_safety_coverage",
+        "man_coverage_vertical_stress",
+        "aggressive_underneath_coverage"
+      ],
+      "worst_against": [
+        "cover_4_quarters_coverage",
+        "cover_3_zone_deep_help",
+        "dime_defense_six_dbs",
+        "bracket_coverage_verticals"
+      ],
+      "strengths": [
+        "three_verticals_overload",
+        "stresses_deep_coverage",
+        "multiple_seam_options",
+        "max_protection"
+      ],
+      "weaknesses": [
+        "long_developing_routes",
+        "vulnerable_to_deep_help",
+        "limited_underneath_options",
+        "requires_time"
+      ]
+    },
+    "rpo_bubble": {
+      "name": "RPO Bubble",
+      "concept": "Inside zone run with bubble screen option to trips",
+      "routes": {
+        "X_receiver": "fade_route_or_block",
+        "trips_outside": "bubble_screen_now",
+        "trips_middle": "bubble_screen_lead_block",
+        "trips_inside": "bubble_screen_trail",
+        "running_back": "inside_zone_read"
+      },
+      "protection": "rpo_zone_bubble_concept",
+      "target_yards": 5,
+      "time_to_throw": "immediate_pre_snap",
+      "best_against": [
+        "heavy_box_run_defense",
+        "aggressive_linebackers_trips",
+        "cover_1_man_run_support",
+        "overly_aggressive_safeties"
+      ],
+      "worst_against": [
+        "disciplined_rpo_defense",
+        "corner_sitting_on_bubble",
+        "robber_coverage_bubble",
+        "safety_rotating_down"
+      ],
+      "strengths": [
+        "puts_defense_in_conflict",
+        "easy_pre_snap_read",
+        "exploits_heavy_box",
+        "gets_speed_in_space"
+      ],
+      "weaknesses": [
+        "vulnerable_to_robber",
+        "limited_vs_disciplined_defense",
+        "predictable_concept",
+        "requires_qb_decision_making"
+      ]
+    }
+  },
+  "running_plays": {
+    "inside_zone_weak": {
+      "name": "Inside Zone Weak",
+      "concept": "Run away from trips to weak side with zone blocking",
+      "blocking_scheme": "inside_zone_weak_side",
+      "ball_carrier": "running_back",
+      "lead_blocker": "none",
+      "target_gap": "weak_side_A_or_B_gap",
+      "target_yards": 5,
+      "best_against": [
+        "trips_focused_defense",
+        "safety_rotation_to_trips",
+        "linebacker_flow_to_trips",
+        "overpursuit_to_strength"
+      ],
+      "worst_against": [
+        "disciplined_weak_side_defense",
+        "penetrating_weak_side_rush",
+        "safety_rotation_weak",
+        "gap_control_defense"
+      ],
+      "strengths": [
+        "runs_away_from_strength",
+        "exploits_trips_focus",
+        "cutback_opportunities",
+        "numbers_advantage_weak_side"
+      ],
+      "weaknesses": [
+        "limited_vs_disciplined_defense",
+        "vulnerable_to_penetration",
+        "fewer_blockers_weak_side",
+        "requires_back_vision"
+      ]
+    },
+    "power_weak": {
+      "name": "Power Weak",
+      "concept": "Power running away from trips with pulling guard",
+      "blocking_scheme": "power_weak_side_pulling",
+      "ball_carrier": "running_back",
+      "lead_blocker": "pulling_guard",
+      "target_gap": "weak_side_C_gap",
+      "target_yards": 4,
+      "best_against": [
+        "trips_focused_linebackers",
+        "safety_rotation_to_trips",
+        "overpursuit_to_strength",
+        "light_weak_side_box"
+      ],
+      "worst_against": [
+        "disciplined_weak_side_edge",
+        "fast_flowing_linebackers",
+        "safety_rotation_weak",
+        "penetrating_weak_side_rush"
+      ],
+      "strengths": [
+        "extra_puller_weak_side",
+        "exploits_trips_focus",
+        "power_gap_scheme",
+        "good_short_yardage"
+      ],
+      "weaknesses": [
+        "can_be_slow_developing",
+        "vulnerable_to_penetration",
+        "predictable_gap",
+        "requires_execution"
+      ]
+    },
+    "jet_sweep_trips": {
+      "name": "Jet Sweep (Trips)",
+      "concept": "Inside trips receiver takes jet sweep handoff",
+      "blocking_scheme": "jet_sweep_trips_blocking",
+      "ball_carrier": "trips_inside_receiver",
+      "lead_blocker": "pulling_tackle",
+      "target_gap": "trips_side_edge",
+      "target_yards": 8,
+      "best_against": [
+        "heavy_weak_side_defense",
+        "slow_flowing_linebackers",
+        "aggressive_inside_rush",
+        "cover_0_man_inside_focus"
+      ],
+      "worst_against": [
+        "disciplined_edge_setting_trips",
+        "fast_corner_support",
+        "string_out_defense",
+        "pursuit_angles"
+      ],
+      "strengths": [
+        "gets_receiver_speed_to_edge",
+        "forces_defense_to_flow",
+        "good_vs_heavy_opposite_box",
+        "big_play_potential"
+      ],
+      "weaknesses": [
+        "vulnerable_to_edge_setting",
+        "can_be_strung_out",
+        "requires_execution",
+        "limited_vs_fast_pursuit"
+      ]
+    },
+    "draw_trips": {
+      "name": "Draw (Trips)",
+      "concept": "Delayed handoff while trips runs pass routes",
+      "blocking_scheme": "draw_protection_trips",
+      "ball_carrier": "running_back",
+      "lead_blocker": "none",
+      "target_gap": "varies_rush_lanes",
+      "target_yards": 6,
+      "best_against": [
+        "aggressive_pass_rush",
+        "cover_0_trips_focused",
+        "obvious_passing_down_rush",
+        "trips_bracket_coverage"
+      ],
+      "worst_against": [
+        "disciplined_rush_lanes",
+        "spy_linebacker",
+        "controlled_pass_rush",
+        "gap_integrity_defense"
+      ],
+      "strengths": [
+        "exploits_pass_rush",
+        "trips_sells_pass",
+        "good_surprise_element",
+        "running_back_has_vision"
+      ],
+      "weaknesses": [
+        "requires_rushing_lanes",
+        "vulnerable_to_spy",
+        "timing_dependent",
+        "limited_vs_controlled_rush"
+      ]
+    },
+    "qb_draw_trips": {
+      "name": "QB Draw (Trips)",
+      "concept": "Quarterback draws through rush lanes while trips runs routes",
+      "blocking_scheme": "qb_draw_protection_trips",
+      "ball_carrier": "quarterback",
+      "lead_blocker": "none",
+      "target_gap": "varies_qb_read",
+      "target_yards": 6,
+      "best_against": [
+        "aggressive_edge_rush",
+        "trips_bracket_coverage",
+        "obvious_passing_situations",
+        "cover_0_trips_focused"
+      ],
+      "worst_against": [
+        "spy_linebacker_on_qb",
+        "disciplined_rush_lanes",
+        "interior_pressure",
+        "gap_control_defense"
+      ],
+      "strengths": [
+        "quarterback_mobility",
+        "trips_sells_pass_concept",
+        "exploits_aggressive_rush",
+        "surprise_element"
+      ],
+      "weaknesses": [
+        "quarterback_injury_risk",
+        "vulnerable_to_spy",
+        "requires_athletic_qb",
+        "limited_vs_interior_pressure"
+      ]
+    }
+  },
+  "formation_strengths": [
+    "numerical_advantage_trips_side",
+    "creates_natural_picks",
+    "multiple_route_combinations",
+    "overloads_coverage",
+    "excellent_rpo_concepts",
+    "forces_defense_to_declare"
+  ],
+  "formation_weaknesses": [
+    "limited_backside_options",
+    "vulnerable_to_robber_coverage",
+    "can_be_bracketed",
+    "predictable_overload_side",
+    "weak_side_run_limited",
+    "requires_timing_precision"
+  ],
+  "optimal_situations": [
+    "red_zone_offense",
+    "third_and_medium",
+    "vs_man_coverage",
+    "rpo_situations",
+    "overload_concepts",
+    "pick_play_scenarios"
+  ],
+  "vulnerable_to": [
+    "robber_coverage_trips_side",
+    "bracket_coverage_concepts",
+    "cover_2_zone_underneath",
+    "disciplined_zone_coverage",
+    "safety_rotation_trips",
+    "corner_sitting_on_routes"
+  ]
+}

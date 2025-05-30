@@ -1,0 +1,405 @@
+{
+  "formation_name": "Shotgun",
+  "personnel": "1 QB, 1 RB, 1 TE, 3 WR",
+  "personnel_package": "11 Personnel",
+  "description": "Modern formation with quarterback 5-7 yards behind center - excellent for quick passing game and RPO concepts",
+  "alignment": {
+    "quarterback": "shotgun_5_yards_back",
+    "running_back": "beside_or_behind_qb",
+    "tight_end": "on_line_strong_side_or_slot",
+    "x_receiver": "split_wide_weak_side",
+    "z_receiver": "split_wide_strong_side",
+    "slot_receiver": "inside_alignment_variable_side"
+  },
+  "passing_plays": {
+    "quick_game": {
+      "name": "Quick Game",
+      "concept": "Three-step timing routes for immediate release",
+      "routes": {
+        "X_receiver": "hitch_route_6_yards",
+        "Z_receiver": "slant_route_6_yards",
+        "slot_receiver": "speed_out_5_yards",
+        "tight_end": "drag_route_8_yards",
+        "running_back": "swing_route_checkdown"
+      },
+      "protection": "5_man_protection_quick_game",
+      "target_yards": 6,
+      "time_to_throw": "very_quick",
+      "best_against": [
+        "aggressive_blitz_packages",
+        "cover_0_man_press_coverage",
+        "heavy_pass_rush",
+        "any_pressure_defense"
+      ],
+      "worst_against": [
+        "robber_coverage_underneath",
+        "cover_2_zone_soft_underneath",
+        "bracket_coverage_short_routes",
+        "aggressive_jam_coverage"
+      ],
+      "strengths": [
+        "beats_any_pressure",
+        "quick_release_timing",
+        "multiple_short_options",
+        "high_completion_percentage"
+      ],
+      "weaknesses": [
+        "limited_yardage_potential",
+        "vulnerable_to_robber",
+        "requires_precise_timing",
+        "predictable_in_obvious_situations"
+      ]
+    },
+    "mesh_concept": {
+      "name": "Mesh Concept",
+      "concept": "Two receivers cross underneath creating picks",
+      "routes": {
+        "X_receiver": "mesh_crossing_route_8_yards",
+        "Z_receiver": "comeback_route_14_yards",
+        "slot_receiver": "mesh_crossing_route_8_yards",
+        "tight_end": "corner_route_12_yards",
+        "running_back": "shoot_route_checkdown"
+      },
+      "protection": "6_man_protection_rb_check",
+      "target_yards": 9,
+      "time_to_throw": "quick_to_intermediate",
+      "best_against": [
+        "man_coverage_natural_picks",
+        "cover_1_man_tight_coverage",
+        "aggressive_underneath_coverage",
+        "blitz_packages_hot_routes"
+      ],
+      "worst_against": [
+        "cover_2_zone_underneath_help",
+        "robber_coverage_crossing_routes",
+        "bracket_coverage_mesh",
+        "disciplined_zone_coverage"
+      ],
+      "strengths": [
+        "creates_natural_picks",
+        "excellent_vs_man_coverage",
+        "multiple_crossing_options",
+        "built_in_hot_routes"
+      ],
+      "weaknesses": [
+        "vulnerable_to_robber",
+        "can_be_bracketed",
+        "requires_timing",
+        "limited_vs_zone_coverage"
+      ]
+    },
+    "four_verticals_gun": {
+      "name": "Four Verticals Shotgun",
+      "concept": "All receivers run vertical routes with checkdown",
+      "routes": {
+        "X_receiver": "vertical_seam_20_yards",
+        "Z_receiver": "vertical_seam_20_yards",
+        "slot_receiver": "vertical_seam_18_yards",
+        "tight_end": "seam_route_16_yards",
+        "running_back": "checkdown_safety_valve"
+      },
+      "protection": "6_man_protection_max_protect",
+      "target_yards": 18,
+      "time_to_throw": "intermediate_to_long",
+      "best_against": [
+        "cover_2_zone_deep_middle_hole",
+        "cover_3_zone_seam_routes",
+        "man_coverage_vertical_stress",
+        "aggressive_underneath_coverage"
+      ],
+      "worst_against": [
+        "cover_4_quarters_coverage",
+        "cover_1_man_with_safety_help",
+        "dime_defense_six_dbs",
+        "bracket_coverage_verticals"
+      ],
+      "strengths": [
+        "stresses_all_levels",
+        "exploits_cover_2_hole",
+        "multiple_vertical_options",
+        "checkdown_available"
+      ],
+      "weaknesses": [
+        "vulnerable_to_quarters_coverage",
+        "requires_time_to_develop",
+        "limited_underneath_options",
+        "predictable_vs_deep_coverage"
+      ]
+    },
+    "rpo_slant": {
+      "name": "RPO Slant",
+      "concept": "Run-pass option reading linebacker",
+      "routes": {
+        "X_receiver": "slant_route_6_yards",
+        "Z_receiver": "fade_route_back_shoulder",
+        "slot_receiver": "slant_route_6_yards",
+        "tight_end": "block_or_leak",
+        "running_back": "inside_zone_read"
+      },
+      "protection": "rpo_zone_read_concept",
+      "target_yards": 6,
+      "time_to_throw": "pre_snap_read",
+      "best_against": [
+        "aggressive_run_support_linebackers",
+        "cover_1_man_run_focused",
+        "heavy_box_run_defense",
+        "overly_aggressive_safeties"
+      ],
+      "worst_against": [
+        "disciplined_rpo_defense",
+        "robber_coverage_slant_routes",
+        "cover_0_man_all_coverage",
+        "spy_linebacker_on_qb"
+      ],
+      "strengths": [
+        "puts_defense_in_conflict",
+        "easy_pre_snap_read",
+        "high_percentage_concepts",
+        "exploits_aggressive_run_support"
+      ],
+      "weaknesses": [
+        "vulnerable_to_robber",
+        "limited_vs_disciplined_defense",
+        "predictable_route_concepts",
+        "requires_qb_decision_making"
+      ]
+    },
+    "spacing_concept": {
+      "name": "Spacing Concept",
+      "concept": "Horizontal stretch with multiple levels",
+      "routes": {
+        "X_receiver": "comeback_route_15_yards",
+        "Z_receiver": "out_route_12_yards",
+        "slot_receiver": "arrow_route_10_yards",
+        "tight_end": "out_route_8_yards",
+        "running_back": "swing_route_outlet"
+      },
+      "protection": "6_man_protection_slide",
+      "target_yards": 11,
+      "time_to_throw": "intermediate",
+      "best_against": [
+        "man_coverage_horizontal_stress",
+        "cover_3_zone_underneath_windows",
+        "aggressive_press_coverage",
+        "blitz_packages_flood_routes"
+      ],
+      "worst_against": [
+        "cover_2_zone_underneath_help",
+        "robber_coverage_intermediate",
+        "bracket_coverage_flood_side",
+        "disciplined_zone_coverage"
+      ],
+      "strengths": [
+        "horizontal_field_stretch",
+        "multiple_route_levels",
+        "good_vs_man_coverage",
+        "natural_flood_concept"
+      ],
+      "weaknesses": [
+        "vulnerable_to_robber",
+        "can_be_bracketed",
+        "requires_timing",
+        "limited_vs_underneath_help"
+      ]
+    }
+  },
+  "running_plays": {
+    "inside_zone_rpo": {
+      "name": "Inside Zone RPO",
+      "concept": "Zone run with pass option based on linebacker read",
+      "blocking_scheme": "inside_zone_rpo_blocking",
+      "ball_carrier": "running_back",
+      "lead_blocker": "none",
+      "target_gap": "A_gap_or_B_gap_read",
+      "target_yards": 5,
+      "best_against": [
+        "nickel_defense_light_box",
+        "dime_defense_six_dbs",
+        "aggressive_pass_coverage",
+        "overpursuit_linebackers"
+      ],
+      "worst_against": [
+        "46_defense_heavy_box",
+        "disciplined_rpo_defense",
+        "a_gap_blitz_packages",
+        "spy_linebacker_concepts"
+      ],
+      "strengths": [
+        "puts_defense_in_conflict",
+        "good_vs_light_box",
+        "quarterback_has_options",
+        "modern_efficient_concept"
+      ],
+      "weaknesses": [
+        "vulnerable_to_heavy_box",
+        "requires_qb_decision_making",
+        "limited_vs_disciplined_defense",
+        "can_be_predictable"
+      ]
+    },
+    "outside_zone_read": {
+      "name": "Outside Zone Read",
+      "concept": "Zone stretch with quarterback read option",
+      "blocking_scheme": "outside_zone_read_option",
+      "ball_carrier": "running_back_or_qb",
+      "lead_blocker": "none",
+      "target_gap": "C_gap_or_edge_read",
+      "target_yards": 6,
+      "best_against": [
+        "aggressive_edge_rush",
+        "overpursuit_defense",
+        "nickel_defense_light_box",
+        "cover_0_aggressive_coverage"
+      ],
+      "worst_against": [
+        "disciplined_edge_setting",
+        "spy_linebacker_on_qb",
+        "crash_and_replace_defense",
+        "gap_exchange_concepts"
+      ],
+      "strengths": [
+        "puts_edge_defender_in_conflict",
+        "quarterback_run_threat",
+        "good_vs_aggressive_edge",
+        "gets_running_back_in_space"
+      ],
+      "weaknesses": [
+        "vulnerable_to_disciplined_edge",
+        "requires_athletic_quarterback",
+        "can_be_slow_developing",
+        "limited_vs_gap_exchange"
+      ]
+    },
+    "draw_delay": {
+      "name": "Draw Delay",
+      "concept": "Delayed handoff from shotgun through rush lanes",
+      "blocking_scheme": "shotgun_draw_protection",
+      "ball_carrier": "running_back",
+      "lead_blocker": "none",
+      "target_gap": "varies_rush_lanes",
+      "target_yards": 7,
+      "best_against": [
+        "aggressive_pass_rush",
+        "cover_0_all_out_blitz",
+        "obvious_passing_down_rush",
+        "dime_defense_light_box"
+      ],
+      "worst_against": [
+        "disciplined_rush_lanes",
+        "spy_linebacker",
+        "controlled_pass_rush",
+        "gap_integrity_defense"
+      ],
+      "strengths": [
+        "exploits_aggressive_rush",
+        "natural_from_shotgun",
+        "good_surprise_element",
+        "running_back_has_vision"
+      ],
+      "weaknesses": [
+        "requires_rushing_lanes",
+        "vulnerable_to_spy",
+        "timing_dependent",
+        "limited_vs_controlled_rush"
+      ]
+    },
+    "jet_sweep": {
+      "name": "Jet Sweep",
+      "concept": "Wide receiver takes handoff on sweep motion",
+      "blocking_scheme": "jet_sweep_edge_blocking",
+      "ball_carrier": "wide_receiver_in_motion",
+      "lead_blocker": "pulling_guard_or_tackle",
+      "target_gap": "outside_edge",
+      "target_yards": 8,
+      "best_against": [
+        "heavy_inside_box_defense",
+        "slow_flowing_linebackers",
+        "aggressive_inside_rush",
+        "cover_0_man_inside_focus"
+      ],
+      "worst_against": [
+        "disciplined_edge_setting",
+        "fast_corner_support",
+        "string_out_defense",
+        "pursuit_angles"
+      ],
+      "strengths": [
+        "gets_speed_to_edge",
+        "forces_defense_to_flow",
+        "good_vs_heavy_box",
+        "big_play_potential"
+      ],
+      "weaknesses": [
+        "vulnerable_to_edge_setting",
+        "can_be_strung_out",
+        "requires_execution",
+        "limited_vs_fast_pursuit"
+      ]
+    },
+    "qb_power": {
+      "name": "QB Power",
+      "concept": "Quarterback runs power concept with pulling guard",
+      "blocking_scheme": "qb_power_pulling_guard",
+      "ball_carrier": "quarterback",
+      "lead_blocker": "pulling_guard",
+      "target_gap": "C_gap_read",
+      "target_yards": 5,
+      "best_against": [
+        "nickel_defense_light_box",
+        "cover_0_aggressive_coverage",
+        "overpursuit_linebackers",
+        "edge_rush_focused_defense"
+      ],
+      "worst_against": [
+        "spy_linebacker_on_qb",
+        "disciplined_gap_control",
+        "heavy_box_defense",
+        "crash_and_replace_concepts"
+      ],
+      "strengths": [
+        "quarterback_as_runner",
+        "extra_gap_threat",
+        "good_short_yardage",
+        "physical_power_concept"
+      ],
+      "weaknesses": [
+        "quarterback_injury_risk",
+        "vulnerable_to_spy",
+        "can_be_slow_developing",
+        "limited_vs_heavy_box"
+      ]
+    }
+  },
+  "formation_strengths": [
+    "excellent_quick_passing_game",
+    "rpo_concepts_built_in",
+    "quarterback_can_see_field",
+    "modern_efficient_offense",
+    "good_vs_pressure",
+    "multiple_pre_snap_adjustments"
+  ],
+  "formation_weaknesses": [
+    "limited_power_running",
+    "vulnerable_to_interior_pressure",
+    "no_play_action_element",
+    "predictable_in_short_yardage",
+    "requires_athletic_quarterback",
+    "struggles_vs_disciplined_rpo_defense"
+  ],
+  "optimal_situations": [
+    "obvious_passing_downs",
+    "third_and_medium_long",
+    "two_minute_drill",
+    "vs_aggressive_pressure",
+    "rpo_situations",
+    "quick_game_scenarios"
+  ],
+  "vulnerable_to": [
+    "interior_pressure_up_middle",
+    "disciplined_rpo_defense",
+    "robber_coverage_concepts",
+    "spy_linebacker_on_qb",
+    "short_yardage_situations",
+    "goal_line_defense"
+  ]
+}

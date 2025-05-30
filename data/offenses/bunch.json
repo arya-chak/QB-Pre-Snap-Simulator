@@ -1,0 +1,404 @@
+{
+  "formation_name": "Bunch",
+  "personnel": "1 QB, 1 RB, 1 TE, 3 WR",
+  "personnel_package": "11 Personnel",
+  "description": "Receivers grouped tightly together creating maximum pick potential - designed to create confusion and natural rubs in coverage",
+  "alignment": {
+    "quarterback": "shotgun_5_yards_back",
+    "running_back": "beside_qb_or_offset",
+    "bunch_receivers": "two_or_three_receivers_within_2_yards",
+    "x_receiver": "can_be_in_bunch_or_split",
+    "tight_end": "can_be_in_bunch_or_on_line"
+  },
+  "passing_plays": {
+    "rub_routes": {
+      "name": "Rub Routes",
+      "concept": "Receivers cross and rub off each other to free up targets",
+      "routes": {
+        "bunch_outside": "slant_route_8_yards",
+        "bunch_middle": "out_route_6_yards",
+        "bunch_inside": "drag_route_crossing_12_yards",
+        "X_receiver": "comeback_route_14_yards",
+        "running_back": "swing_route_outlet"
+      },
+      "protection": "5_man_protection_quick_game",
+      "target_yards": 8,
+      "time_to_throw": "quick",
+      "best_against": [
+        "man_coverage_tight_defenders",
+        "cover_1_man_aggressive_coverage",
+        "press_coverage_bump_routes",
+        "aggressive_jam_techniques"
+      ],
+      "worst_against": [
+        "zone_coverage_no_picks",
+        "cover_2_zone_underneath_help",
+        "robber_coverage_bunch_routes",
+        "bracket_coverage_bunch"
+      ],
+      "strengths": [
+        "creates_natural_picks",
+        "frees_receivers_from_coverage",
+        "difficult_to_jam_all_routes",
+        "quick_release_timing"
+      ],
+      "weaknesses": [
+        "ineffective_vs_zone_coverage",
+        "vulnerable_to_robber",
+        "can_be_bracketed",
+        "requires_precise_timing"
+      ]
+    },
+    "four_verticals_bunch": {
+      "name": "Four Verticals Bunch",
+      "concept": "Vertical routes from bunch formation creating picks on stems",
+      "routes": {
+        "bunch_outside": "vertical_seam_18_yards",
+        "bunch_middle": "vertical_seam_16_yards",
+        "bunch_inside": "vertical_seam_14_yards",
+        "X_receiver": "vertical_seam_20_yards",
+        "running_back": "checkdown_safety_valve"
+      },
+      "protection": "6_man_protection_max_protect",
+      "target_yards": 17,
+      "time_to_throw": "long_developing",
+      "best_against": [
+        "cover_2_zone_deep_holes",
+        "man_coverage_bunch_picks",
+        "single_high_safety_coverage",
+        "aggressive_underneath_coverage"
+      ],
+      "worst_against": [
+        "cover_4_quarters_coverage",
+        "cover_3_zone_deep_help",
+        "bracket_coverage_bunch_verticals",
+        "robber_coverage_seams"
+      ],
+      "strengths": [
+        "bunch_picks_on_vertical_stems",
+        "stresses_deep_coverage",
+        "multiple_seam_options",
+        "natural_rubs_deep"
+      ],
+      "weaknesses": [
+        "long_developing_routes",
+        "vulnerable_to_deep_help",
+        "can_be_bracketed",
+        "requires_time_to_develop"
+      ]
+    },
+    "switch_concept": {
+      "name": "Switch Concept",
+      "concept": "Receivers switch routes mid-pattern to create confusion",
+      "routes": {
+        "bunch_outside": "switch_to_inside_slant_6_yards",
+        "bunch_middle": "switch_to_out_route_10_yards",
+        "bunch_inside": "switch_to_outside_comeback_12_yards",
+        "X_receiver": "fade_route_18_yards",
+        "running_back": "swing_route_outlet"
+      },
+      "protection": "6_man_protection_rb_check",
+      "target_yards": 9,
+      "time_to_throw": "quick_to_intermediate",
+      "best_against": [
+        "man_coverage_route_switches",
+        "aggressive_bump_coverage",
+        "press_coverage_disruption",
+        "cover_1_man_tight_coverage"
+      ],
+      "worst_against": [
+        "zone_coverage_pattern_reading",
+        "robber_coverage_switch_routes",
+        "bracket_coverage_bunch",
+        "disciplined_zone_defenders"
+      ],
+      "strengths": [
+        "confuses_man_coverage",
+        "creates_natural_picks",
+        "difficult_to_jam_switches",
+        "multiple_quick_options"
+      ],
+      "weaknesses": [
+        "requires_perfect_timing",
+        "ineffective_vs_zone",
+        "vulnerable_to_robber",
+        "can_cause_confusion"
+      ]
+    },
+    "levels_concept": {
+      "name": "Levels Concept",
+      "concept": "Bunch receivers run different levels creating high-low stretches",
+      "routes": {
+        "bunch_outside": "comeback_route_14_yards",
+        "bunch_middle": "out_route_8_yards",
+        "bunch_inside": "speed_out_4_yards",
+        "X_receiver": "post_route_18_yards",
+        "running_back": "checkdown_safety_valve"
+      },
+      "protection": "6_man_protection_slide",
+      "target_yards": 10,
+      "time_to_throw": "intermediate",
+      "best_against": [
+        "man_coverage_bunch_picks",
+        "cover_3_zone_level_stress",
+        "aggressive_press_coverage",
+        "single_safety_help"
+      ],
+      "worst_against": [
+        "cover_2_zone_underneath_help",
+        "robber_coverage_levels",
+        "bracket_coverage_bunch_side",
+        "zone_coverage_pattern_reading"
+      ],
+      "strengths": [
+        "multiple_level_options",
+        "creates_picks_naturally",
+        "high_low_stretches_coverage",
+        "good_vs_man_coverage"
+      ],
+      "weaknesses": [
+        "vulnerable_to_zone_help",
+        "can_be_robbed",
+        "requires_timing",
+        "limited_vs_brackets"
+      ]
+    },
+    "flood_bunch": {
+      "name": "Flood Bunch",
+      "concept": "All bunch receivers flood same area at different speeds",
+      "routes": {
+        "bunch_outside": "arrow_route_10_yards",
+        "bunch_middle": "out_route_8_yards",
+        "bunch_inside": "quick_out_6_yards",
+        "X_receiver": "comeback_route_16_yards",
+        "running_back": "swing_route_bunch_side"
+      },
+      "protection": "6_man_protection_max_protect",
+      "target_yards": 8,
+      "time_to_throw": "quick_to_intermediate",
+      "best_against": [
+        "man_coverage_horizontal_stress",
+        "cover_3_zone_bunch_overload",
+        "aggressive_press_coverage",
+        "single_safety_coverage"
+      ],
+      "worst_against": [
+        "cover_2_zone_underneath_help",
+        "robber_coverage_flood_area",
+        "bracket_coverage_bunch",
+        "zone_coverage_flood_side"
+      ],
+      "strengths": [
+        "horizontal_overload",
+        "multiple_timing_options",
+        "creates_picks_in_flood",
+        "good_vs_man_coverage"
+      ],
+      "weaknesses": [
+        "vulnerable_to_zone_help",
+        "can_be_robbed_easily",
+        "limited_vertical_stretch",
+        "requires_precise_timing"
+      ]
+    }
+  },
+  "running_plays": {
+    "inside_zone_bunch": {
+      "name": "Inside Zone (Bunch)",
+      "concept": "Zone running away from bunch to exploit overfocus",
+      "blocking_scheme": "inside_zone_away_from_bunch",
+      "ball_carrier": "running_back",
+      "lead_blocker": "none",
+      "target_gap": "away_from_bunch_A_or_B_gap",
+      "target_yards": 5,
+      "best_against": [
+        "bunch_focused_coverage",
+        "safety_rotation_to_bunch",
+        "linebacker_coverage_bunch",
+        "overpursuit_to_receivers"
+      ],
+      "worst_against": [
+        "disciplined_run_defense",
+        "penetrating_defensive_line",
+        "gap_control_defense",
+        "spy_linebacker"
+      ],
+      "strengths": [
+        "runs_away_from_bunch_focus",
+        "exploits_coverage_attention",
+        "good_vs_light_box",
+        "cutback_opportunities"
+      ],
+      "weaknesses": [
+        "vulnerable_to_penetration",
+        "limited_vs_disciplined_defense",
+        "requires_back_vision",
+        "can_be_predictable"
+      ]
+    },
+    "draw_bunch": {
+      "name": "Draw (Bunch)",
+      "concept": "Delayed handoff while bunch runs pick routes",
+      "blocking_scheme": "draw_protection_bunch_routes",
+      "ball_carrier": "running_back",
+      "lead_blocker": "none",
+      "target_gap": "varies_rush_lanes",
+      "target_yards": 6,
+      "best_against": [
+        "aggressive_pass_rush",
+        "bunch_bracket_coverage",
+        "obvious_passing_situations",
+        "cover_0_bunch_focused"
+      ],
+      "worst_against": [
+        "disciplined_rush_lanes",
+        "spy_linebacker",
+        "controlled_pass_rush",
+        "gap_integrity_defense"
+      ],
+      "strengths": [
+        "bunch_sells_pass_perfectly",
+        "exploits_aggressive_rush",
+        "good_surprise_element",
+        "running_back_has_vision"
+      ],
+      "weaknesses": [
+        "requires_rushing_lanes",
+        "vulnerable_to_spy",
+        "timing_dependent",
+        "limited_vs_controlled_rush"
+      ]
+    },
+    "screen_bunch": {
+      "name": "Screen (Bunch)",
+      "concept": "Running back screen while bunch creates pick action",
+      "blocking_scheme": "screen_protection_bunch_picks",
+      "ball_carrier": "running_back",
+      "lead_blocker": "offensive_linemen_releasing",
+      "target_gap": "screen_side_edge",
+      "target_yards": 8,
+      "best_against": [
+        "aggressive_pass_rush",
+        "bunch_bracket_coverage",
+        "obvious_passing_down_rush",
+        "cover_0_man_aggressive"
+      ],
+      "worst_against": [
+        "disciplined_screen_coverage",
+        "linebacker_screen_awareness",
+        "controlled_pass_rush",
+        "safety_robber_coverage"
+      ],
+      "strengths": [
+        "bunch_creates_distraction",
+        "exploits_aggressive_rush",
+        "linemen_lead_blocking",
+        "big_play_potential"
+      ],
+      "weaknesses": [
+        "requires_perfect_timing",
+        "vulnerable_to_screen_awareness",
+        "can_be_blown_up",
+        "limited_vs_disciplined_rush"
+      ]
+    },
+    "sweep_away": {
+      "name": "Sweep Away (Bunch)",
+      "concept": "Sweep running away from bunch formation",
+      "blocking_scheme": "sweep_away_from_bunch",
+      "ball_carrier": "running_back",
+      "lead_blocker": "pulling_guard",
+      "target_gap": "away_from_bunch_edge",
+      "target_yards": 7,
+      "best_against": [
+        "bunch_focused_linebackers",
+        "safety_rotation_to_bunch",
+        "overpursuit_to_receivers",
+        "heavy_bunch_side_coverage"
+      ],
+      "worst_against": [
+        "disciplined_backside_defense",
+        "fast_pursuit_angles",
+        "safety_rotation_away",
+        "string_out_defense"
+      ],
+      "strengths": [
+        "runs_away_from_attention",
+        "pulling_guard_lead_block",
+        "exploits_bunch_focus",
+        "gets_to_edge_quickly"
+      ],
+      "weaknesses": [
+        "vulnerable_to_pursuit",
+        "can_be_strung_out",
+        "requires_execution",
+        "limited_vs_disciplined_edge"
+      ]
+    },
+    "qb_run_bunch": {
+      "name": "QB Run (Bunch)",
+      "concept": "Quarterback designed run while bunch creates picks",
+      "blocking_scheme": "qb_run_protection_bunch",
+      "ball_carrier": "quarterback",
+      "lead_blocker": "none",
+      "target_gap": "varies_qb_read",
+      "target_yards": 6,
+      "best_against": [
+        "bunch_bracket_coverage",
+        "aggressive_pass_rush",
+        "man_coverage_bunch_picks",
+        "obvious_passing_situations"
+      ],
+      "worst_against": [
+        "spy_linebacker_on_qb",
+        "disciplined_qb_contain",
+        "interior_pressure",
+        "crash_defense"
+      ],
+      "strengths": [
+        "bunch_creates_distraction",
+        "quarterback_athleticism",
+        "exploits_pass_focus",
+        "surprise_element"
+      ],
+      "weaknesses": [
+        "quarterback_injury_risk",
+        "vulnerable_to_spy",
+        "requires_athletic_qb",
+        "limited_vs_qb_focused_defense"
+      ]
+    }
+  },
+  "formation_strengths": [
+    "maximum_pick_potential",
+    "creates_coverage_confusion",
+    "difficult_to_jam_all_receivers",
+    "natural_rub_routes",
+    "forces_bracket_coverage",
+    "excellent_vs_man_coverage"
+  ],
+  "formation_weaknesses": [
+    "ineffective_vs_zone_coverage",
+    "vulnerable_to_robber_coverage",
+    "can_be_bracketed_easily",
+    "requires_precise_timing",
+    "limited_field_stretch",
+    "predictable_pick_concepts"
+  ],
+  "optimal_situations": [
+    "red_zone_offense",
+    "vs_man_coverage",
+    "short_yardage_passing",
+    "pick_play_situations",
+    "goal_line_passing",
+    "vs_aggressive_press_coverage"
+  ],
+  "vulnerable_to": [
+    "zone_coverage_concepts",
+    "robber_coverage_bunch",
+    "bracket_coverage_formation",
+    "disciplined_zone_defenders",
+    "safety_sitting_on_picks",
+    "illegal_pick_penalties"
+  ]
+}

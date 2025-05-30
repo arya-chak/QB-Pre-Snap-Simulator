@@ -1,0 +1,628 @@
+{
+  "formation_name": "Nickel Defense",
+  "personnel": "4 DL, 2 LB, 5 DB",
+  "description": "Pass-oriented defense with 5 defensive backs and 2 linebackers - designed to defend against 3+ receiver sets",
+  "coverages": {
+    "cover_2_zone": {
+      "name": "Cover 2 Zone",
+      "coverage_type": "zone",
+      "description": "Two safeties split the deep field, corners and nickel play underneath zones",
+      "positions": {
+        "safeties": "deep_split_halves",
+        "corners": "soft_underneath",
+        "nickel": "slot_coverage",
+        "linebackers": "short_zone_coverage_two_underneath",
+        "d_line": "four_man_rush"
+      },
+      "blitz_packages": {
+        "base_coverage": {
+          "name": "Base Cover 2 Zone (No Blitz)",
+          "blitzer": "none",
+          "rushers": 4,
+          "coverage_adjustment": "standard_cover_2_with_nickel_coverage",
+          "run_strengths": ["decent_run_support", "gap_responsibility"],
+          "run_weaknesses": ["fewer_run_defenders", "power_running"],
+          "pass_strengths": ["five_dbs", "slot_coverage", "deep_sidelines"],
+          "pass_weaknesses": ["deep_middle", "linebacker_coverage_thin"],
+          "best_against": ["three_receiver_sets", "slot_routes", "spread_offense"]
+        },
+        "mike_blitz": {
+          "name": "Mike Linebacker Blitz",
+          "blitzer": "MLB",
+          "rushers": 5,
+          "coverage_adjustment": "safety_drops_to_linebacker_zone",
+          "run_strengths": ["outside_runs"],
+          "run_weaknesses": ["A_gap", "inside_runs"],
+          "pass_strengths": ["five_man_rush", "nickel_coverage"],
+          "pass_weaknesses": ["short_middle", "checkdowns"],
+          "best_against": ["dropback_passing", "spread_concepts"]
+        },
+        "outside_linebacker_blitz": {
+          "name": "Outside Linebacker Blitz",
+          "blitzer": "OLB",
+          "rushers": 5,
+          "coverage_adjustment": "safety_rotates_to_coverage",
+          "run_strengths": ["edge_setting"],
+          "run_weaknesses": ["inside_runs", "draws"],
+          "pass_strengths": ["edge_pressure"],
+          "pass_weaknesses": ["quick_slants", "screens"],
+          "best_against": ["rollouts", "bootlegs"]
+        },
+        "nickel_blitz": {
+          "name": "Nickel Blitz",
+          "blitzer": "nickel_back",
+          "rushers": 5,
+          "coverage_adjustment": "linebacker_covers_slot",
+          "run_strengths": ["gap_shooting"],
+          "run_weaknesses": ["outside_runs"],
+          "pass_strengths": ["unexpected_pressure", "edge_rush"],
+          "pass_weaknesses": ["slot_routes", "pick_plays"],
+          "best_against": ["max_protect", "trips_formations"]
+        },
+        "safety_blitz": {
+          "name": "Safety Blitz",
+          "blitzer": "SS_or_FS",
+          "rushers": 5,
+          "coverage_adjustment": "linebacker_covers_safety_zone",
+          "run_strengths": ["gap_shooting"],
+          "run_weaknesses": ["big_play_potential"],
+          "pass_strengths": ["unexpected_pressure"],
+          "pass_weaknesses": ["deep_coverage_thin", "over_the_top"],
+          "best_against": ["short_yardage_passing"]
+        },
+        "double_safety": {
+          "name": "Double Safety Blitz",
+          "blitzer": "both_safeties",
+          "rushers": 6,
+          "coverage_adjustment": "corners_and_nickel_deep_linebackers_underneath",
+          "run_strengths": ["gap_control"],
+          "run_weaknesses": ["outside_runs"],
+          "pass_strengths": ["six_man_rush"],
+          "pass_weaknesses": ["deep_routes", "limited_deep_help"],
+          "best_against": ["obvious_passing_downs"]
+        }
+      },
+      "base_strengths": [
+        "five_defensive_backs",
+        "excellent_slot_coverage",
+        "good_against_spread",
+        "flexible_coverage_options"
+      ],
+      "base_weaknesses": [
+        "fewer_run_defenders",
+        "linebacker_coverage_thin",
+        "vulnerable_to_power_running",
+        "deep_middle_can_be_weak"
+      ],
+      "optimal_situations": [
+        "obvious_passing_downs",
+        "three_receiver_sets",
+        "spread_formations",
+        "slot_heavy_offenses"
+      ],
+      "vulnerable_to": [
+        "power_running_game",
+        "tight_end_heavy_sets",
+        "two_back_formations",
+        "goal_line_situations"
+      ]
+    },
+    "cover_2_man": {
+      "name": "Cover 2 Man",
+      "coverage_type": "man",
+      "description": "Two safeties deep, corners, nickel, and linebackers in man coverage",
+      "positions": {
+        "safeties": "deep_split_halves",
+        "corners": "man_coverage_underneath",
+        "nickel": "man_coverage_slot_receiver",
+        "linebackers": "man_coverage_backs_tight_ends_two_defenders",
+        "d_line": "four_man_rush"
+      },
+      "blitz_packages": {
+        "base_coverage": {
+          "name": "Base Cover 2 Man (No Blitz)",
+          "blitzer": "none",
+          "rushers": 4,
+          "coverage_adjustment": "standard_cover_2_man_with_nickel",
+          "run_strengths": ["gap_responsibility", "pursuit_angles"],
+          "run_weaknesses": ["fewer_run_defenders", "misdirection"],
+          "pass_strengths": ["tight_man_coverage", "slot_coverage"],
+          "pass_weaknesses": ["pick_plays", "crossing_routes"],
+          "best_against": ["individual_routes", "spread_offense"]
+        },
+        "mike_blitz": {
+          "name": "Mike Linebacker Blitz",
+          "blitzer": "MLB",
+          "rushers": 5,
+          "coverage_adjustment": "safety_takes_mike_assignment",
+          "run_strengths": ["outside_runs"],
+          "run_weaknesses": ["A_gap", "running_back_releases"],
+          "pass_strengths": ["five_man_rush"],
+          "pass_weaknesses": ["hot_routes", "checkdowns"],
+          "best_against": ["dropback_passing"]
+        },
+        "outside_linebacker_blitz": {
+          "name": "Outside Linebacker Blitz",
+          "blitzer": "OLB",
+          "rushers": 5,
+          "coverage_adjustment": "safety_covers_linebacker_assignment",
+          "run_strengths": ["edge_control"],
+          "run_weaknesses": ["inside_runs"],
+          "pass_strengths": ["edge_pressure"],
+          "pass_weaknesses": ["quick_outs"],
+          "best_against": ["rollouts"]
+        },
+        "nickel_blitz": {
+          "name": "Nickel Blitz",
+          "blitzer": "nickel_back",
+          "rushers": 5,
+          "coverage_adjustment": "linebacker_takes_nickel_assignment",
+          "run_strengths": ["gap_shooting"],
+          "run_weaknesses": ["outside_runs"],
+          "pass_strengths": ["slot_pressure"],
+          "pass_weaknesses": ["slot_routes", "picks"],
+          "best_against": ["trips_formations"]
+        },
+        "zone_blitz": {
+          "name": "Zone Blitz",
+          "blitzer": "linebacker",
+          "rushers": 5,
+          "coverage_adjustment": "defensive_end_drops_to_man_coverage",
+          "run_strengths": ["gap_discipline"],
+          "run_weaknesses": ["outside_runs"],
+          "pass_strengths": ["coverage_disguise"],
+          "pass_weaknesses": ["recognition"],
+          "best_against": ["predetermined_reads"]
+        },
+        "safety_blitz": {
+          "name": "Safety Blitz",
+          "blitzer": "SS_or_FS",
+          "rushers": 5,
+          "coverage_adjustment": "linebacker_takes_safety_assignment",
+          "run_strengths": ["gap_shooting"],
+          "run_weaknesses": ["big_plays"],
+          "pass_strengths": ["unexpected_pressure"],
+          "pass_weaknesses": ["deep_routes", "broken_coverage"],
+          "best_against": ["short_yardage"]
+        }
+      },
+      "base_strengths": [
+        "tight_individual_coverage",
+        "excellent_slot_coverage",
+        "good_against_spread",
+        "five_defensive_backs"
+      ],
+      "base_weaknesses": [
+        "pick_plays_effective",
+        "fewer_run_defenders",
+        "crossing_routes",
+        "power_running_vulnerable"
+      ],
+      "optimal_situations": [
+        "obvious_passing_downs",
+        "three_receiver_sets",
+        "spread_formations",
+        "slot_heavy_concepts"
+      ],
+      "vulnerable_to": [
+        "bunch_formations",
+        "pick_concepts",
+        "power_running",
+        "tight_end_heavy_sets"
+      ]
+    },
+    "cover_3_zone": {
+      "name": "Cover 3 Zone",
+      "coverage_type": "zone",
+      "description": "Single high safety, corners and safety cover deep thirds, nickel underneath",
+      "positions": {
+        "safeties": "single_high_deep_middle",
+        "corners": "deep_third_coverage",
+        "nickel": "underneath_zone_coverage",
+        "linebackers": "underneath_zones_two_defenders",
+        "d_line": "four_man_rush"
+      },
+      "blitz_packages": {
+        "base_coverage": {
+          "name": "Base Cover 3 Zone (No Blitz)",
+          "blitzer": "none",
+          "rushers": 4,
+          "coverage_adjustment": "standard_cover_3_with_nickel_underneath",
+          "run_strengths": ["run_support", "gap_control"],
+          "run_weaknesses": ["fewer_run_defenders", "inside_power"],
+          "pass_strengths": ["deep_coverage", "slot_coverage"],
+          "pass_weaknesses": ["short_middle", "comeback_routes"],
+          "best_against": ["deep_passing", "spread_offense"]
+        },
+        "mike_blitz": {
+          "name": "Mike Linebacker Blitz",
+          "blitzer": "MLB",
+          "rushers": 5,
+          "coverage_adjustment": "nickel_and_outside_linebacker_underneath",
+          "run_strengths": ["outside_runs"],
+          "run_weaknesses": ["inside_draws"],
+          "pass_strengths": ["deep_coverage_intact"],
+          "pass_weaknesses": ["short_middle_hole"],
+          "best_against": ["deep_drops"]
+        },
+        "outside_linebacker_blitz": {
+          "name": "Outside Linebacker Blitz",
+          "blitzer": "OLB",
+          "rushers": 5,
+          "coverage_adjustment": "nickel_and_mike_underneath",
+          "run_strengths": ["edge_setting"],
+          "run_weaknesses": ["counters"],
+          "pass_strengths": ["edge_pressure"],
+          "pass_weaknesses": ["underneath_thin"],
+          "best_against": ["rollouts"]
+        },
+        "nickel_blitz": {
+          "name": "Nickel Blitz",
+          "blitzer": "nickel_back",
+          "rushers": 5,
+          "coverage_adjustment": "linebackers_cover_underneath_alone",
+          "run_strengths": ["gap_shooting"],
+          "run_weaknesses": ["outside_runs"],
+          "pass_strengths": ["slot_pressure"],
+          "pass_weaknesses": ["underneath_very_thin"],
+          "best_against": ["slot_concepts"]
+        },
+        "safety_blitz": {
+          "name": "Safety Blitz (Robber)",
+          "blitzer": "SS_from_underneath",
+          "rushers": 5,
+          "coverage_adjustment": "free_safety_alone_deep",
+          "run_strengths": ["gap_shooting"],
+          "run_weaknesses": ["big_plays"],
+          "pass_strengths": ["unexpected_pressure"],
+          "pass_weaknesses": ["deep_middle_vulnerable"],
+          "best_against": ["short_passing"]
+        },
+        "double_blitz": {
+          "name": "Double Blitz",
+          "blitzer": "linebacker_and_nickel",
+          "rushers": 6,
+          "coverage_adjustment": "safety_and_one_linebacker_underneath",
+          "run_strengths": ["gap_control"],
+          "run_weaknesses": ["outside_runs"],
+          "pass_strengths": ["six_man_rush"],
+          "pass_weaknesses": ["underneath_completely_thin"],
+          "best_against": ["obvious_passing_downs"]
+        }
+      },
+      "base_strengths": [
+        "excellent_deep_coverage",
+        "good_slot_coverage",
+        "prevents_big_plays",
+        "flexible_nickel_usage"
+      ],
+      "base_weaknesses": [
+        "short_middle_vulnerable",
+        "fewer_run_defenders",
+        "comeback_routes",
+        "underneath_can_be_thin"
+      ],
+      "optimal_situations": [
+        "obvious_passing_downs",
+        "long_yardage",
+        "spread_formations"
+      ],
+      "vulnerable_to": [
+        "short_passing_game",
+        "power_running",
+        "comeback_routes",
+        "tight_end_concepts"
+      ]
+    },
+    "cover_4_zone": {
+      "name": "Cover 4 Zone (Quarters)",
+      "coverage_type": "zone",
+      "description": "Four deep defenders cover quarters, nickel helps underneath",
+      "positions": {
+        "safeties": "deep_quarter_coverage",
+        "corners": "deep_quarter_coverage",
+        "nickel": "underneath_zone_coverage",
+        "linebackers": "underneath_zones_two_defenders",
+        "d_line": "four_man_rush"
+      },
+      "blitz_packages": {
+        "base_coverage": {
+          "name": "Base Cover 4 Zone (No Blitz)",
+          "blitzer": "none",
+          "rushers": 4,
+          "coverage_adjustment": "quarters_coverage_with_nickel_underneath",
+          "run_strengths": ["contain_outside", "gap_responsibility"],
+          "run_weaknesses": ["fewer_run_defenders", "inside_power"],
+          "pass_strengths": ["deep_coverage", "covers_verticals"],
+          "pass_weaknesses": ["underneath_thin", "crossing_routes"],
+          "best_against": ["four_verticals", "deep_passing"]
+        },
+        "mike_blitz": {
+          "name": "Mike Linebacker Blitz",
+          "blitzer": "MLB",
+          "rushers": 5,
+          "coverage_adjustment": "quarters_maintained_nickel_and_olb_underneath",
+          "run_strengths": ["outside_runs"],
+          "run_weaknesses": ["A_gap"],
+          "pass_strengths": ["deep_coverage_intact"],
+          "pass_weaknesses": ["underneath_very_thin"],
+          "best_against": ["vertical_concepts"]
+        },
+        "outside_linebacker_blitz": {
+          "name": "Outside Linebacker Blitz",
+          "blitzer": "OLB",
+          "rushers": 5,
+          "coverage_adjustment": "quarters_maintained_nickel_and_mike_underneath",
+          "run_strengths": ["edge_setting"],
+          "run_weaknesses": ["counters"],
+          "pass_strengths": ["edge_pressure"],
+          "pass_weaknesses": ["underneath_very_thin"],
+          "best_against": ["rollouts"]
+        },
+        "nickel_blitz": {
+          "name": "Nickel Blitz",
+          "blitzer": "nickel_back",
+          "rushers": 5,
+          "coverage_adjustment": "quarters_maintained_linebackers_underneath_alone",
+          "run_strengths": ["gap_shooting"],
+          "run_weaknesses": ["outside_runs"],
+          "pass_strengths": ["slot_pressure"],
+          "pass_weaknesses": ["underneath_extremely_thin"],
+          "best_against": ["slot_verticals"]
+        },
+        "safety_blitz": {
+          "name": "Safety Blitz",
+          "blitzer": "strong_safety",
+          "rushers": 5,
+          "coverage_adjustment": "three_deep_coverage",
+          "run_strengths": ["gap_shooting"],
+          "run_weaknesses": ["big_plays"],
+          "pass_strengths": ["pressure_with_deep_help"],
+          "pass_weaknesses": ["deep_strong_side"],
+          "best_against": ["weak_side_concepts"]
+        },
+        "all_linebacker_blitz": {
+          "name": "All Linebacker Blitz",
+          "blitzer": "both_linebackers",
+          "rushers": 6,
+          "coverage_adjustment": "quarters_coverage_nickel_alone_underneath",
+          "run_strengths": ["gap_control"],
+          "run_weaknesses": ["outside_runs"],
+          "pass_strengths": ["six_man_rush"],
+          "pass_weaknesses": ["underneath_completely_open"],
+          "best_against": ["obvious_passing_downs"]
+        }
+      },
+      "base_strengths": [
+        "excellent_deep_coverage",
+        "covers_all_verticals",
+        "prevents_explosive_plays",
+        "good_slot_coverage"
+      ],
+      "base_weaknesses": [
+        "underneath_very_vulnerable",
+        "fewer_run_defenders",
+        "crossing_routes",
+        "quick_game_effective"
+      ],
+      "optimal_situations": [
+        "obvious_passing_downs",
+        "two_minute_drill_defense",
+        "long_yardage"
+      ],
+      "vulnerable_to": [
+        "quick_passing_game",
+        "crossing_routes",
+        "power_running",
+        "checkdowns"
+      ]
+    },
+    "cover_1_man": {
+      "name": "Cover 1 Man",
+      "coverage_type": "man",
+      "description": "Single high safety, corners, nickel, and linebackers in man coverage",
+      "positions": {
+        "safeties": "single_high_free_safety",
+        "corners": "man_coverage",
+        "nickel": "man_coverage_slot_receiver",
+        "linebackers": "man_coverage_backs_tight_ends_two_defenders",
+        "d_line": "four_man_rush"
+      },
+      "blitz_packages": {
+        "base_coverage": {
+          "name": "Base Cover 1 Man (No Blitz)",
+          "blitzer": "none",
+          "rushers": 4,
+          "coverage_adjustment": "standard_cover_1_with_nickel",
+          "run_strengths": ["gap_integrity", "pursuit"],
+          "run_weaknesses": ["fewer_run_defenders", "misdirection"],
+          "pass_strengths": ["tight_man_coverage", "deep_help"],
+          "pass_weaknesses": ["pick_plays", "crossing_routes"],
+          "best_against": ["individual_routes", "spread_offense"]
+        },
+        "mike_blitz": {
+          "name": "Mike Linebacker Blitz",
+          "blitzer": "MLB",
+          "rushers": 5,
+          "coverage_adjustment": "safety_covers_mike_assignment",
+          "run_strengths": ["outside_runs"],
+          "run_weaknesses": ["A_gap", "running_back_releases"],
+          "pass_strengths": ["man_coverage_with_help"],
+          "pass_weaknesses": ["hot_routes"],
+          "best_against": ["slow_developing_plays"]
+        },
+        "outside_linebacker_blitz": {
+          "name": "Outside Linebacker Blitz",
+          "blitzer": "OLB",
+          "rushers": 5,
+          "coverage_adjustment": "safety_helps_with_linebacker_assignment",
+          "run_strengths": ["edge_control"],
+          "run_weaknesses": ["inside_runs"],
+          "pass_strengths": ["edge_pressure"],
+          "pass_weaknesses": ["quick_game"],
+          "best_against": ["rollouts"]
+        },
+        "nickel_blitz": {
+          "name": "Nickel Blitz",
+          "blitzer": "nickel_back",
+          "rushers": 5,
+          "coverage_adjustment": "linebacker_takes_nickel_assignment",
+          "run_strengths": ["gap_shooting"],
+          "run_weaknesses": ["outside_runs"],
+          "pass_strengths": ["slot_pressure"],
+          "pass_weaknesses": ["slot_routes", "linebacker_on_receiver"],
+          "best_against": ["trips_formations"]
+        },
+        "safety_blitz": {
+          "name": "Safety Blitz (Cover 0)",
+          "blitzer": "free_safety",
+          "rushers": 5,
+          "coverage_adjustment": "pure_man_no_help",
+          "run_strengths": ["gap_shooting"],
+          "run_weaknesses": ["big_play_potential"],
+          "pass_strengths": ["tight_coverage"],
+          "pass_weaknesses": ["any_broken_coverage"],
+          "best_against": ["short_yardage"]
+        },
+        "double_blitz": {
+          "name": "Double Blitz",
+          "blitzer": "linebacker_and_nickel",
+          "rushers": 6,
+          "coverage_adjustment": "safety_helps_with_assignments",
+          "run_strengths": ["gap_control"],
+          "run_weaknesses": ["outside_runs"],
+          "pass_strengths": ["six_man_rush"],
+          "pass_weaknesses": ["quick_routes", "hot_routes"],
+          "best_against": ["max_protect"]
+        }
+      },
+      "base_strengths": [
+        "tight_man_coverage",
+        "excellent_slot_coverage",
+        "deep_safety_help",
+        "good_against_spread"
+      ],
+      "base_weaknesses": [
+        "pick_plays",
+        "fewer_run_defenders",
+        "crossing_routes",
+        "power_running_vulnerable"
+      ],
+      "optimal_situations": [
+        "obvious_passing_downs",
+        "three_receiver_sets",
+        "spread_formations"
+      ],
+      "vulnerable_to": [
+        "pick_concepts",
+        "power_running",
+        "crossing_patterns",
+        "tight_end_heavy_sets"
+      ]
+    },
+    "cover_0": {
+      "name": "Cover 0 (No Safety Help)",
+      "coverage_type": "man",
+      "description": "Pure man coverage with no deep safety help - nickel package with maximum aggression",
+      "positions": {
+        "safeties": "blitzing_or_man_coverage",
+        "corners": "man_coverage_no_help",
+        "nickel": "man_coverage_or_blitzing",
+        "linebackers": "man_coverage_or_blitzing_two_defenders",
+        "d_line": "four_man_rush_minimum"
+      },
+      "blitz_packages": {
+        "base_coverage": {
+          "name": "Base Cover 0 (5 Rush)",
+          "blitzer": "linebacker_nickel_or_safety",
+          "rushers": 5,
+          "coverage_adjustment": "pure_man_no_safety_help",
+          "run_strengths": ["gap_control", "extra_defender"],
+          "run_weaknesses": ["fewer_run_defenders", "big_play_potential"],
+          "pass_strengths": ["tight_coverage", "five_man_rush"],
+          "pass_weaknesses": ["any_broken_coverage"],
+          "best_against": ["short_yardage", "spread_offense"]
+        },
+        "linebacker_blitz": {
+          "name": "Linebacker Blitz",
+          "blitzer": "both_linebackers",
+          "rushers": 6,
+          "coverage_adjustment": "man_coverage_no_help",
+          "run_strengths": ["gap_control"],
+          "run_weaknesses": ["outside_runs"],
+          "pass_strengths": ["six_man_rush"],
+          "pass_weaknesses": ["any_completion"],
+          "best_against": ["obvious_passing_downs"]
+        },
+        "nickel_blitz": {
+          "name": "Nickel Blitz",
+          "blitzer": "nickel_back",
+          "rushers": 5,
+          "coverage_adjustment": "man_coverage_no_safety_help",
+          "run_strengths": ["gap_shooting"],
+          "run_weaknesses": ["outside_runs"],
+          "pass_strengths": ["slot_pressure"],
+          "pass_weaknesses": ["slot_routes", "any_route"],
+          "best_against": ["trips_formations"]
+        },
+        "safety_blitz": {
+          "name": "Safety Blitz",
+          "blitzer": "both_safeties",
+          "rushers": 6,
+          "coverage_adjustment": "corners_nickel_linebackers_only",
+          "run_strengths": ["gap_shooting"],
+          "run_weaknesses": ["outside_runs"],
+          "pass_strengths": ["immediate_pressure"],
+          "pass_weaknesses": ["any_route"],
+          "best_against": ["short_yardage_passing"]
+        },
+        "overload_blitz": {
+          "name": "Overload Blitz",
+          "blitzer": "linebackers_nickel_safety",
+          "rushers": 7,
+          "coverage_adjustment": "corners_and_one_safety_only",
+          "run_strengths": ["overwhelming_numbers"],
+          "run_weaknesses": ["any_outside_run"],
+          "pass_strengths": ["seven_man_rush"],
+          "pass_weaknesses": ["literally_any_completion"],
+          "best_against": ["obvious_quarterback_sneak"]
+        },
+        "all_out_blitz": {
+          "name": "All Out Blitz",
+          "blitzer": "everyone_except_corners",
+          "rushers": 8,
+          "coverage_adjustment": "corners_completely_alone",
+          "run_strengths": ["total_gap_saturation"],
+          "run_weaknesses": ["outside_speed"],
+          "pass_strengths": ["eight_man_rush"],
+          "pass_weaknesses": ["any_route_whatsoever"],
+          "best_against": ["desperation_situations"]
+        }
+      },
+      "base_strengths": [
+        "maximum_pressure_potential",
+        "tight_man_coverage",
+        "good_against_spread",
+        "forces_quick_decisions"
+      ],
+      "base_weaknesses": [
+        "no_deep_help_whatsoever",
+        "fewer_run_defenders",
+        "big_play_vulnerable",
+        "requires_perfect_execution"
+      ],
+      "optimal_situations": [
+        "short_yardage",
+        "obvious_passing_downs",
+        "spread_formations",
+        "desperation_pass_rush"
+      ],
+      "vulnerable_to": [
+        "any_deep_route",
+        "power_running",
+        "broken_plays",
+        "quick_passing_game"
+      ]
+    }
+  }
+}

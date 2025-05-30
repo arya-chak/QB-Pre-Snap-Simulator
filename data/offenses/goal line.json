@@ -1,0 +1,406 @@
+{
+  "formation_name": "Goal Line",
+  "personnel": "1 QB, 2 FB, 1 RB, 2 TE, 1 WR",
+  "personnel_package": "23 Personnel",
+  "description": "Heavy formation with maximum blockers designed for short yardage situations and goal line scoring - power over finesse",
+  "alignment": {
+    "quarterback": "under_center",
+    "fullback_1": "7_yards_behind_qb",
+    "fullback_2": "beside_or_behind_fb1",
+    "running_back": "behind_fullbacks",
+    "tight_end_1": "on_line_strong_side",
+    "tight_end_2": "on_line_weak_side_or_h_back",
+    "wide_receiver": "split_wide_or_bunch"
+  },
+  "passing_plays": {
+    "fade_corner": {
+      "name": "Fade Corner",
+      "concept": "Back shoulder fade to receiver in corner of end zone",
+      "routes": {
+        "wide_receiver": "fade_route_corner_end_zone",
+        "tight_end_1": "drag_route_6_yards",
+        "tight_end_2": "out_route_4_yards",
+        "fullback_1": "checkdown_safety_valve",
+        "running_back": "swing_route_outlet"
+      },
+      "protection": "8_man_protection_max_protect",
+      "target_yards": 6,
+      "time_to_throw": "quick_to_intermediate",
+      "best_against": [
+        "goal_line_man_coverage",
+        "cover_1_man_single_safety",
+        "aggressive_goal_line_defense",
+        "tight_coverage_underneath"
+      ],
+      "worst_against": [
+        "cover_2_zone_goal_line",
+        "bracket_coverage_receiver",
+        "safety_help_over_top",
+        "aggressive_bump_coverage"
+      ],
+      "strengths": [
+        "max_protection_time",
+        "back_shoulder_timing",
+        "good_vs_man_coverage",
+        "checkdown_options_available"
+      ],
+      "weaknesses": [
+        "limited_vs_bracket_coverage",
+        "requires_perfect_timing",
+        "vulnerable_to_safety_help",
+        "can_be_jumped_by_corner"
+      ]
+    },
+    "tight_end_cross": {
+      "name": "Tight End Cross",
+      "concept": "Tight end crosses underneath while receiver runs fade",
+      "routes": {
+        "wide_receiver": "fade_route_12_yards",
+        "tight_end_1": "crossing_route_8_yards",
+        "tight_end_2": "out_route_5_yards",
+        "fullback_1": "checkdown_route",
+        "running_back": "swing_route"
+      },
+      "protection": "8_man_protection_te_release",
+      "target_yards": 6,
+      "time_to_throw": "quick",
+      "best_against": [
+        "goal_line_zone_coverage",
+        "man_coverage_crossing_picks",
+        "aggressive_linebacker_coverage",
+        "tight_underneath_coverage"
+      ],
+      "worst_against": [
+        "robber_coverage_crossing_routes",
+        "cover_2_zone_underneath_help",
+        "bracket_coverage_tight_end",
+        "aggressive_bump_coverage"
+      ],
+      "strengths": [
+        "crossing_route_picks",
+        "multiple_underneath_options",
+        "good_vs_zone_coverage",
+        "reliable_short_concept"
+      ],
+      "weaknesses": [
+        "vulnerable_to_robber",
+        "can_be_bracketed",
+        "requires_timing",
+        "limited_deep_threat"
+      ]
+    },
+    "play_action_tight_end": {
+      "name": "Play Action Tight End",
+      "concept": "Fake handoff to tight end seam or out route",
+      "routes": {
+        "wide_receiver": "comeback_route_10_yards",
+        "tight_end_1": "seam_route_12_yards",
+        "tight_end_2": "out_route_6_yards",
+        "fullback_1": "leak_route_8_yards",
+        "running_back": "protection_hot_route"
+      },
+      "protection": "8_man_protection_rb_hot",
+      "target_yards": 8,
+      "time_to_throw": "intermediate",
+      "best_against": [
+        "aggressive_run_support_linebackers",
+        "goal_line_run_focused_defense",
+        "heavy_box_coverage",
+        "overly_aggressive_safeties"
+      ],
+      "worst_against": [
+        "disciplined_goal_line_coverage",
+        "cover_0_man_no_help",
+        "robber_coverage_seam_routes",
+        "bracket_coverage_tight_ends"
+      ],
+      "strengths": [
+        "exploits_run_fake",
+        "linebackers_bite_on_fake",
+        "max_protection",
+        "multiple_route_options"
+      ],
+      "weaknesses": [
+        "long_developing",
+        "vulnerable_to_disciplined_coverage",
+        "limited_quick_options",
+        "can_be_robbed"
+      ]
+    },
+    "smash_goal_line": {
+      "name": "Smash Goal Line",
+      "concept": "High-low stretch with corner and speed out",
+      "routes": {
+        "wide_receiver": "corner_route_8_yards",
+        "tight_end_1": "speed_out_4_yards",
+        "tight_end_2": "drag_route_6_yards",
+        "fullback_1": "checkdown_route",
+        "running_back": "swing_route"
+      },
+      "protection": "8_man_protection_max_protect",
+      "target_yards": 5,
+      "time_to_throw": "quick",
+      "best_against": [
+        "goal_line_zone_coverage",
+        "soft_corner_coverage",
+        "single_safety_help",
+        "underneath_zone_coverage"
+      ],
+      "worst_against": [
+        "hard_corner_coverage",
+        "bracket_coverage_outside",
+        "robber_coverage_underneath",
+        "aggressive_bump_coverage"
+      ],
+      "strengths": [
+        "high_low_stretch",
+        "quick_release_options",
+        "exploits_soft_coverage",
+        "max_protection"
+      ],
+      "weaknesses": [
+        "limited_vs_hard_coverage",
+        "vulnerable_to_robber",
+        "requires_timing",
+        "can_be_bracketed"
+      ]
+    },
+    "bootleg_goal_line": {
+      "name": "Bootleg Goal Line",
+      "concept": "Quarterback rolls out with flood routes",
+      "routes": {
+        "wide_receiver": "comeback_route_8_yards",
+        "tight_end_1": "out_route_6_yards",
+        "tight_end_2": "drag_route_4_yards",
+        "fullback_1": "swing_route_outlet",
+        "running_back": "protection_then_release"
+      },
+      "protection": "bootleg_protection_rollout",
+      "target_yards": 6,
+      "time_to_throw": "intermediate",
+      "best_against": [
+        "aggressive_interior_rush",
+        "goal_line_man_coverage",
+        "heavy_inside_rush",
+        "overly_aggressive_linebackers"
+      ],
+      "worst_against": [
+        "disciplined_edge_rush",
+        "spy_linebacker",
+        "corner_sitting_on_routes",
+        "string_out_defense"
+      ],
+      "strengths": [
+        "gets_qb_outside_pocket",
+        "flood_routes_rollout_side",
+        "good_vs_interior_pressure",
+        "multiple_options"
+      ],
+      "weaknesses": [
+        "vulnerable_to_edge_rush",
+        "limited_backside_options",
+        "requires_mobile_qb",
+        "can_be_strung_out"
+      ]
+    }
+  },
+  "running_plays": {
+    "fb_dive": {
+      "name": "Fullback Dive",
+      "concept": "Lead fullback straight ahead through A-gap",
+      "blocking_scheme": "straight_ahead_goal_line_blocking",
+      "ball_carrier": "fullback_1",
+      "lead_blocker": "fullback_2",
+      "target_gap": "A_gap",
+      "target_yards": 2,
+      "best_against": [
+        "goal_line_defense_spread_out",
+        "nickel_dime_light_box",
+        "cover_0_aggressive_coverage",
+        "linebackers_in_coverage"
+      ],
+      "worst_against": [
+        "goal_line_defense_heavy_box",
+        "46_defense_stacked_box",
+        "a_gap_blitz_packages",
+        "penetrating_nose_tackle"
+      ],
+      "strengths": [
+        "quick_hitting",
+        "hard_to_stop_at_line",
+        "physical_power_running",
+        "short_yardage_specialist"
+      ],
+      "weaknesses": [
+        "limited_yardage_upside",
+        "predictable_gap",
+        "vulnerable_to_penetration",
+        "requires_good_center"
+      ]
+    },
+    "iso_power_goal_line": {
+      "name": "Isolation Power",
+      "concept": "Lead fullback isolates linebacker with running back behind",
+      "blocking_scheme": "iso_power_goal_line",
+      "ball_carrier": "running_back",
+      "lead_blocker": "fullback_1",
+      "target_gap": "B_gap_strong_side",
+      "target_yards": 3,
+      "best_against": [
+        "goal_line_defense_light_linebackers",
+        "nickel_defense_light_box",
+        "cover_0_aggressive_coverage",
+        "spread_out_goal_line"
+      ],
+      "worst_against": [
+        "46_defense_eight_in_box",
+        "goal_line_defense_heavy",
+        "penetrating_defensive_line",
+        "stacked_box_coverage"
+      ],
+      "strengths": [
+        "lead_blocker_advantage",
+        "power_gap_scheme",
+        "physical_running",
+        "good_short_yardage"
+      ],
+      "weaknesses": [
+        "predictable_gap",
+        "can_be_slow_developing",
+        "vulnerable_to_penetration",
+        "limited_vs_heavy_box"
+      ]
+    },
+    "qb_sneak_goal_line": {
+      "name": "QB Sneak",
+      "concept": "Quarterback sneak behind center for minimal yardage",
+      "blocking_scheme": "qb_sneak_surge_blocking",
+      "ball_carrier": "quarterback",
+      "lead_blocker": "center_and_guards",
+      "target_gap": "A_gap",
+      "target_yards": 1,
+      "best_against": [
+        "goal_line_defense_expecting_run",
+        "heavy_outside_rush",
+        "linebackers_flowing_outside",
+        "defensive_ends_wide"
+      ],
+      "worst_against": [
+        "goal_line_defense_a_gap_focused",
+        "penetrating_nose_tackle",
+        "a_gap_blitz_packages",
+        "defensive_line_dominance"
+      ],
+      "strengths": [
+        "quarterback_behind_center",
+        "short_yardage_reliable",
+        "hard_to_stop_one_yard",
+        "quick_hitting"
+      ],
+      "weaknesses": [
+        "quarterback_injury_risk",
+        "limited_yardage_upside",
+        "vulnerable_to_penetration",
+        "predictable_concept"
+      ]
+    },
+    "power_sweep_goal_line": {
+      "name": "Power Sweep",
+      "concept": "Sweep outside with multiple pulling blockers",
+      "blocking_scheme": "goal_line_sweep_pulling",
+      "ball_carrier": "running_back",
+      "lead_blocker": "pulling_guard_and_fullback",
+      "target_gap": "outside_contain",
+      "target_yards": 4,
+      "best_against": [
+        "goal_line_defense_inside_focused",
+        "heavy_a_gap_defense",
+        "penetrating_nose_tackle",
+        "linebackers_crashing_inside"
+      ],
+      "worst_against": [
+        "disciplined_edge_setting",
+        "fast_outside_linebackers",
+        "corner_run_support",
+        "string_out_defense"
+      ],
+      "strengths": [
+        "gets_outside_heavy_box",
+        "multiple_lead_blockers",
+        "good_vs_inside_focused_defense",
+        "big_play_potential"
+      ],
+      "weaknesses": [
+        "can_be_strung_out",
+        "vulnerable_to_pursuit",
+        "requires_execution",
+        "limited_vs_disciplined_edge"
+      ]
+    },
+    "wedge_blocking": {
+      "name": "Wedge Blocking",
+      "concept": "All blockers form wedge for straight ahead power",
+      "blocking_scheme": "wedge_formation_blocking",
+      "ball_carrier": "running_back",
+      "lead_blocker": "wedge_of_blockers",
+      "target_gap": "A_gap_wedge",
+      "target_yards": 2,
+      "best_against": [
+        "goal_line_defense_spread_out",
+        "nickel_dime_light_box",
+        "linebackers_in_coverage",
+        "defensive_backs_deep"
+      ],
+      "worst_against": [
+        "goal_line_defense_heavy_box",
+        "46_defense_stacked",
+        "wedge_busting_techniques",
+        "penetrating_defensive_line"
+      ],
+      "strengths": [
+        "maximum_blocking_concentration",
+        "physical_power_concept",
+        "hard_to_stop_with_light_box",
+        "short_yardage_specialist"
+      ],
+      "weaknesses": [
+        "predictable_gap",
+        "vulnerable_to_penetration",
+        "limited_vs_heavy_box",
+        "can_be_busted_with_technique"
+      ]
+    }
+  },
+  "formation_strengths": [
+    "maximum_blocking_power",
+    "excellent_short_yardage",
+    "physical_running_game",
+    "goal_line_specialist",
+    "multiple_fullback_options",
+    "power_over_finesse"
+  ],
+  "formation_weaknesses": [
+    "limited_vs_modern_defenses",
+    "predictable_power_concepts",
+    "vulnerable_to_speed_defense",
+    "limited_passing_options",
+    "slow_developing_concepts",
+    "requires_physical_superiority"
+  ],
+  "optimal_situations": [
+    "goal_line_situations",
+    "short_yardage_3rd_down",
+    "fourth_and_short",
+    "two_point_conversions",
+    "clock_control_situations",
+    "vs_light_box_defenses"
+  ],
+  "vulnerable_to": [
+    "46_defense_heavy_box",
+    "goal_line_defense_stacked",
+    "speed_based_defenses",
+    "penetrating_defensive_lines",
+    "disciplined_gap_control",
+    "modern_hybrid_defenders"
+  ]
+}

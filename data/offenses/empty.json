@@ -1,0 +1,404 @@
+{
+  "formation_name": "Empty",
+  "personnel": "1 QB, 0 RB, 2 TE, 3 WR",
+  "personnel_package": "10 Personnel",
+  "description": "No running back in backfield with five receivers - ultimate passing formation that forces defense to show coverage",
+  "alignment": {
+    "quarterback": "shotgun_5_yards_back_alone",
+    "running_back": "none_split_out_as_receiver",
+    "receivers": "five_receivers_spread_across_formation",
+    "tight_ends": "can_be_inline_or_split_out",
+    "protection": "entirely_five_man_offensive_line"
+  },
+  "passing_plays": {
+    "hot_routes": {
+      "name": "Hot Routes",
+      "concept": "Quick timing routes to beat any pressure with five receivers",
+      "routes": {
+        "receiver_1": "slant_route_5_yards",
+        "receiver_2": "hitch_route_6_yards",
+        "receiver_3": "speed_out_5_yards",
+        "receiver_4": "drag_route_8_yards",
+        "receiver_5": "fade_route_hot_if_blitz"
+      },
+      "protection": "5_man_protection_only",
+      "target_yards": 6,
+      "time_to_throw": "very_quick",
+      "best_against": [
+        "any_blitz_package",
+        "cover_0_all_out_pressure",
+        "aggressive_pass_rush",
+        "heavy_pressure_situations"
+      ],
+      "worst_against": [
+        "robber_coverage_hot_routes",
+        "cover_2_zone_underneath_help",
+        "bracket_coverage_short_routes",
+        "disciplined_rush_lanes"
+      ],
+      "strengths": [
+        "beats_any_pressure",
+        "five_quick_options",
+        "immediate_release",
+        "forces_coverage_decisions"
+      ],
+      "weaknesses": [
+        "no_protection_help",
+        "vulnerable_to_robber",
+        "limited_yardage_upside",
+        "requires_perfect_timing"
+      ]
+    },
+    "spacing_empty": {
+      "name": "Spacing (Empty)",
+      "concept": "Five receivers spread horizontally to stress coverage",
+      "routes": {
+        "receiver_1": "comeback_route_14_yards",
+        "receiver_2": "out_route_12_yards",
+        "receiver_3": "dig_route_10_yards",
+        "receiver_4": "out_route_8_yards",
+        "receiver_5": "arrow_route_6_yards"
+      },
+      "protection": "5_man_protection_slide",
+      "target_yards": 10,
+      "time_to_throw": "intermediate",
+      "best_against": [
+        "man_coverage_horizontal_stress",
+        "cover_3_zone_underneath_windows",
+        "single_safety_coverage",
+        "aggressive_press_coverage"
+      ],
+      "worst_against": [
+        "cover_2_zone_underneath_help",
+        "robber_coverage_spacing_routes",
+        "bracket_coverage_multiple_receivers",
+        "aggressive_interior_pressure"
+      ],
+      "strengths": [
+        "horizontal_field_stretch",
+        "five_receiver_options",
+        "multiple_route_levels",
+        "forces_coverage_decisions"
+      ],
+      "weaknesses": [
+        "no_protection_help",
+        "vulnerable_to_interior_rush",
+        "can_be_robbed",
+        "requires_intermediate_timing"
+      ]
+    },
+    "verticals_empty": {
+      "name": "Verticals (Empty)",
+      "concept": "Five vertical routes to stress deep coverage",
+      "routes": {
+        "receiver_1": "vertical_seam_20_yards",
+        "receiver_2": "vertical_seam_18_yards",
+        "receiver_3": "vertical_seam_16_yards",
+        "receiver_4": "vertical_seam_18_yards",
+        "receiver_5": "vertical_seam_20_yards"
+      },
+      "protection": "5_man_protection_max_effort",
+      "target_yards": 18,
+      "time_to_throw": "long_developing",
+      "best_against": [
+        "cover_2_zone_deep_holes",
+        "man_coverage_vertical_stress",
+        "single_safety_coverage",
+        "aggressive_underneath_coverage"
+      ],
+      "worst_against": [
+        "cover_4_quarters_deep_help",
+        "cover_3_zone_deep_coverage",
+        "dime_defense_six_dbs",
+        "aggressive_interior_pressure"
+      ],
+      "strengths": [
+        "five_vertical_threats",
+        "stresses_all_deep_coverage",
+        "exploits_cover_2_holes",
+        "forces_deep_help"
+      ],
+      "weaknesses": [
+        "long_developing_routes",
+        "no_protection_help",
+        "vulnerable_to_pressure",
+        "limited_underneath_options"
+      ]
+    },
+    "stick_nod_empty": {
+      "name": "Stick Nod (Empty)",
+      "concept": "Receivers sit in zones and adjust routes based on coverage",
+      "routes": {
+        "receiver_1": "stick_route_adjust_12_yards",
+        "receiver_2": "nod_route_adjust_10_yards", 
+        "receiver_3": "stick_route_adjust_8_yards",
+        "receiver_4": "out_route_6_yards",
+        "receiver_5": "drag_route_crossing_8_yards"
+      },
+      "protection": "5_man_protection_slide",
+      "target_yards": 9,
+      "time_to_throw": "intermediate",
+      "best_against": [
+        "zone_coverage_find_holes",
+        "cover_2_zone_linebacker_holes",
+        "cover_3_zone_underneath_windows",
+        "soft_zone_coverage"
+      ],
+      "worst_against": [
+        "man_coverage_tight_defenders",
+        "robber_coverage_stick_routes",
+        "aggressive_interior_pressure",
+        "cover_1_man_with_help"
+      ],
+      "strengths": [
+        "finds_holes_in_zones",
+        "route_adjustments_built_in",
+        "five_receiver_options",
+        "intelligent_route_concepts"
+      ],
+      "weaknesses": [
+        "requires_route_adjustment_skills",
+        "vulnerable_to_man_coverage",
+        "no_protection_help",
+        "can_be_robbed"
+      ]
+    },
+    "flood_empty": {
+      "name": "Flood (Empty)",
+      "concept": "Overload one side with multiple receivers at different levels",
+      "routes": {
+        "receiver_1": "comeback_route_16_yards",
+        "receiver_2": "out_route_12_yards",
+        "receiver_3": "arrow_route_8_yards",
+        "receiver_4": "speed_out_4_yards",
+        "receiver_5": "fade_route_backside_20_yards"
+      },
+      "protection": "5_man_protection_slide_away",
+      "target_yards": 10,
+      "time_to_throw": "quick_to_intermediate",
+      "best_against": [
+        "man_coverage_flood_overload",
+        "cover_3_zone_one_side_stress",
+        "single_safety_help",
+        "aggressive_press_coverage"
+      ],
+      "worst_against": [
+        "cover_2_zone_flood_side_help",
+        "robber_coverage_flood_routes",
+        "bracket_coverage_flood_side",
+        "zone_coverage_flood_awareness"
+      ],
+      "strengths": [
+        "overloads_one_side",
+        "multiple_levels_flood_side",
+        "backside_fade_option",
+        "forces_coverage_decisions"
+      ],
+      "weaknesses": [
+        "vulnerable_to_robber",
+        "can_be_bracketed",
+        "no_protection_help",
+        "limited_vs_zone_help"
+      ]
+    }
+  },
+  "running_plays": {
+    "qb_draw_empty": {
+      "name": "QB Draw (Empty)",
+      "concept": "Quarterback draws through rush lanes while receivers run routes",
+      "blocking_scheme": "qb_draw_five_man_line",
+      "ball_carrier": "quarterback",
+      "lead_blocker": "none",
+      "target_gap": "varies_qb_read",
+      "target_yards": 8,
+      "best_against": [
+        "aggressive_pass_rush",
+        "cover_0_empty_focused",
+        "obvious_passing_situations",
+        "all_out_blitz_packages"
+      ],
+      "worst_against": [
+        "spy_linebacker_on_qb",
+        "disciplined_rush_lanes",
+        "interior_pressure",
+        "qb_contain_concepts"
+      ],
+      "strengths": [
+        "completely_unexpected",
+        "receivers_sell_pass",
+        "exploits_aggressive_rush",
+        "quarterback_athleticism"
+      ],
+      "weaknesses": [
+        "quarterback_injury_risk",
+        "vulnerable_to_spy",
+        "no_lead_blocking",
+        "requires_athletic_qb"
+      ]
+    },
+    "qb_sneak_empty": {
+      "name": "QB Sneak (Empty)",
+      "concept": "Quarterback sneak from empty formation for short yardage",
+      "blocking_scheme": "qb_sneak_five_man_surge",
+      "ball_carrier": "quarterback",
+      "lead_blocker": "center_and_guards",
+      "target_gap": "A_gap",
+      "target_yards": 1,
+      "best_against": [
+        "empty_coverage_surprised",
+        "defensive_backs_in_coverage",
+        "obvious_passing_situation",
+        "goal_line_pass_defense"
+      ],
+      "worst_against": [
+        "goal_line_defense",
+        "heavy_box_short_yardage",
+        "a_gap_blitz_packages",
+        "penetrating_nose_tackle"
+      ],
+      "strengths": [
+        "element_of_surprise",
+        "quarterback_behind_center",
+        "good_short_yardage_option",
+        "defense_not_expecting"
+      ],
+      "weaknesses": [
+        "limited_yardage_upside",
+        "quarterback_injury_risk",
+        "vulnerable_to_penetration",
+        "predictable_gap"
+      ]
+    },
+    "qb_scramble": {
+      "name": "QB Scramble",
+      "concept": "Quarterback scrambles when protection breaks down",
+      "blocking_scheme": "protection_breakdown_scramble",
+      "ball_carrier": "quarterback",
+      "lead_blocker": "none",
+      "target_gap": "any_available_gap",
+      "target_yards": 6,
+      "best_against": [
+        "coverage_sacks_developing",
+        "long_developing_routes",
+        "tight_coverage_everywhere",
+        "broken_down_protection"
+      ],
+      "worst_against": [
+        "spy_linebacker_on_qb",
+        "disciplined_rush_lanes",
+        "contain_rush_concepts",
+        "defensive_end_containment"
+      ],
+      "strengths": [
+        "extends_broken_plays",
+        "quarterback_athleticism",
+        "improvisational_element",
+        "can_create_big_plays"
+      ],
+      "weaknesses": [
+        "quarterback_injury_risk",
+        "vulnerable_to_spy",
+        "unpredictable_outcome",
+        "requires_mobile_qb"
+      ]
+    },
+    "fake_spike": {
+      "name": "Fake Spike",
+      "concept": "Quarterback fakes spike then runs or throws",
+      "blocking_scheme": "fake_spike_protection",
+      "ball_carrier": "quarterback_or_receiver",
+      "lead_blocker": "none",
+      "target_gap": "varies_fake_spike_action",
+      "target_yards": 5,
+      "best_against": [
+        "defense_expecting_spike",
+        "clock_management_situations",
+        "end_of_half_defense",
+        "prevent_defense_relaxed"
+      ],
+      "worst_against": [
+        "disciplined_defense",
+        "timeout_available",
+        "defense_not_expecting_spike",
+        "spy_linebacker_aware"
+      ],
+      "strengths": [
+        "element_of_complete_surprise",
+        "defense_relaxed",
+        "clock_management_deception",
+        "can_be_huge_play"
+      ],
+      "weaknesses": [
+        "one_time_use_per_game",
+        "requires_specific_situation",
+        "quarterback_injury_risk",
+        "can_backfire_spectacularly"
+      ]
+    },
+    "wildcat_direct": {
+      "name": "Wildcat Direct",
+      "concept": "Direct snap to receiver from empty formation",
+      "blocking_scheme": "wildcat_from_empty",
+      "ball_carrier": "receiver_taking_direct_snap",
+      "lead_blocker": "other_receivers_blocking",
+      "target_gap": "varies_receiver_read",
+      "target_yards": 7,
+      "best_against": [
+        "defense_not_expecting_run",
+        "empty_coverage_focused",
+        "obvious_passing_situations",
+        "cover_0_all_coverage"
+      ],
+      "worst_against": [
+        "disciplined_run_defense",
+        "spy_linebacker",
+        "penetrating_defensive_line",
+        "gap_control_defense"
+      ],
+      "strengths": [
+        "completely_unexpected",
+        "speed_to_edge",
+        "multiple_receiver_options",
+        "element_of_surprise"
+      ],
+      "weaknesses": [
+        "requires_special_practice",
+        "receiver_injury_risk",
+        "vulnerable_to_penetration",
+        "limited_blocking"
+      ]
+    }
+  },
+  "formation_strengths": [
+    "five_receiver_threats",
+    "forces_defense_to_declare_coverage",
+    "excellent_vs_pressure",
+    "maximum_route_combinations",
+    "ultimate_passing_formation",
+    "no_run_fake_possible"
+  ],
+  "formation_weaknesses": [
+    "no_protection_help",
+    "vulnerable_to_interior_pressure",
+    "no_running_game_threat",
+    "quarterback_exposed",
+    "predictable_pass_only",
+    "requires_perfect_timing"
+  ],
+  "optimal_situations": [
+    "obvious_passing_downs",
+    "two_minute_drill",
+    "third_and_long",
+    "vs_heavy_blitz",
+    "comeback_situations",
+    "hail_mary_attempts"
+  ],
+  "vulnerable_to": [
+    "interior_pressure_rush",
+    "spy_linebacker_concepts",
+    "robber_coverage_routes",
+    "aggressive_man_coverage",
+    "disciplined_rush_lanes",
+    "defensive_line_dominance"
+  ]
+}
