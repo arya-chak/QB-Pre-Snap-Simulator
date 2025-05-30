@@ -18,7 +18,7 @@ from comprehensive_play_simulator import ComprehensivePlaySimulator
 
 # Page configuration
 st.set_page_config(
-    page_title="QB Pre-Snap Decision Simulator",
+    page_title="QB Pre-Snap Simulator",
     page_icon="🏈",
     layout="wide",
     initial_sidebar_state="expanded"
