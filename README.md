@@ -1,6 +1,26 @@
 # QB-Pre-Snap-Simulator
 A simulator/tester for quarterbacks to see if they can call the correct play based on what the defense gives them pre-snap.
 
+7 formations for offense and defense!
+
+Offense:
+1. I-Formation
+2. Singleback
+3. Shotgun
+4. Trips
+5. Bunch
+6. Empty
+7. Goal Line
+
+Defense:
+1. 3-4
+2. 4-3
+3. 4-4
+4. 5-2
+5. 46
+6. Dime
+7. Nickel
+
 Will be adding:
 1. X's and O's visuals for offense and defense
 2. Mode where you are given 5 plays that could work instead of going through entire playbook
