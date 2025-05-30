@@ -28,3 +28,4 @@ Will be adding:
 1. X's and O's visuals for offense and defense
 2. Mode where you are given 5 plays that could work instead of going through entire playbook
 3. Ability to call audible, motions, hot routes, and change other aspects of the play before snapping the ball
+4. Ability to rank recivers in order of progression that qb wants to throw to before the snap
