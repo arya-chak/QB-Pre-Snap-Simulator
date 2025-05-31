@@ -4,6 +4,7 @@ Author: Arya Chakraborty
 
 Comprehensive library for viewing all offensive and defensive formations and plays.
 Displays detailed information from JSON files in an organized, searchable format.
+Now includes visual field representations for defensive formations.
 """
 
 import streamlit as st
@@ -11,10 +12,11 @@ from defense_engine import DefenseEngine
 from offense_engine import OffenseEngine
 
 class LibraryBrowser:
-    def __init__(self, defense_engine, offense_engine):
-        """Initialize library with loaded engines"""
+    def __init__(self, defense_engine, offense_engine, field_visualizer=None):
+        """Initialize library with loaded engines and optional field visualizer"""
         self.defense_engine = defense_engine
         self.offense_engine = offense_engine
+        self.field_visualizer = field_visualizer
     
     def display_offensive_library(self):
         """Display comprehensive offensive formations and plays"""
@@ -184,7 +186,7 @@ class LibraryBrowser:
                             st.write(f"• {weakness.replace('_', ' ').title()}")
     
     def display_defensive_library(self):
-        """Display comprehensive defensive formations and coverages"""
+        """Display comprehensive defensive formations and coverages with visual representations"""
         st.markdown("## 🛡️ Defensive Formations Library")
         st.markdown("*Explore all defensive formations and their coverage packages in detail*")
         
@@ -205,11 +207,45 @@ class LibraryBrowser:
             self._display_defensive_formation_details(selected_formation)
     
     def _display_defensive_formation_details(self, formation_name):
-        """Display detailed information about a defensive formation"""
+        """Display detailed information about a defensive formation with visual representation"""
         formation_data = self.defense_engine.formations[formation_name]
         
         # Formation header
         st.markdown(f"### {formation_data['formation_name']}")
+        
+        # Show formation visual if field visualizer is available
+        if self.field_visualizer:
+            st.markdown("#### 🏈 Formation Visual")
+            
+            # Default to base coverage for initial display
+            default_coverage = list(formation_data['coverages'].keys())[0]
+            default_coverage_name = formation_data['coverages'][default_coverage]['name']
+            
+            # Set default yards to go for library viewing
+            self.field_visualizer.update_yards_to_go(10)
+            
+            field_display, legend = self.field_visualizer.display_defensive_formation(
+                formation_name, default_coverage_name
+            )
+            
+            # Display field visual and legend side by side
+            vis_col1, vis_col2 = st.columns([3, 1])
+            
+            with vis_col1:
+                st.markdown(field_display)
+            
+            with vis_col2:
+                st.markdown("**Legend:**")
+                for category, symbols in legend.items():
+                    st.write(f"**{category}:** {symbols}")
+                
+                st.markdown("**Field Markers:**")
+                st.write("**─** = Line of Scrimmage")
+                st.write("**═** = First Down Marker")
+                st.write("**|** = 5-yard markers")
+                st.write("**.** = Hash marks")
+            
+            st.divider()
         
         # Basic formation info
         col1, col2 = st.columns(2)
@@ -238,11 +274,32 @@ class LibraryBrowser:
         )
         
         if selected_coverage:
-            self._display_coverage_details(formation_data['coverages'][selected_coverage])
+            self._display_coverage_details(formation_data['coverages'][selected_coverage], formation_name)
     
-    def _display_coverage_details(self, coverage_data):
-        """Display detailed coverage information"""
+    def _display_coverage_details(self, coverage_data, formation_name):
+        """Display detailed coverage information with visual representation"""
         st.markdown(f"#### {coverage_data['name']}")
+        
+        # Show coverage visual if field visualizer is available
+        if self.field_visualizer:
+            # Update visual to show this specific coverage
+            field_display, legend = self.field_visualizer.display_defensive_formation(
+                formation_name, coverage_data['name']
+            )
+            
+            # Display updated visual
+            vis_col1, vis_col2 = st.columns([3, 1])
+            
+            with vis_col1:
+                st.markdown("**🏈 Coverage Visual**")
+                st.markdown(field_display)
+            
+            with vis_col2:
+                st.markdown("**Legend:**")
+                for category, symbols in legend.items():
+                    st.write(f"**{category}:** {symbols}")
+            
+            st.divider()
         
         # Basic coverage info
         col1, col2 = st.columns(2)
@@ -366,6 +423,31 @@ class LibraryBrowser:
         st.divider()
         st.markdown("### 📊 Formation Matchup Analysis")
         
+        # Show defensive visual if available
+        if self.field_visualizer:
+            st.markdown("#### 🛡️ Defensive Formation Visual")
+            
+            # Get default coverage for visual
+            default_coverage = list(def_data['coverages'].keys())[0]
+            default_coverage_name = def_data['coverages'][default_coverage]['name']
+            
+            self.field_visualizer.update_yards_to_go(10)
+            field_display, legend = self.field_visualizer.display_defensive_formation(
+                def_formation, default_coverage_name
+            )
+            
+            vis_col1, vis_col2 = st.columns([3, 1])
+            
+            with vis_col1:
+                st.markdown(field_display)
+            
+            with vis_col2:
+                st.markdown("**Legend:**")
+                for category, symbols in legend.items():
+                    st.write(f"**{category}:** {symbols}")
+            
+            st.divider()
+        
         col1, col2 = st.columns(2)
         
         with col1:
@@ -409,15 +491,21 @@ def main():
     # Initialize engines
     @st.cache_resource
     def load_engines():
+        from field_visualizer import FieldVisualizer
+        
         defense_engine = DefenseEngine()
         offense_engine = OffenseEngine()
         defense_engine.load_all_formations()
         offense_engine.load_all_formations()
-        return defense_engine, offense_engine
+        
+        # Create field visualizer for defensive formations
+        field_visualizer = FieldVisualizer()
+        
+        return defense_engine, offense_engine, field_visualizer
     
     try:
-        defense_engine, offense_engine = load_engines()
-        library = LibraryBrowser(defense_engine, offense_engine)
+        defense_engine, offense_engine, field_visualizer = load_engines()
+        library = LibraryBrowser(defense_engine, offense_engine, field_visualizer)
         
         # Create tabs
         off_tab, def_tab, compare_tab = st.tabs(["🏈 Offensive Library", "🛡️ Defensive Library", "⚖️ Compare Formations"])

@@ -18,6 +18,7 @@ from offense_engine import OffenseEngine
 from comprehensive_play_simulator import ComprehensivePlaySimulator
 from strategic_play_selector import StrategicPlaySelector
 from library_browser import LibraryBrowser
+from field_visualizer import FieldVisualizer
 
 # Page configuration
 st.set_page_config(
@@ -107,30 +108,58 @@ def load_engines():
     defense_engine.load_all_formations()
     offense_engine.load_all_formations()
     
-    # Create strategic selector and library
-    strategic_selector = StrategicPlaySelector(offense_engine, simulator)
-    library_browser = LibraryBrowser(defense_engine, offense_engine)
+    # Create field visualizer
+    field_visualizer = FieldVisualizer()  # No parameters needed initially
     
-    return defense_engine, offense_engine, simulator, strategic_selector, library_browser
+    # Create strategic selector and library browser with field visualizer
+    strategic_selector = StrategicPlaySelector(offense_engine, simulator)
+    library_browser = LibraryBrowser(defense_engine, offense_engine, field_visualizer)
+    
+    return defense_engine, offense_engine, simulator, strategic_selector, library_browser, field_visualizer
 
-def display_defensive_scenario(scenario):
-    """Display the defensive scenario in a nice format"""
+
+def display_defensive_scenario(scenario, field_visualizer, minimum_yards=10):
+    """Display the defensive scenario with visual field representation"""
     st.markdown('<div class="scenario-box">', unsafe_allow_html=True)
     
-    col1, col2 = st.columns(2)
+    # Update the field visualizer with yards to go
+    field_visualizer.update_yards_to_go(minimum_yards)
+    
+    # Create two columns - field visual and details
+    col1, col2 = st.columns([2, 1])
     
     with col1:
-        st.markdown("**🛡️ Defensive Formation**")
+        st.markdown("**🛡️ Defensive Formation Visual**")
+        
+        # Get the formation name for visualization
+        formation_name = scenario['formation_name']
+        coverage_name = scenario['coverage_data']['name']
+        
+        # Display the field visualization with dynamic field position
+        field_display, legend = field_visualizer.display_defensive_formation(formation_name, coverage_name)
+        st.markdown(field_display)
+    
+    with col2:
+        st.markdown("**📋 Formation Details**")
         st.write(f"**Formation:** {scenario['formation_data']['formation_name']}")
         st.write(f"**Personnel:** {scenario['formation_data']['personnel']}")
         st.write(f"**Coverage:** {scenario['coverage_data']['name']}")
         st.write(f"**Type:** {scenario['coverage_data']['coverage_type'].title()}")
-    
-    with col2:
+        
         st.markdown("**🔥 Pressure Package**")
         st.write(f"**Blitz:** {scenario['blitz_data']['name']}")
         st.write(f"**Rushers:** {scenario['blitz_data']['rushers']}")
         st.write(f"**Adjustment:** {scenario['blitz_data']['coverage_adjustment'].replace('_', ' ').title()}")
+        
+        st.markdown("**Legend:**")
+        for category, symbols in legend.items():
+            st.write(f"**{category}:** {symbols}")
+        
+        st.markdown("**Field Markers:**")
+        st.write("**─** = Line of Scrimmage")
+        st.write("**═** = First Down Marker")
+        st.write("**|** = 5-yard markers")
+        st.write("**.** = Hash marks")
     
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -450,12 +479,13 @@ def main():
     try:
         if not st.session_state.engines_loaded:
             with st.spinner("Loading defensive and offensive formations..."):
-                defense_engine, offense_engine, simulator, strategic_selector, library_browser = load_engines()
+                defense_engine, offense_engine, simulator, strategic_selector, library_browser, field_visualizer = load_engines()
                 st.session_state.defense_engine = defense_engine
                 st.session_state.offense_engine = offense_engine
                 st.session_state.simulator = simulator
                 st.session_state.strategic_selector = strategic_selector
                 st.session_state.library_browser = library_browser
+                st.session_state.field_visualizer = field_visualizer
                 st.session_state.engines_loaded = True
                 st.success("✅ All formations loaded successfully!")
         
@@ -464,6 +494,7 @@ def main():
         simulator = st.session_state.simulator
         strategic_selector = st.session_state.strategic_selector
         library_browser = st.session_state.library_browser
+        field_visualizer = st.session_state.field_visualizer
         
     except Exception as e:
         st.error(f"❌ Error loading formations: {e}")
@@ -535,7 +566,7 @@ def main():
     
     # Display defensive scenario
     st.markdown("## 🛡️ Defensive Scenario")
-    display_defensive_scenario(scenario)
+    display_defensive_scenario(scenario, field_visualizer, minimum_yards)  # Pass minimum_yards here
     
     # Display yards needed
     display_yards_needed(minimum_yards)
