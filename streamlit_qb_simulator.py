@@ -15,6 +15,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from defense_engine import DefenseEngine
 from offense_engine import OffenseEngine
 from comprehensive_play_simulator import ComprehensivePlaySimulator
+from strategic_play_selector import StrategicPlaySelector
 
 # Page configuration
 st.set_page_config(
