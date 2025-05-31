@@ -2,7 +2,7 @@
 
 Streamlit app: https://qb-pre-snap-simulator.streamlit.app/
 
-"Most quarterbacks aren't playing the game like that anymore. They're fast when they get out of the pocket when they have to make decisions, but I didn't snap the ball unless I knew what they were doing, and if my guys were going to be open. The one benefit you have as a quarterback before you snap the ball, you know where everybody on your team is running." - Tom Brady
+"I could figure out what they were doing before they did it because that's how I learned the game... Unfortunately, most quarterbacks aren't playing the game like that anymore. They're fast when they get out of the pocket when they have to make decisions, but I didn't snap the ball unless I knew what they were doing... The one benefit you have as a quarterback before you snap the ball, you know where everybody on your team is running... If I look at the defense and I say 'None of my guys are going to be open based on this coverage', I don't need to snap the ball. I can run something different." - Tom Brady
 
 A simulator/tester for quarterbacks to see if they can call the correct play based on what the defense gives them pre-snap.
 
