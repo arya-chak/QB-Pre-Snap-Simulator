@@ -77,9 +77,11 @@ if 'current_scenario' not in st.session_state:
 if 'minimum_yards' not in st.session_state:
     st.session_state.minimum_yards = None
 if 'game_mode' not in st.session_state:
-    st.session_state.game_mode = 'strategic'  # 'strategic' or 'browse'
+    st.session_state.game_mode = 'learner'  # 'learner' or 'pro'
 if 'strategic_plays' not in st.session_state:
     st.session_state.strategic_plays = None
+if 'shuffled_play_order' not in st.session_state:
+    st.session_state.shuffled_play_order = None
 if 'game_stats' not in st.session_state:
     st.session_state.game_stats = {
         'total_plays': 0,
@@ -134,41 +136,46 @@ def display_yards_needed(yards):
     </div>
     """, unsafe_allow_html=True)
 
-def display_strategic_plays(strategic_result, simulator, scenario, minimum_yards):
-    """Display the 5 strategic play options with risk/reward info"""
+def display_learner_mode_plays(strategic_result, simulator, scenario, minimum_yards):
+    """Display the 5 plays without revealing appropriateness - for learning"""
     
-    st.markdown("### ⚡ Strategic Play Selection")
-    st.markdown("*Choose from 5 plays representing different risk/reward levels:*")
+    st.markdown("### 🎓 Learner Mode - Choose Your Play")
+    st.markdown("*5 plays have been selected for this scenario. Make your decision based on the defense you see:*")
     
-    # Display selection info
+    # Display selection info without revealing categories
     col1, col2 = st.columns(2)
     with col1:
-        st.metric("Total Plays Analyzed", strategic_result['total_plays_evaluated'])
+        st.metric("Plays Available", "5")
     with col2:
         st.metric("Formation Variety", strategic_result['diversity_info']['formation_diversity'])
     
-    # Create play option cards
+    # Create a list of plays without revealing their categories
     strategic_plays = strategic_result['strategic_plays']
     
-    # Risk level colors
-    risk_colors = {
-        'Perfect': '🎯',
-        'Good': '✅', 
-        'Average': '⚖️',
-        'Poor': '⚠️',
-        'Terrible': '❌'
-    }
+    # Create shuffled order only once and store in session state
+    if st.session_state.shuffled_play_order is None:
+        play_options = []
+        for category, play_eval in strategic_plays.items():
+            if play_eval:
+                play_options.append(play_eval)
+        
+        # Shuffle once and store
+        import random
+        random.shuffle(play_options)
+        st.session_state.shuffled_play_order = play_options
     
-    for i, (category, play_eval) in enumerate(strategic_plays.items(), 1):
+    # Use the stored shuffled order
+    play_options = st.session_state.shuffled_play_order
+    
+    for i, play_eval in enumerate(play_options, 1):
         if play_eval:
             # Format play for display
             from strategic_play_selector import StrategicPlaySelector
             temp_selector = StrategicPlaySelector(None, None)
             formatted_play = temp_selector.format_play_for_display(play_eval)
             
-            emoji = risk_colors.get(category, '❓')
-            
-            with st.expander(f"{emoji} Option {i}: {formatted_play['name']} ({category})", expanded=False):
+            # NO appropriateness indicators - just the play info
+            with st.expander(f"Option {i}: {formatted_play['name']}", expanded=False):
                 
                 col1, col2 = st.columns([2, 1])
                 
@@ -187,31 +194,15 @@ def display_strategic_plays(strategic_result, simulator, scenario, minimum_yards
                         st.markdown(f"**Ball Carrier:** {formatted_play.get('ball_carrier', 'N/A')}")
                 
                 with col2:
-                    st.metric("Success Rate", formatted_play['success_rate'])
-                    
-                    # Color-coded risk level
-                    if category == 'Perfect':
-                        st.success("Low Risk, High Reward")
-                    elif category == 'Good':
-                        st.success("Low Risk, Good Reward")
-                    elif category == 'Average':
-                        st.warning("Moderate Risk/Reward")
-                    elif category == 'Poor':
-                        st.warning("High Risk, Low Reward")
-                    elif category == 'Terrible':
-                        st.error("Very High Risk")
+                    # NO success rate shown in learner mode
+                    st.markdown("**Make your read!**")
+                    st.markdown("*Trust your instincts based on what you see in the defense.*")
                 
-                st.markdown(f"*{formatted_play['risk_level']}*")
-                
-                # Selection button
-                if st.button(f"Select {formatted_play['name']}", key=f"strategic_{category}_{i}"):
+                # Selection button with stable key
+                if st.button(f"Call {formatted_play['name']}", key=f"learner_stable_{i}_{formatted_play['name'].replace(' ', '_')}"):
                     return formatted_play['full_data']
-        else:
-            # No play available for this category
-            st.info(f"❓ Option {i}: No {category} play available against this defense")
     
     return None
-
 def display_play_selection(offense_engine, formation_name):
     """Display plays from selected formation"""
     plays = offense_engine.get_formation_plays(formation_name)
@@ -361,7 +352,7 @@ def main():
     """Main Streamlit app"""
     
     # Header
-    st.markdown('<h1 class="main-header">🏈 QB Pre-Snap Decision Simulator</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">🏈 QB Pre-Snap Simulator</h1>', unsafe_allow_html=True)
     st.markdown("**Test your quarterback decision-making skills by reading defenses and calling the right plays!**")
     
     # Load engines
@@ -392,21 +383,22 @@ def main():
     # Game mode selection
     game_mode = st.sidebar.radio(
         "Choose Game Mode:",
-        ["⚡ Strategic Selection (5 Plays)", "📋 Browse Playbook"],
+        ["🎓 Learner Mode (5 Plays)", "⚡ Pro Mode (Full Playbook)"],
         key="game_mode_radio"
     )
     
     # Update session state based on selection
-    if "Strategic" in game_mode:
-        st.session_state.game_mode = 'strategic'
+    if "Learner" in game_mode:
+        st.session_state.game_mode = 'learner'
     else:
-        st.session_state.game_mode = 'browse'
+        st.session_state.game_mode = 'pro'
     
     # Generate new scenario button
     if st.sidebar.button("🎲 Generate New Scenario", type="primary"):
         st.session_state.current_scenario = defense_engine.get_random_scenario()
         st.session_state.minimum_yards = simulator.generate_minimum_yards()
         st.session_state.strategic_plays = None  # Reset strategic plays
+        st.session_state.shuffled_play_order = None  # Reset shuffled order
         st.rerun()
     
     # Display game stats
@@ -428,19 +420,19 @@ def main():
     display_yards_needed(minimum_yards)
     
     # Different UI based on game mode
-    if st.session_state.game_mode == 'strategic':
-        # Strategic 5-play selection mode
-        st.markdown("## ⚡ Strategic Play Selection Mode")
-        st.markdown("*The system has analyzed all plays and selected 5 options representing different risk/reward levels.*")
+    if st.session_state.game_mode == 'learner':
+        # Learner mode - 5 plays without appropriateness revealed
+        st.markdown("## 🎓 Learner Mode")
+        st.markdown("*Read the defense and make your call. You'll learn if it was a good choice after the play!*")
         
         # Generate strategic plays if not already done
         if st.session_state.strategic_plays is None:
-            with st.spinner("Analyzing all plays against this defense..."):
+            with st.spinner("Preparing 5 plays for this scenario..."):
                 strategic_result = strategic_selector.get_strategic_play_selection(scenario, minimum_yards)
                 st.session_state.strategic_plays = strategic_result
         
-        # Display strategic options
-        selected_play_data = display_strategic_plays(
+        # Display learner mode options (no appropriateness shown)
+        selected_play_data = display_learner_mode_plays(
             st.session_state.strategic_plays, 
             simulator, 
             scenario, 
@@ -448,28 +440,46 @@ def main():
         )
         
         if selected_play_data:
-            # Run simulation with selected strategic play
+            # Run simulation with selected play
             with st.spinner("Simulating play..."):
                 result = simulator.simulate_play(scenario, selected_play_data, minimum_yards)
             
-            # Display results
-            st.markdown("## 📊 Play Result")
+            # Display results with LEARNING feedback
+            st.markdown("## 📊 Play Result & Learning")
             display_result(result)
+            
+            # REVEAL the appropriateness after the play
+            st.markdown("### 🧑‍🏫 Learning Analysis")
+            appropriateness = result['appropriateness_category']
+            
+            if appropriateness == 'Perfect':
+                st.success("📚 **EXCELLENT READ!** 🎯 This was a Perfect call - you correctly identified and exploited a weakness in this defense!")
+            elif appropriateness == 'Good':
+                st.success("📚 **GOOD READ!** ✅ This was a solid choice that worked well against this defensive setup.")
+            elif appropriateness == 'Average':
+                st.info("📚 **DECENT READ** ⚖️ This was an Average call - not bad, but there were better options available against this defense.")
+            elif appropriateness == 'Poor':
+                st.warning("📚 **LEARNING MOMENT** ⚠️ This was a Poor choice - the defense had advantages. Study what they were showing!")
+            elif appropriateness == 'Terrible':
+                st.error("📚 **TOUGH LESSON** ❌ This was a Terrible call - this defense was set up perfectly to stop that play. Learn from this!")
+            elif appropriateness == 'Overkill':
+                st.info("📚 **CREATIVE CHOICE** 🚀 This was Overkill - it worked but was more complex than needed for this situation.")
             
             # Update stats
             update_game_stats(result)
             
             # Option to play again
-            if st.button("🔄 Play Another Scenario", type="secondary"):
+            if st.button("🔄 Try Again", type="secondary"):
                 st.session_state.current_scenario = defense_engine.get_random_scenario()
                 st.session_state.minimum_yards = simulator.generate_minimum_yards()
                 st.session_state.strategic_plays = None
+                st.session_state.shuffled_play_order = None  # Reset shuffled order
                 st.rerun()
     
-    else:
-        # Original browse playbook mode
-        st.markdown("## 📋 Browse Playbook Mode")
-        st.markdown("*Browse through formations and select any play you want.*")
+    elif st.session_state.game_mode == 'pro':
+        # Pro mode - full playbook access
+        st.markdown("## ⚡ Pro Mode")
+        st.markdown("*Full playbook access - browse through all formations and plays.*")
         
         # Formation selection
         st.markdown("### ⚔️ Select Your Formation")
@@ -519,10 +529,11 @@ def main():
                 update_game_stats(result)
                 
                 # Option to play again
-                if st.button("🔄 Play Another Scenario", type="secondary"):
+                if st.button("🔄 Try Again", type="secondary"):
                     st.session_state.current_scenario = defense_engine.get_random_scenario()
                     st.session_state.minimum_yards = simulator.generate_minimum_yards()
                     st.session_state.strategic_plays = None
+                    st.session_state.shuffled_play_order = None  # Reset shuffled order
                     st.rerun()
 
 if __name__ == "__main__":
