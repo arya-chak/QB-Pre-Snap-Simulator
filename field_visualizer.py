@@ -278,10 +278,14 @@ class FieldVisualizer:
         
         return field
     
-    def render_field(self, field, formation_name, coverage_name="Base Coverage"):
-        """Render the field as text with labels and yards to go info"""
-        field_text = f"**{formation_name} - {coverage_name}**\n"
-        field_text += f"*{self.yards_to_go} yards to go*\n\n"
+    def render_field(self, field, formation_name, coverage_name="Base Coverage", show_labels=True):
+        """Render the field as text with optional labels and yards to go info"""
+        if show_labels:
+            field_text = f"**{formation_name} - {coverage_name}**\n"
+            field_text += f"*{self.yards_to_go} yards to go*\n\n"
+        else:
+            field_text = f"**Defensive Formation**\n"
+            field_text += f"*{self.yards_to_go} yards to go*\n\n"
         field_text += "```\n"
         
         # Add yard markers
@@ -352,8 +356,8 @@ class FieldVisualizer:
         
         return legends.get(formation_name, legends["4-3"])
     
-    def display_defensive_formation(self, formation_name, coverage_name="Base Coverage"):
-        """Main function to display a defensive formation with yards to go"""
+    def display_defensive_formation(self, formation_name, coverage_name="Base Coverage", show_labels=True):
+        """Main function to display a defensive formation with optional labels"""
         # Create empty field
         field = self.create_empty_field()
         
@@ -363,8 +367,8 @@ class FieldVisualizer:
         # Place defenders
         field = self.place_defenders(field, alignment)
         
-        # Render field
-        field_display = self.render_field(field, formation_name.replace('-', ' ').title(), coverage_name)
+        # Render field with optional labels
+        field_display = self.render_field(field, formation_name.replace('-', ' ').title(), coverage_name, show_labels)
         
         # Get legend
         legend = self.get_legend(formation_name)

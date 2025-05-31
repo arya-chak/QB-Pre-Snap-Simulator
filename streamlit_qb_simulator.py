@@ -118,8 +118,20 @@ def load_engines():
     return defense_engine, offense_engine, simulator, strategic_selector, library_browser, field_visualizer
 
 
-def display_defensive_scenario(scenario, field_visualizer, minimum_yards=10):
-    """Display the defensive scenario with visual field representation"""
+def display_defensive_scenario(scenario, field_visualizer, minimum_yards=10, visibility_settings=None):
+    """Display the defensive scenario with configurable visibility based on pre-snap read settings"""
+    if visibility_settings is None:
+        visibility_settings = {
+            'formation_name': True,
+            'personnel': True,
+            'coverage_name': False,
+            'coverage_type': False,
+            'blitz_name': False,
+            'rushers': False,
+            'coverage_adjustment': False,
+            'field_visual': True
+        }
+    
     st.markdown('<div class="scenario-box">', unsafe_allow_html=True)
     
     # Update the field visualizer with yards to go
@@ -129,37 +141,76 @@ def display_defensive_scenario(scenario, field_visualizer, minimum_yards=10):
     col1, col2 = st.columns([2, 1])
     
     with col1:
-        st.markdown("**🛡️ Defensive Formation Visual**")
-        
-        # Get the formation name for visualization
-        formation_name = scenario['formation_name']
-        coverage_name = scenario['coverage_data']['name']
-        
-        # Display the field visualization with dynamic field position
-        field_display, legend = field_visualizer.display_defensive_formation(formation_name, coverage_name)
-        st.markdown(field_display)
+        if visibility_settings['field_visual']:
+            st.markdown("**🛡️ Defensive Formation Visual**")
+            
+            # Get the formation name for visualization
+            formation_name = scenario['formation_name']
+            
+            # Only show coverage name in visual if it's visible
+            if visibility_settings['coverage_name']:
+                coverage_name = scenario['coverage_data']['name']
+            else:
+                coverage_name = "Base Coverage"  # Generic name
+            
+            # Determine if we should show labels (formation/coverage names in the visual)
+            show_labels = visibility_settings['formation_name'] or visibility_settings['coverage_name']
+            
+            # Display the field visualization
+            field_display, legend = field_visualizer.display_defensive_formation(
+                formation_name, coverage_name, show_labels
+            )
+            st.markdown(field_display)
+        else:
+            st.markdown("**🛡️ Defensive Formation**")
+            st.info("🚫 Field visual disabled - You must rely on other visible information to read the defense")
     
     with col2:
-        st.markdown("**📋 Formation Details**")
-        st.write(f"**Formation:** {scenario['formation_data']['formation_name']}")
-        st.write(f"**Personnel:** {scenario['formation_data']['personnel']}")
-        st.write(f"**Coverage:** {scenario['coverage_data']['name']}")
-        st.write(f"**Type:** {scenario['coverage_data']['coverage_type'].title()}")
+        st.markdown("**📋 Defensive Information**")
         
-        st.markdown("**🔥 Pressure Package**")
-        st.write(f"**Blitz:** {scenario['blitz_data']['name']}")
-        st.write(f"**Rushers:** {scenario['blitz_data']['rushers']}")
-        st.write(f"**Adjustment:** {scenario['blitz_data']['coverage_adjustment'].replace('_', ' ').title()}")
+        # Formation name - almost always visible in real games
+        if visibility_settings['formation_name']:
+            st.write(f"**Formation:** {scenario['formation_data']['formation_name']}")
         
-        st.markdown("**Legend:**")
-        for category, symbols in legend.items():
-            st.write(f"**{category}:** {symbols}")
+        # Personnel - visible by counting players
+        if visibility_settings['personnel']:
+            st.write(f"**Personnel:** {scenario['formation_data']['personnel']}")
         
-        st.markdown("**Field Markers:**")
-        st.write("**─** = Line of Scrimmage")
-        st.write("**═** = First Down Marker")
-        st.write("**|** = 5-yard markers")
-        st.write("**.** = Hash marks")
+        # Coverage name - harder to tell pre-snap
+        if visibility_settings['coverage_name']:
+            st.write(f"**Coverage:** {scenario['coverage_data']['name']}")
+        
+        # Coverage type - requires film study/experience
+        if visibility_settings['coverage_type']:
+            st.write(f"**Type:** {scenario['coverage_data']['coverage_type'].title()}")
+        
+        if visibility_settings['blitz_name'] or visibility_settings['rushers'] or visibility_settings['coverage_adjustment']:
+            st.markdown("**🔥 Pressure Package**")
+            
+            # Blitz name - very hard to tell pre-snap
+            if visibility_settings['blitz_name']:
+                st.write(f"**Blitz:** {scenario['blitz_data']['name']}")
+            
+            # Number of rushers - somewhat visible
+            if visibility_settings['rushers']:
+                st.write(f"**Rushers:** {scenario['blitz_data']['rushers']}")
+            
+            # Coverage adjustment - nearly impossible pre-snap
+            if visibility_settings['coverage_adjustment']:
+                st.write(f"**Adjustment:** {scenario['blitz_data']['coverage_adjustment'].replace('_', ' ').title()}")
+        
+        # Always show legend if field visual is visible
+        if visibility_settings['field_visual']:
+            field_display, legend = field_visualizer.display_defensive_formation(scenario['formation_name'], "Base Coverage")
+            st.markdown("**Legend:**")
+            for category, symbols in legend.items():
+                st.write(f"**{category}:** {symbols}")
+            
+            st.markdown("**Field Markers:**")
+            st.write("**─** = Line of Scrimmage")
+            st.write("**═** = First Down Marker")
+            st.write("**|** = 5-yard markers")
+            st.write("**.** = Hash marks")
     
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -447,8 +498,129 @@ def display_game_stats():
             }
             st.rerun()
 
+def display_pre_snap_read_settings():
+    """Display pre-snap read settings in sidebar"""
+    st.sidebar.markdown("### 👁️ Pre-Snap Read Settings")
+    st.sidebar.markdown("*Control what you can see about the defense*")
+    
+    # Create difficulty presets
+    difficulty = st.sidebar.radio(
+        "**Difficulty Level:**",
+        ["👶 Rookie", "🎮 Custom", "🧠 Pro", "🔥 Elite"],
+        index=1,  # Default to Custom
+        key="difficulty_level"
+    )
+    
+    # Preset configurations
+    if difficulty == "👶 Rookie":
+        # Rookie: See almost everything (training mode)
+        visibility_settings = {
+            'formation_name': True,
+            'personnel': True,
+            'coverage_name': True,
+            'coverage_type': True,
+            'blitz_name': False,
+            'rushers': True,
+            'coverage_adjustment': False,
+            'field_visual': True
+        }
+        st.sidebar.info("🎓 **Rookie Mode:** Most information visible for learning")
+        
+    elif difficulty == "🧠 Pro":
+        # Pro: Realistic pre-snap reads
+        visibility_settings = {
+            'formation_name': True,
+            'personnel': True,
+            'coverage_name': False,
+            'coverage_type': False,
+            'blitz_name': False,
+            'rushers': False,
+            'coverage_adjustment': False,
+            'field_visual': True
+        }
+        st.sidebar.info("🏈 **Pro Mode:** Realistic pre-snap information only")
+        
+    elif difficulty == "🔥 Elite":
+        # Elite: Visual only - no text information
+        visibility_settings = {
+            'formation_name': False,
+            'personnel': False,
+            'coverage_name': False,
+            'coverage_type': False,
+            'blitz_name': False,
+            'rushers': False,
+            'coverage_adjustment': False,
+            'field_visual': True
+        }
+        st.sidebar.info("🔥 **Elite Mode:** Visual only - identify the formation and read the defense yourself!")
+        
+    else:  # Custom
+        st.sidebar.info("🎮 **Custom Mode:** Choose your own settings below")
+        
+        # Custom settings - show checkboxes
+        st.sidebar.markdown("**Visible Information:**")
+        
+        visibility_settings = {}
+        
+        # Always show field visual option first
+        visibility_settings['field_visual'] = st.sidebar.checkbox(
+            "🏈 Field Visual", 
+            value=True,
+            help="Show the X's and O's field representation"
+        )
+        
+        # Formation information (easier to see)
+        st.sidebar.markdown("**Formation Info:**")
+        visibility_settings['formation_name'] = st.sidebar.checkbox(
+            "📋 Formation Name", 
+            value=True,
+            help="Defense formation (4-3, Nickel, etc.) - usually obvious"
+        )
+        
+        visibility_settings['personnel'] = st.sidebar.checkbox(
+            "👥 Personnel Package", 
+            value=True,
+            help="Number of DBs, LBs, etc. - can count players"
+        )
+        
+        # Coverage information (harder to determine)
+        st.sidebar.markdown("**Coverage Info:**")
+        visibility_settings['coverage_name'] = st.sidebar.checkbox(
+            "🎯 Coverage Name", 
+            value=False,
+            help="Specific coverage (Cover 2, Cover 3, etc.) - hard to tell pre-snap"
+        )
+        
+        visibility_settings['coverage_type'] = st.sidebar.checkbox(
+            "🔍 Coverage Type", 
+            value=False,
+            help="Man vs Zone - requires experience to identify"
+        )
+        
+        # Blitz information (very hard to determine)
+        st.sidebar.markdown("**Pressure Info:**")
+        visibility_settings['blitz_name'] = st.sidebar.checkbox(
+            "🔥 Blitz Package", 
+            value=False,
+            help="Specific blitz name - nearly impossible to know pre-snap"
+        )
+        
+        visibility_settings['rushers'] = st.sidebar.checkbox(
+            "⚡ Number of Rushers", 
+            value=False,
+            help="How many will rush - sometimes can guess from alignment"
+        )
+        
+        visibility_settings['coverage_adjustment'] = st.sidebar.checkbox(
+            "🔄 Coverage Adjustment", 
+            value=False,
+            help="How coverage changes with blitz - impossible to know pre-snap"
+        )
+    
+    return visibility_settings
+
 def main():
-    """Main Streamlit app"""
+    """Main Streamlit app with pre-snap read settings"""
     
     # Header
     st.markdown('<h1 class="main-header">🏈 QB Pre-Snap Simulator</h1>', unsafe_allow_html=True)
@@ -528,7 +700,10 @@ def main():
         with compare_tab:
             library_browser.display_formation_comparison()
         
-        return  # Exit early for library view)
+        return  # Exit early for library view
+    
+    # Pre-Snap Read Settings (only show during game)
+    visibility_settings = display_pre_snap_read_settings()
     
     # Game mode selection
     game_mode = st.sidebar.radio(
@@ -559,14 +734,23 @@ def main():
     # Main game area
     if st.session_state.current_scenario is None:
         st.info("👆 Click 'Generate New Scenario' in the sidebar to start playing!")
+        st.markdown("### 💡 How to Use Pre-Snap Read Settings:")
+        st.markdown("""
+        - **👶 Rookie Mode:** See most defensive information (great for learning)
+        - **🎮 Custom Mode:** Choose exactly what you can see
+        - **🧠 Pro Mode:** Realistic pre-snap reads only
+        - **🔥 Elite Mode:** Minimal information - read the defense like a pro!
+        
+        **Real QBs** can usually see the formation and personnel, but coverage and blitz packages are much harder to identify before the snap!
+        """)
         return
     
     scenario = st.session_state.current_scenario
     minimum_yards = st.session_state.minimum_yards
     
-    # Display defensive scenario
+    # Display defensive scenario with visibility settings
     st.markdown("## 🛡️ Defensive Scenario")
-    display_defensive_scenario(scenario, field_visualizer, minimum_yards)  # Pass minimum_yards here
+    display_defensive_scenario(scenario, field_visualizer, minimum_yards, visibility_settings)
     
     # Display yards needed
     display_yards_needed(minimum_yards)
