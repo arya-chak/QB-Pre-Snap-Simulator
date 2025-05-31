@@ -31,4 +31,3 @@ Will be added:
 2. Ability to call audible, motions, hot routes, and change other aspects of the play before snapping the ball
 3. Ability to rank recivers in order of progression that qb wants to throw to before the snap
 4. More detailed feedback why certain plays work or do not work
-5. Library of all plays with breakdowns
