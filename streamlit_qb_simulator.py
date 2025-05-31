@@ -20,7 +20,7 @@ from strategic_play_selector import StrategicPlaySelector
 
 # Page configuration
 st.set_page_config(
-    page_title="QB Pre-Snap Decision Simulator",
+    page_title="QB Pre-Snap Simulator",
     page_icon="🏈",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -82,6 +82,10 @@ if 'strategic_plays' not in st.session_state:
     st.session_state.strategic_plays = None
 if 'shuffled_play_order' not in st.session_state:
     st.session_state.shuffled_play_order = None
+if 'play_completed' not in st.session_state:
+    st.session_state.play_completed = False
+if 'current_result' not in st.session_state:
+    st.session_state.current_result = None
 if 'game_stats' not in st.session_state:
     st.session_state.game_stats = {
         'total_plays': 0,
@@ -198,12 +202,26 @@ def display_learner_mode_plays(strategic_result, simulator, scenario, minimum_ya
                     st.markdown("**Make your read!**")
                     st.markdown("*Trust your instincts based on what you see in the defense.*")
                 
-                # Selection button with stable key
-                if st.button(f"Call {formatted_play['name']}", key=f"learner_stable_{i}_{formatted_play['name'].replace(' ', '_')}"):
-                    return formatted_play['full_data']
+                # Selection button with stable key - only show if play not completed
+                if not st.session_state.play_completed:
+                    if st.button(f"Call {formatted_play['name']}", key=f"learner_stable_{i}_{formatted_play['name'].replace(' ', '_')}"):
+                        # Run simulation immediately and store result
+                        with st.spinner("Simulating play..."):
+                            result = simulator.simulate_play(scenario, formatted_play['full_data'], minimum_yards)
+                        
+                        # Store result and mark play as completed
+                        st.session_state.current_result = result
+                        st.session_state.play_completed = True
+                        
+                        # Update stats
+                        update_game_stats(result)
+                        
+                        st.rerun()
+                else:
+                    st.info("Play completed! Choose your next action below.")
     
     return None
-def display_play_selection(offense_engine, formation_name):
+def display_play_selection(offense_engine, formation_name, simulator, scenario, minimum_yards):
     """Display plays from selected formation"""
     plays = offense_engine.get_formation_plays(formation_name)
     
@@ -231,7 +249,32 @@ def display_play_selection(offense_engine, formation_name):
                             st.write(f"• {receiver.replace('_', ' ').title()}: {route.replace('_', ' ').title()}")
                     
                     if st.button(f"Select {play['name']}", key=f"pass_{i}"):
-                        return play
+                        if not st.session_state.play_completed:
+                            # Get full play details for comprehensive analysis
+                            full_play_details = offense_engine.get_play_full_details(
+                                play['formation'], 
+                                play['key']
+                            )
+                            
+                            if full_play_details:
+                                comprehensive_play_data = {**play, **full_play_details}
+                            else:
+                                comprehensive_play_data = play
+                            
+                            # Run simulation immediately and store result
+                            with st.spinner("Simulating play..."):
+                                result = simulator.simulate_play(scenario, comprehensive_play_data, minimum_yards)
+                            
+                            # Store result and mark play as completed
+                            st.session_state.current_result = result
+                            st.session_state.play_completed = True
+                            
+                            # Update stats
+                            update_game_stats(result)
+                            
+                            st.rerun()
+                        else:
+                            st.info("Play completed! Choose your next action below.")
     
     with run_tab:
         if running_plays:
@@ -244,7 +287,32 @@ def display_play_selection(offense_engine, formation_name):
                     st.write(f"**Target Gap:** {play.get('target_gap', 'N/A').replace('_', ' ').title()}")
                     
                     if st.button(f"Select {play['name']}", key=f"run_{i}"):
-                        return play
+                        if not st.session_state.play_completed:
+                            # Get full play details for comprehensive analysis
+                            full_play_details = offense_engine.get_play_full_details(
+                                play['formation'], 
+                                play['key']
+                            )
+                            
+                            if full_play_details:
+                                comprehensive_play_data = {**play, **full_play_details}
+                            else:
+                                comprehensive_play_data = play
+                            
+                            # Run simulation immediately and store result
+                            with st.spinner("Simulating play..."):
+                                result = simulator.simulate_play(scenario, comprehensive_play_data, minimum_yards)
+                            
+                            # Store result and mark play as completed
+                            st.session_state.current_result = result
+                            st.session_state.play_completed = True
+                            
+                            # Update stats
+                            update_game_stats(result)
+                            
+                            st.rerun()
+                        else:
+                            st.info("Play completed! Choose your next action below.")
     
     return None
 
@@ -399,6 +467,8 @@ def main():
         st.session_state.minimum_yards = simulator.generate_minimum_yards()
         st.session_state.strategic_plays = None  # Reset strategic plays
         st.session_state.shuffled_play_order = None  # Reset shuffled order
+        st.session_state.play_completed = False  # Reset play completion
+        st.session_state.current_result = None  # Reset current result
         st.rerun()
     
     # Display game stats
@@ -432,17 +502,16 @@ def main():
                 st.session_state.strategic_plays = strategic_result
         
         # Display learner mode options (no appropriateness shown)
-        selected_play_data = display_learner_mode_plays(
+        display_learner_mode_plays(
             st.session_state.strategic_plays, 
             simulator, 
             scenario, 
             minimum_yards
         )
         
-        if selected_play_data:
-            # Run simulation with selected play
-            with st.spinner("Simulating play..."):
-                result = simulator.simulate_play(scenario, selected_play_data, minimum_yards)
+        # Show results if play is completed
+        if st.session_state.play_completed and st.session_state.current_result:
+            result = st.session_state.current_result
             
             # Display results with LEARNING feedback
             st.markdown("## 📊 Play Result & Learning")
@@ -465,15 +534,12 @@ def main():
             elif appropriateness == 'Overkill':
                 st.info("📚 **CREATIVE CHOICE** 🚀 This was Overkill - it worked but was more complex than needed for this situation.")
             
-            # Update stats
-            update_game_stats(result)
-            
-            # Option to play again
-            if st.button("🔄 Try Again", type="secondary"):
-                st.session_state.current_scenario = defense_engine.get_random_scenario()
-                st.session_state.minimum_yards = simulator.generate_minimum_yards()
+            # Option to try same scenario again
+            if st.button("🔄 Try This Scenario Again", type="secondary"):
                 st.session_state.strategic_plays = None
                 st.session_state.shuffled_play_order = None  # Reset shuffled order
+                st.session_state.play_completed = False  # Reset play completion
+                st.session_state.current_result = None  # Reset current result
                 st.rerun()
     
     elif st.session_state.game_mode == 'pro':
@@ -503,37 +569,20 @@ def main():
             st.write(f"*{selected_formation['description']}*")
             
             # Play selection
-            selected_play = display_play_selection(offense_engine, formation_name)
+            selected_play = display_play_selection(offense_engine, formation_name, simulator, scenario, minimum_yards)
             
-            if selected_play:
-                # Get full play details for comprehensive analysis
-                full_play_details = offense_engine.get_play_full_details(
-                    selected_play['formation'], 
-                    selected_play['key']
-                )
-                
-                if full_play_details:
-                    comprehensive_play_data = {**selected_play, **full_play_details}
-                else:
-                    comprehensive_play_data = selected_play
-                
-                # Run simulation
-                with st.spinner("Simulating play..."):
-                    result = simulator.simulate_play(scenario, comprehensive_play_data, minimum_yards)
+            # Show results if play is completed
+            if st.session_state.play_completed and st.session_state.current_result:
+                result = st.session_state.current_result
                 
                 # Display results
                 st.markdown("## 📊 Play Result")
                 display_result(result)
                 
-                # Update stats
-                update_game_stats(result)
-                
-                # Option to play again
-                if st.button("🔄 Try Again", type="secondary"):
-                    st.session_state.current_scenario = defense_engine.get_random_scenario()
-                    st.session_state.minimum_yards = simulator.generate_minimum_yards()
-                    st.session_state.strategic_plays = None
-                    st.session_state.shuffled_play_order = None  # Reset shuffled order
+                # Option to try same scenario again
+                if st.button("🔄 Try This Scenario Again", type="secondary"):
+                    st.session_state.play_completed = False  # Reset play completion
+                    st.session_state.current_result = None  # Reset current result
                     st.rerun()
 
 if __name__ == "__main__":
