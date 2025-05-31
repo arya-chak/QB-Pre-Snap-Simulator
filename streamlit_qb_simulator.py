@@ -3,6 +3,7 @@ QB Pre-Snap Simulator Streamlit App
 Author: Arya Chakraborty
 
 This is the Streamlit app for the QB Pre-Snap Simulator project so users can interact through a web interface.
+Enhanced with Strategic Play Selection Mode.
 """
 
 import streamlit as st
@@ -19,7 +20,7 @@ from strategic_play_selector import StrategicPlaySelector
 
 # Page configuration
 st.set_page_config(
-    page_title="QB Pre-Snap Simulator",
+    page_title="QB Pre-Snap Decision Simulator",
     page_icon="🏈",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -75,6 +76,10 @@ if 'current_scenario' not in st.session_state:
     st.session_state.current_scenario = None
 if 'minimum_yards' not in st.session_state:
     st.session_state.minimum_yards = None
+if 'game_mode' not in st.session_state:
+    st.session_state.game_mode = 'strategic'  # 'strategic' or 'browse'
+if 'strategic_plays' not in st.session_state:
+    st.session_state.strategic_plays = None
 if 'game_stats' not in st.session_state:
     st.session_state.game_stats = {
         'total_plays': 0,
@@ -95,7 +100,10 @@ def load_engines():
     defense_engine.load_all_formations()
     offense_engine.load_all_formations()
     
-    return defense_engine, offense_engine, simulator
+    # Create strategic selector
+    strategic_selector = StrategicPlaySelector(offense_engine, simulator)
+    
+    return defense_engine, offense_engine, simulator, strategic_selector
 
 def display_defensive_scenario(scenario):
     """Display the defensive scenario in a nice format"""
@@ -125,6 +133,84 @@ def display_yards_needed(yards):
         🎯 YOU NEED AT LEAST {yards} YARDS
     </div>
     """, unsafe_allow_html=True)
+
+def display_strategic_plays(strategic_result, simulator, scenario, minimum_yards):
+    """Display the 5 strategic play options with risk/reward info"""
+    
+    st.markdown("### ⚡ Strategic Play Selection")
+    st.markdown("*Choose from 5 plays representing different risk/reward levels:*")
+    
+    # Display selection info
+    col1, col2 = st.columns(2)
+    with col1:
+        st.metric("Total Plays Analyzed", strategic_result['total_plays_evaluated'])
+    with col2:
+        st.metric("Formation Variety", strategic_result['diversity_info']['formation_diversity'])
+    
+    # Create play option cards
+    strategic_plays = strategic_result['strategic_plays']
+    
+    # Risk level colors
+    risk_colors = {
+        'Perfect': '🎯',
+        'Good': '✅', 
+        'Average': '⚖️',
+        'Poor': '⚠️',
+        'Terrible': '❌'
+    }
+    
+    for i, (category, play_eval) in enumerate(strategic_plays.items(), 1):
+        if play_eval:
+            # Format play for display
+            from strategic_play_selector import StrategicPlaySelector
+            temp_selector = StrategicPlaySelector(None, None)
+            formatted_play = temp_selector.format_play_for_display(play_eval)
+            
+            emoji = risk_colors.get(category, '❓')
+            
+            with st.expander(f"{emoji} Option {i}: {formatted_play['name']} ({category})", expanded=False):
+                
+                col1, col2 = st.columns([2, 1])
+                
+                with col1:
+                    st.markdown(f"**Formation:** {formatted_play['formation']}")
+                    st.markdown(f"**Type:** {formatted_play['type']} - {formatted_play['concept']}")
+                    
+                    if formatted_play['type'] == 'Pass':
+                        st.markdown(f"**Protection:** {formatted_play.get('protection', 'N/A')}")
+                        if formatted_play.get('routes'):
+                            st.markdown("**Routes:**")
+                            for receiver, route in formatted_play['routes'].items():
+                                st.markdown(f"• {receiver.replace('_', ' ').title()}: {route.replace('_', ' ').title()}")
+                    else:
+                        st.markdown(f"**Blocking:** {formatted_play.get('blocking', 'N/A')}")
+                        st.markdown(f"**Ball Carrier:** {formatted_play.get('ball_carrier', 'N/A')}")
+                
+                with col2:
+                    st.metric("Success Rate", formatted_play['success_rate'])
+                    
+                    # Color-coded risk level
+                    if category == 'Perfect':
+                        st.success("Low Risk, High Reward")
+                    elif category == 'Good':
+                        st.success("Low Risk, Good Reward")
+                    elif category == 'Average':
+                        st.warning("Moderate Risk/Reward")
+                    elif category == 'Poor':
+                        st.warning("High Risk, Low Reward")
+                    elif category == 'Terrible':
+                        st.error("Very High Risk")
+                
+                st.markdown(f"*{formatted_play['risk_level']}*")
+                
+                # Selection button
+                if st.button(f"Select {formatted_play['name']}", key=f"strategic_{category}_{i}"):
+                    return formatted_play['full_data']
+        else:
+            # No play available for this category
+            st.info(f"❓ Option {i}: No {category} play available against this defense")
+    
+    return None
 
 def display_play_selection(offense_engine, formation_name):
     """Display plays from selected formation"""
@@ -275,23 +361,25 @@ def main():
     """Main Streamlit app"""
     
     # Header
-    st.markdown('<h1 class="main-header">🏈 QB Pre-Snap Simulator</h1>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-header">🏈 QB Pre-Snap Decision Simulator</h1>', unsafe_allow_html=True)
     st.markdown("**Test your quarterback decision-making skills by reading defenses and calling the right plays!**")
     
     # Load engines
     try:
         if not st.session_state.engines_loaded:
             with st.spinner("Loading defensive and offensive formations..."):
-                defense_engine, offense_engine, simulator = load_engines()
+                defense_engine, offense_engine, simulator, strategic_selector = load_engines()
                 st.session_state.defense_engine = defense_engine
                 st.session_state.offense_engine = offense_engine
                 st.session_state.simulator = simulator
+                st.session_state.strategic_selector = strategic_selector
                 st.session_state.engines_loaded = True
                 st.success("✅ All formations loaded successfully!")
         
         defense_engine = st.session_state.defense_engine
         offense_engine = st.session_state.offense_engine
         simulator = st.session_state.simulator
+        strategic_selector = st.session_state.strategic_selector
         
     except Exception as e:
         st.error(f"❌ Error loading formations: {e}")
@@ -301,10 +389,24 @@ def main():
     # Sidebar controls
     st.sidebar.markdown("### 🎮 Game Controls")
     
+    # Game mode selection
+    game_mode = st.sidebar.radio(
+        "Choose Game Mode:",
+        ["⚡ Strategic Selection (5 Plays)", "📋 Browse Playbook"],
+        key="game_mode_radio"
+    )
+    
+    # Update session state based on selection
+    if "Strategic" in game_mode:
+        st.session_state.game_mode = 'strategic'
+    else:
+        st.session_state.game_mode = 'browse'
+    
     # Generate new scenario button
     if st.sidebar.button("🎲 Generate New Scenario", type="primary"):
         st.session_state.current_scenario = defense_engine.get_random_scenario()
         st.session_state.minimum_yards = simulator.generate_minimum_yards()
+        st.session_state.strategic_plays = None  # Reset strategic plays
         st.rerun()
     
     # Display game stats
@@ -325,45 +427,30 @@ def main():
     # Display yards needed
     display_yards_needed(minimum_yards)
     
-    # Formation selection
-    st.markdown("## ⚡ Select Your Formation")
-    formations = offense_engine.get_available_formations()
-    
-    formation_names = [f"{'⚡' if 'shotgun' in f['name'] else '🏃' if 'goal' in f['name'] else '⚔️'} {f['display_name']} ({f['personnel']})" 
-                      for f in formations]
-    
-    selected_formation_idx = st.selectbox(
-        "Choose your offensive formation:",
-        range(len(formations)),
-        format_func=lambda i: formation_names[i],
-        key="formation_select"
-    )
-    
-    if selected_formation_idx is not None:
-        selected_formation = formations[selected_formation_idx]
-        formation_name = selected_formation['name']
+    # Different UI based on game mode
+    if st.session_state.game_mode == 'strategic':
+        # Strategic 5-play selection mode
+        st.markdown("## ⚡ Strategic Play Selection Mode")
+        st.markdown("*The system has analyzed all plays and selected 5 options representing different risk/reward levels.*")
         
-        st.markdown(f"### {selected_formation['display_name']}")
-        st.write(f"*{selected_formation['description']}*")
+        # Generate strategic plays if not already done
+        if st.session_state.strategic_plays is None:
+            with st.spinner("Analyzing all plays against this defense..."):
+                strategic_result = strategic_selector.get_strategic_play_selection(scenario, minimum_yards)
+                st.session_state.strategic_plays = strategic_result
         
-        # Play selection
-        selected_play = display_play_selection(offense_engine, formation_name)
+        # Display strategic options
+        selected_play_data = display_strategic_plays(
+            st.session_state.strategic_plays, 
+            simulator, 
+            scenario, 
+            minimum_yards
+        )
         
-        if selected_play:
-            # Get full play details for comprehensive analysis
-            full_play_details = offense_engine.get_play_full_details(
-                selected_play['formation'], 
-                selected_play['key']
-            )
-            
-            if full_play_details:
-                comprehensive_play_data = {**selected_play, **full_play_details}
-            else:
-                comprehensive_play_data = selected_play
-            
-            # Run simulation
+        if selected_play_data:
+            # Run simulation with selected strategic play
             with st.spinner("Simulating play..."):
-                result = simulator.simulate_play(scenario, comprehensive_play_data, minimum_yards)
+                result = simulator.simulate_play(scenario, selected_play_data, minimum_yards)
             
             # Display results
             st.markdown("## 📊 Play Result")
@@ -376,7 +463,67 @@ def main():
             if st.button("🔄 Play Another Scenario", type="secondary"):
                 st.session_state.current_scenario = defense_engine.get_random_scenario()
                 st.session_state.minimum_yards = simulator.generate_minimum_yards()
+                st.session_state.strategic_plays = None
                 st.rerun()
+    
+    else:
+        # Original browse playbook mode
+        st.markdown("## 📋 Browse Playbook Mode")
+        st.markdown("*Browse through formations and select any play you want.*")
+        
+        # Formation selection
+        st.markdown("### ⚔️ Select Your Formation")
+        formations = offense_engine.get_available_formations()
+        
+        formation_names = [f"{'⚡' if 'shotgun' in f['name'] else '🏃' if 'goal' in f['name'] else '⚔️'} {f['display_name']} ({f['personnel']})" 
+                          for f in formations]
+        
+        selected_formation_idx = st.selectbox(
+            "Choose your offensive formation:",
+            range(len(formations)),
+            format_func=lambda i: formation_names[i],
+            key="formation_select"
+        )
+        
+        if selected_formation_idx is not None:
+            selected_formation = formations[selected_formation_idx]
+            formation_name = selected_formation['name']
+            
+            st.markdown(f"### {selected_formation['display_name']}")
+            st.write(f"*{selected_formation['description']}*")
+            
+            # Play selection
+            selected_play = display_play_selection(offense_engine, formation_name)
+            
+            if selected_play:
+                # Get full play details for comprehensive analysis
+                full_play_details = offense_engine.get_play_full_details(
+                    selected_play['formation'], 
+                    selected_play['key']
+                )
+                
+                if full_play_details:
+                    comprehensive_play_data = {**selected_play, **full_play_details}
+                else:
+                    comprehensive_play_data = selected_play
+                
+                # Run simulation
+                with st.spinner("Simulating play..."):
+                    result = simulator.simulate_play(scenario, comprehensive_play_data, minimum_yards)
+                
+                # Display results
+                st.markdown("## 📊 Play Result")
+                display_result(result)
+                
+                # Update stats
+                update_game_stats(result)
+                
+                # Option to play again
+                if st.button("🔄 Play Another Scenario", type="secondary"):
+                    st.session_state.current_scenario = defense_engine.get_random_scenario()
+                    st.session_state.minimum_yards = simulator.generate_minimum_yards()
+                    st.session_state.strategic_plays = None
+                    st.rerun()
 
 if __name__ == "__main__":
     main()
