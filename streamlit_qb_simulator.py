@@ -17,6 +17,7 @@ from defense_engine import DefenseEngine
 from offense_engine import OffenseEngine
 from comprehensive_play_simulator import ComprehensivePlaySimulator
 from strategic_play_selector import StrategicPlaySelector
+from library_browser import LibraryBrowser
 
 # Page configuration
 st.set_page_config(
@@ -106,10 +107,11 @@ def load_engines():
     defense_engine.load_all_formations()
     offense_engine.load_all_formations()
     
-    # Create strategic selector
+    # Create strategic selector and library
     strategic_selector = StrategicPlaySelector(offense_engine, simulator)
+    library_browser = LibraryBrowser(defense_engine, offense_engine)
     
-    return defense_engine, offense_engine, simulator, strategic_selector
+    return defense_engine, offense_engine, simulator, strategic_selector, library_browser
 
 def display_defensive_scenario(scenario):
     """Display the defensive scenario in a nice format"""
@@ -421,17 +423,39 @@ def main():
     
     # Header
     st.markdown('<h1 class="main-header">🏈 QB Pre-Snap Simulator</h1>', unsafe_allow_html=True)
+    
+    # Tom Brady Quote
+    st.markdown("""
+    <div style="
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 5px solid #1f4e79;
+        margin: 20px 0;
+        font-style: italic;
+        text-align: center;
+    ">
+        <p style="margin: 0; font-size: 16px; color: #2c3e50; line-height: 1.6;">
+            "Most quarterbacks aren't playing the game like that anymore. They're fast when they get out of the pocket when they have to make decisions, but I didn't snap the ball unless I knew what they were doing, and if my guys were going to be open. The one benefit you have as a quarterback before you snap the ball, you know where everybody on your team is running."
+        </p>
+        <p style="margin: 10px 0 0 0; font-weight: bold; color: #1f4e79;">
+            — Tom Brady
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
     st.markdown("**Test your quarterback decision-making skills by reading defenses and calling the right plays!**")
     
     # Load engines
     try:
         if not st.session_state.engines_loaded:
             with st.spinner("Loading defensive and offensive formations..."):
-                defense_engine, offense_engine, simulator, strategic_selector = load_engines()
+                defense_engine, offense_engine, simulator, strategic_selector, library_browser = load_engines()
                 st.session_state.defense_engine = defense_engine
                 st.session_state.offense_engine = offense_engine
                 st.session_state.simulator = simulator
                 st.session_state.strategic_selector = strategic_selector
+                st.session_state.library_browser = library_browser
                 st.session_state.engines_loaded = True
                 st.success("✅ All formations loaded successfully!")
         
@@ -439,6 +463,7 @@ def main():
         offense_engine = st.session_state.offense_engine
         simulator = st.session_state.simulator
         strategic_selector = st.session_state.strategic_selector
+        library_browser = st.session_state.library_browser
         
     except Exception as e:
         st.error(f"❌ Error loading formations: {e}")
@@ -447,6 +472,32 @@ def main():
     
     # Sidebar controls
     st.sidebar.markdown("### 🎮 Game Controls")
+    
+    # Navigation
+    page = st.sidebar.radio(
+        "Choose Section:",
+        ["🎯 Play Game", "📚 Formation Library"],
+        key="navigation_radio"
+    )
+    
+    if page == "📚 Formation Library":
+        # Display library
+        st.markdown('<h1 class="main-header">📚 Formation Library</h1>', unsafe_allow_html=True)
+        st.markdown("**Explore all offensive and defensive formations, plays, and coverage packages in detail**")
+        
+        # Create tabs for library
+        off_tab, def_tab, compare_tab = st.tabs(["🏈 Offensive Library", "🛡️ Defensive Library", "⚖️ Compare Formations"])
+        
+        with off_tab:
+            library_browser.display_offensive_library()
+        
+        with def_tab:
+            library_browser.display_defensive_library()
+        
+        with compare_tab:
+            library_browser.display_formation_comparison()
+        
+        return  # Exit early for library view)
     
     # Game mode selection
     game_mode = st.sidebar.radio(
