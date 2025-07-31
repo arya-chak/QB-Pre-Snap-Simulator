@@ -1,0 +1,251 @@
+"""
+FastAPI Backend for QB Pre-Snap Simulator Mobile App
+Author: Arya Chakraborty
+
+This API serves your existing Python logic to the React Native mobile app.
+"""
+
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from typing import Dict, List, Optional, Any
+import sys
+import os
+
+# Add the current directory to the path so we can import our engines
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from defense_engine import DefenseEngine
+from offense_engine import OffenseEngine
+from comprehensive_play_simulator import ComprehensivePlaySimulator
+from strategic_play_selector import StrategicPlaySelector
+
+# Initialize FastAPI app
+app = FastAPI(
+    title="QB Pre-Snap Simulator API",
+    description="API for the QB Pre-Snap Simulator mobile app",
+    version="1.0.0"
+)
+
+# Add CORS middleware to allow requests from mobile app
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, specify your mobile app's domain
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Initialize engines
+defense_engine = DefenseEngine()
+offense_engine = OffenseEngine()
+simulator = ComprehensivePlaySimulator()
+strategic_selector = None  # Will be initialized after engines load
+
+# Load all data on startup
+@app.on_event("startup")
+async def startup_event():
+    """Load all formation data when the API starts"""
+    global strategic_selector
+    try:
+        defense_engine.load_all_formations()
+        offense_engine.load_all_formations()
+        
+        # Initialize strategic selector after engines are loaded
+        strategic_selector = StrategicPlaySelector(offense_engine, simulator)
+        
+        print("✅ All formations loaded successfully!")
+        print("✅ Strategic Play Selector initialized!")
+    except Exception as e:
+        print(f"❌ Error loading formations: {e}")
+
+# Pydantic models for request/response
+class PlaySimulationRequest(BaseModel):
+    offensive_play: Dict
+    defensive_scenario: Dict
+    minimum_yards: int
+
+class StrategicPlaysRequest(BaseModel):
+    scenario: Dict[str, Any]
+    minimum_yards: int
+
+class PlayResult(BaseModel):
+    success: bool
+    yards_gained: int
+    outcome_type: str
+    appropriateness_category: str
+    description: str
+
+# API Endpoints
+
+@app.get("/")
+async def root():
+    """Health check endpoint"""
+    return {
+        "message": "QB Pre-Snap Simulator API is running!",
+        "version": "1.0.0",
+        "status": "healthy"
+    }
+
+@app.get("/api/defensive-scenario")
+async def get_random_defensive_scenario():
+    """Get a random defensive scenario"""
+    try:
+        scenario = defense_engine.get_random_scenario()
+        if not scenario:
+            raise HTTPException(status_code=500, detail="Could not generate defensive scenario")
+        
+        # Add minimum yards needed
+        minimum_yards = simulator.generate_minimum_yards()
+        
+        return {
+            "scenario": scenario,
+            "minimum_yards": minimum_yards,
+            "yard_range": simulator.determine_yard_range_category(minimum_yards)
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error generating scenario: {str(e)}")
+
+@app.get("/api/offensive-formations")
+async def get_offensive_formations():
+    """Get all available offensive formations"""
+    try:
+        formations = offense_engine.get_available_formations()
+        if not formations:
+            raise HTTPException(status_code=500, detail="No offensive formations available")
+        
+        return {"formations": formations}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error getting formations: {str(e)}")
+
+@app.get("/api/offensive-formations/{formation_name}/plays")
+async def get_formation_plays(formation_name: str):
+    """Get all plays for a specific formation"""
+    try:
+        plays = offense_engine.get_formation_plays(formation_name)
+        if not plays:
+            raise HTTPException(status_code=404, detail=f"No plays found for formation: {formation_name}")
+        
+        return {"formation": formation_name, "plays": plays}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error getting plays: {str(e)}")
+
+@app.post("/api/strategic-plays")
+async def get_strategic_plays(request: StrategicPlaysRequest):
+    """Get 5 strategic plays for learner mode"""
+    try:
+        if strategic_selector is None:
+            raise HTTPException(status_code=500, detail="Strategic selector not initialized")
+        
+        # Use the strategic selector to get 5 plays
+        strategic_result = strategic_selector.get_strategic_play_selection(
+            request.scenario, 
+            request.minimum_yards
+        )
+        
+        # ADD DEBUG LOGGING
+        print(f"\n🎯 Strategic Play Selection Debug:")
+        print(f"Defense: {request.scenario.get('formation_data', {}).get('formation_name')} - {request.scenario.get('coverage_data', {}).get('name')}")
+        print(f"Minimum Yards: {request.minimum_yards}")
+        print(f"Category counts: {strategic_result['category_counts']}")
+        
+        for category, play_eval in strategic_result['strategic_plays'].items():
+            if play_eval:
+                play_name = play_eval.get('play_data', {}).get('name', 'Unknown')
+                formation = play_eval.get('formation_name', 'Unknown')
+                appropriateness = play_eval.get('appropriateness_category', 'Unknown')
+                print(f"  {category}: {play_name} ({formation}) - {appropriateness}")
+            else:
+                print(f"  {category}: No play found")
+        
+        return {
+            "strategic_plays": strategic_result['strategic_plays'],
+            "category_counts": strategic_result['category_counts'],
+            "diversity_info": strategic_result['diversity_info'],
+            "total_plays_evaluated": strategic_result['total_plays_evaluated']
+        }
+        
+    except Exception as e:
+        print(f"❌ Strategic plays error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error generating strategic plays: {str(e)}")
+
+@app.post("/api/simulate-play")
+async def simulate_play(request: PlaySimulationRequest):
+    """Simulate a play and return the result"""
+    try:
+        # Get full play details for comprehensive analysis
+        full_play_details = offense_engine.get_play_full_details(
+            request.offensive_play.get('formation'),
+            request.offensive_play.get('key')
+        )
+        
+        if full_play_details:
+            # Merge basic play info with full details
+            comprehensive_play_data = {
+                **request.offensive_play,
+                **full_play_details
+            }
+            result = simulator.simulate_play(
+                request.defensive_scenario,
+                comprehensive_play_data,
+                request.minimum_yards
+            )
+        else:
+            # Fallback to basic play data
+            result = simulator.simulate_play(
+                request.defensive_scenario,
+                request.offensive_play,
+                request.minimum_yards
+            )
+        
+        return {
+            "success": result['overall_success'],
+            "yards_gained": result['yards_gained'],
+            "yards_needed": result['minimum_yards_needed'],
+            "outcome_type": result['outcome_type'],
+            "appropriateness_category": result['appropriateness_category'],
+            "description": result['description'],
+            "yard_range": result['yard_range'],
+            "success_rate_used": result['success_rate_used']
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error simulating play: {str(e)}")
+
+@app.get("/api/stats")
+async def get_api_stats():
+    """Get API statistics and loaded data count"""
+    try:
+        total_def_scenarios = 0
+        for formation in defense_engine.formations.values():
+            for coverage in formation["coverages"].values():
+                total_def_scenarios += len(coverage["blitz_packages"])
+        
+        total_off_plays = 0
+        for formation in offense_engine.formations.values():
+            total_off_plays += len(formation.get("passing_plays", {}))
+            total_off_plays += len(formation.get("running_plays", {}))
+        
+        return {
+            "defensive_formations": len(defense_engine.formations),
+            "offensive_formations": len(offense_engine.formations),
+            "total_defensive_scenarios": total_def_scenarios,
+            "total_offensive_plays": total_off_plays,
+            "total_possible_matchups": total_def_scenarios * total_off_plays
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error getting stats: {str(e)}")
+
+if __name__ == "__main__":
+    import uvicorn
+    
+    print("🏈 Starting QB Pre-Snap Simulator API...")
+    print("📱 This will serve data to your React Native mobile app")
+    print("🌐 API will be available at: http://localhost:8000")
+    print("📚 API documentation at: http://localhost:8000/docs")
+    
+    uvicorn.run(
+        app, 
+        host="0.0.0.0",  # Allow connections from mobile app
+        port=8000,
+        reload=True  # Auto-reload when code changes
+    )
