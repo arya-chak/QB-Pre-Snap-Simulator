@@ -1,1 +1,12 @@
+# Core dependencies
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+
+# CORS support
+python-multipart==0.0.6
+
+# Existing dependencies (if you had any)
 streamlit
+pandas
+numpy
