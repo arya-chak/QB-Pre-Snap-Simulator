@@ -235,6 +235,192 @@ async def get_api_stats():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error getting stats: {str(e)}")
 
+@app.get("/api/defensive-formation/{formation_name}/positions")
+async def get_formation_positions(formation_name: str, yards_to_go: int = 10):
+    """Get player positions for SVG field visualization"""
+    try:
+        # Import the mobile-friendly field visualizer
+        from mobile_field_visualizer import MobileFieldVisualizer
+        
+        # Create visualizer with yards to go
+        visualizer = MobileFieldVisualizer(yards_to_go=yards_to_go)
+        
+        # Get formation data
+        formation_data = visualizer.get_formation_data(formation_name)
+        
+        # Convert to mobile-friendly format with additional metadata
+        players = []
+        position_types = {
+            # Defensive Line
+            'DE_weak': {'pos': 'E', 'type': 'dline', 'label': 'Weak DE'},
+            'DE_strong': {'pos': 'E', 'type': 'dline', 'label': 'Strong DE'},
+            'DT_weak': {'pos': 'T', 'type': 'dline', 'label': 'Weak DT'},
+            'DT_strong': {'pos': 'T', 'type': 'dline', 'label': 'Strong DT'},
+            'NT': {'pos': 'N', 'type': 'dline', 'label': 'Nose Tackle'},
+            
+            # Linebackers
+            'WLB': {'pos': 'W', 'type': 'lb', 'label': 'Weak LB'},
+            'MLB': {'pos': 'M', 'type': 'lb', 'label': 'Middle LB'},
+            'SLB': {'pos': 'S', 'type': 'lb', 'label': 'Strong LB'},
+            'OLB_weak': {'pos': 'B', 'type': 'lb', 'label': 'Weak OLB'},
+            'OLB_strong': {'pos': 'B', 'type': 'lb', 'label': 'Strong OLB'},
+            'ILB_weak': {'pos': 'M', 'type': 'lb', 'label': 'Weak ILB'},
+            'ILB_strong': {'pos': 'M', 'type': 'lb', 'label': 'Strong ILB'},
+            'MLB_weak': {'pos': 'M', 'type': 'lb', 'label': 'Weak MLB'},
+            'MLB_strong': {'pos': 'M', 'type': 'lb', 'label': 'Strong MLB'},
+            'ROVER': {'pos': 'R', 'type': 'lb', 'label': 'Rover LB'},
+            
+            # Secondary
+            'CB_weak': {'pos': 'C', 'type': 'db', 'label': 'Weak CB'},
+            'CB_strong': {'pos': 'C', 'type': 'db', 'label': 'Strong CB'},
+            'FS': {'pos': 'F', 'type': 'db', 'label': 'Free Safety'},
+            'SS': {'pos': 'S', 'type': 'db', 'label': 'Strong Safety'},
+            'NB': {'pos': '△', 'type': 'db', 'label': 'Nickel Back'},
+            'NB_weak': {'pos': '△', 'type': 'db', 'label': 'Weak Nickel'},
+            'NB_strong': {'pos': '△', 'type': 'db', 'label': 'Strong Nickel'},
+        }
+        
+        for position_key, (row, col) in formation_data['players'].items():
+            if position_key in position_types:
+                player_data = position_types[position_key]
+                players.append({
+                    'id': position_key,
+                    'pos': player_data['pos'],
+                    'x': col,
+                    'y': row,
+                    'type': player_data['type'],
+                    'label': player_data['label']
+                })
+        
+        return {
+            'formation_name': formation_name,
+            'yards_to_go': yards_to_go,
+            'line_of_scrimmage': formation_data['line_of_scrimmage'],
+            'first_down_marker': formation_data['first_down_marker'],
+            'players': players,
+            'field_dimensions': formation_data['field_dimensions']
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error getting formation positions: {str(e)}")
+
+@app.get("/api/coverage-zones/{coverage_name}")
+async def get_coverage_zones(coverage_name: str):
+    """Get coverage zone definitions for SVG visualization"""
+    try:
+        # Define coverage zones - you can expand this based on your needs
+        coverage_zones = {
+            "cover_2_zone": [
+                {
+                    "id": "deep_left",
+                    "path": "M0,0 L200,0 L200,80 Q200,100 180,120 Q120,140 0,120 Z",
+                    "color": "#7c3aed",
+                    "opacity": 0.2,
+                    "label": "Deep Half (FS)"
+                },
+                {
+                    "id": "deep_right", 
+                    "path": "M200,0 L400,0 L400,120 Q280,140 220,120 Q200,100 200,80 Z",
+                    "color": "#7c3aed",
+                    "opacity": 0.2,
+                    "label": "Deep Half (SS)"
+                },
+                {
+                    "id": "hook",
+                    "path": "M140,120 Q160,140 180,160 Q200,180 220,160 Q240,140 260,120 Q240,100 220,80 Q200,100 180,80 Q160,100 140,120 Z",
+                    "color": "#1d4ed8",
+                    "opacity": 0.25,
+                    "label": "Hook (MLB)"
+                }
+            ],
+            "cover_3_zone": [
+                {
+                    "id": "deep_left_third",
+                    "path": "M0,0 L133,0 L133,100 Q100,120 50,110 Q0,100 0,80 Z",
+                    "color": "#7c3aed",
+                    "opacity": 0.2,
+                    "label": "Deep Third"
+                },
+                {
+                    "id": "deep_middle_third",
+                    "path": "M133,0 L267,0 L267,100 Q233,120 200,110 Q167,120 133,100 Z",
+                    "color": "#7c3aed",
+                    "opacity": 0.2,
+                    "label": "Deep Third (FS)"
+                },
+                {
+                    "id": "deep_right_third",
+                    "path": "M267,0 L400,0 L400,80 Q400,100 350,110 Q300,120 267,100 Z",
+                    "color": "#7c3aed",
+                    "opacity": 0.2,
+                    "label": "Deep Third"
+                }
+            ]
+        }
+        
+        zones = coverage_zones.get(coverage_name, [])
+        return {
+            "coverage_name": coverage_name,
+            "zones": zones
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error getting coverage zones: {str(e)}")
+
+@app.post("/api/defensive-scenario/enhanced")
+async def get_enhanced_defensive_scenario():
+    """Get defensive scenario with position data and blitz information"""
+    try:
+        # Get regular scenario
+        scenario = defense_engine.get_random_scenario()
+        if not scenario:
+            raise HTTPException(status_code=500, detail="Could not generate defensive scenario")
+        
+        # Add minimum yards
+        minimum_yards = simulator.generate_minimum_yards()
+        
+        # Get formation positions using mobile visualizer
+        from mobile_field_visualizer import MobileFieldVisualizer
+        visualizer = MobileFieldVisualizer(yards_to_go=minimum_yards)
+        formation_name = scenario['formation_name']
+        
+        # Convert formation name to API format (lowercase, replace spaces with hyphens)
+        api_formation_name = formation_name.lower().replace(' defense', '').replace(' ', '-')
+        
+        # Get positions
+        formation_data = visualizer.get_formation_data(api_formation_name)
+        
+        # Add blitz information to players based on the blitz package
+        blitz_data = scenario.get('blitz_data', {})
+        blitzer = blitz_data.get('blitzer', 'none')
+        
+        # Map blitzers (you can expand this based on your blitz package data)
+        blitzing_positions = []
+        if 'linebacker' in blitzer.lower():
+            if 'mike' in blitzer.lower() or 'MLB' in blitzer:
+                blitzing_positions.append('MLB')
+            if 'weak' in blitzer.lower() or 'WLB' in blitzer:
+                blitzing_positions.append('WLB')
+            if 'strong' in blitzer.lower() or 'SLB' in blitzer:
+                blitzing_positions.append('SLB')
+        
+        return {
+            "scenario": scenario,
+            "minimum_yards": minimum_yards,
+            "yard_range": simulator.determine_yard_range_category(minimum_yards),
+            "field_data": {
+                "formation_name": formation_name,
+                "line_of_scrimmage": formation_data['line_of_scrimmage'],
+                "first_down_marker": formation_data['first_down_marker'],
+                "players": formation_data['players'],
+                "blitzing_positions": blitzing_positions,
+                "field_dimensions": formation_data['field_dimensions']
+            }
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error generating enhanced scenario: {str(e)}")
+
 if __name__ == "__main__":
     import uvicorn
     
