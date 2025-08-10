@@ -421,6 +421,297 @@ async def get_enhanced_defensive_scenario():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error generating enhanced scenario: {str(e)}")
 
+@app.get("/api/library/offensive-formations")
+async def get_all_offensive_formations():
+    """Get list of all offensive formations with basic info for library browser"""
+    try:
+        formations_list = []
+        
+        for formation_key, formation_data in offense_engine.formations.items():
+            formation_info = {
+                "key": formation_key,
+                "name": formation_data.get("formation_name", "Unknown Formation"),
+                "personnel": formation_data.get("personnel", "Unknown Personnel"),
+                "personnel_package": formation_data.get("personnel_package", ""),
+                "description": formation_data.get("description", ""),
+                "total_passing_plays": len(formation_data.get("passing_plays", {})),
+                "total_running_plays": len(formation_data.get("running_plays", {})),
+                "total_plays": len(formation_data.get("passing_plays", {})) + len(formation_data.get("running_plays", {}))
+            }
+            formations_list.append(formation_info)
+        
+        # Sort by formation name for consistent ordering
+        formations_list.sort(key=lambda x: x["name"])
+        
+        return {
+            "formations": formations_list,
+            "total_formations": len(formations_list)
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error getting offensive formations: {str(e)}")
+
+@app.get("/api/library/offensive-formations/{formation_key}")
+async def get_offensive_formation_details(formation_key: str):
+    """Get detailed information about a specific offensive formation"""
+    try:
+        if formation_key not in offense_engine.formations:
+            raise HTTPException(status_code=404, detail=f"Formation '{formation_key}' not found")
+        
+        formation_data = offense_engine.formations[formation_key]
+        
+        # Process passing plays
+        passing_plays = []
+        for play_key, play_data in formation_data.get("passing_plays", {}).items():
+            passing_play = {
+                "key": play_key,
+                "name": play_data.get("name", "Unknown Play"),
+                "concept": play_data.get("concept", ""),
+                "routes": play_data.get("routes", {}),
+                "protection": play_data.get("protection", ""),
+                "target_yards": play_data.get("target_yards", 0),
+                "time_to_throw": play_data.get("time_to_throw", ""),
+                "best_against": play_data.get("best_against", []),
+                "worst_against": play_data.get("worst_against", []),
+                "strengths": play_data.get("strengths", []),
+                "weaknesses": play_data.get("weaknesses", [])
+            }
+            passing_plays.append(passing_play)
+        
+        # Process running plays
+        running_plays = []
+        for play_key, play_data in formation_data.get("running_plays", {}).items():
+            running_play = {
+                "key": play_key,
+                "name": play_data.get("name", "Unknown Play"),
+                "concept": play_data.get("concept", ""),
+                "blocking_scheme": play_data.get("blocking_scheme", ""),
+                "ball_carrier": play_data.get("ball_carrier", ""),
+                "lead_blocker": play_data.get("lead_blocker", ""),
+                "target_gap": play_data.get("target_gap", ""),
+                "target_yards": play_data.get("target_yards", 0),
+                "best_against": play_data.get("best_against", []),
+                "worst_against": play_data.get("worst_against", []),
+                "strengths": play_data.get("strengths", []),
+                "weaknesses": play_data.get("weaknesses", [])
+            }
+            running_plays.append(running_play)
+        
+        return {
+            "key": formation_key,
+            "name": formation_data.get("formation_name", "Unknown Formation"),
+            "personnel": formation_data.get("personnel", ""),
+            "personnel_package": formation_data.get("personnel_package", ""),
+            "description": formation_data.get("description", ""),
+            "formation_strengths": formation_data.get("formation_strengths", []),
+            "formation_weaknesses": formation_data.get("formation_weaknesses", []),
+            "optimal_situations": formation_data.get("optimal_situations", []),
+            "passing_plays": passing_plays,
+            "running_plays": running_plays,
+            "total_plays": len(passing_plays) + len(running_plays)
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error getting formation details: {str(e)}")
+
+@app.get("/api/library/defensive-formations")
+async def get_all_defensive_formations():
+    """Get list of all defensive formations with basic info for library browser"""
+    try:
+        formations_list = []
+        
+        for formation_key, formation_data in defense_engine.formations.items():
+            # Count total coverage packages and blitz packages
+            total_coverages = len(formation_data.get("coverages", {}))
+            total_blitz_packages = 0
+            for coverage in formation_data.get("coverages", {}).values():
+                total_blitz_packages += len(coverage.get("blitz_packages", {}))
+            
+            formation_info = {
+                "key": formation_key,
+                "name": formation_data.get("formation_name", "Unknown Formation"),
+                "personnel": formation_data.get("personnel", "Unknown Personnel"),
+                "description": formation_data.get("description", ""),
+                "total_coverages": total_coverages,
+                "total_blitz_packages": total_blitz_packages
+            }
+            formations_list.append(formation_info)
+        
+        # Sort by formation name for consistent ordering
+        formations_list.sort(key=lambda x: x["name"])
+        
+        return {
+            "formations": formations_list,
+            "total_formations": len(formations_list)
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error getting defensive formations: {str(e)}")
+
+@app.get("/api/library/defensive-formations/{formation_key}")
+async def get_defensive_formation_details(formation_key: str):
+    """Get detailed information about a specific defensive formation"""
+    try:
+        if formation_key not in defense_engine.formations:
+            raise HTTPException(status_code=404, detail=f"Formation '{formation_key}' not found")
+        
+        formation_data = defense_engine.formations[formation_key]
+        
+        # Process coverage packages
+        coverages = []
+        for coverage_key, coverage_data in formation_data.get("coverages", {}).items():
+            # Process blitz packages for this coverage
+            blitz_packages = []
+            for blitz_key, blitz_data in coverage_data.get("blitz_packages", {}).items():
+                blitz_package = {
+                    "key": blitz_key,
+                    "name": blitz_data.get("name", "Unknown Blitz"),
+                    "blitzer": blitz_data.get("blitzer", ""),
+                    "rushers": blitz_data.get("rushers", 4),
+                    "coverage_adjustment": blitz_data.get("coverage_adjustment", ""),
+                    "run_strengths": blitz_data.get("run_strengths", []),
+                    "run_weaknesses": blitz_data.get("run_weaknesses", []),
+                    "pass_strengths": blitz_data.get("pass_strengths", []),
+                    "pass_weaknesses": blitz_data.get("pass_weaknesses", []),
+                    "best_against": blitz_data.get("best_against", [])
+                }
+                blitz_packages.append(blitz_package)
+            
+            coverage = {
+                "key": coverage_key,
+                "name": coverage_data.get("name", "Unknown Coverage"),
+                "coverage_type": coverage_data.get("coverage_type", ""),
+                "description": coverage_data.get("description", ""),
+                "base_strengths": coverage_data.get("base_strengths", []),
+                "base_weaknesses": coverage_data.get("base_weaknesses", []),
+                "optimal_situations": coverage_data.get("optimal_situations", []),
+                "vulnerable_to": coverage_data.get("vulnerable_to", []),
+                "blitz_packages": blitz_packages
+            }
+            coverages.append(coverage)
+        
+        return {
+            "key": formation_key,
+            "name": formation_data.get("formation_name", "Unknown Formation"),
+            "personnel": formation_data.get("personnel", ""),
+            "description": formation_data.get("description", ""),
+            "base_strengths": formation_data.get("base_strengths", []),
+            "base_weaknesses": formation_data.get("base_weaknesses", []),
+            "optimal_situations": formation_data.get("optimal_situations", []),
+            "coverages": coverages,
+            "total_coverages": len(coverages)
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error getting defensive formation details: {str(e)}")
+
+@app.get("/api/library/search")
+async def search_formations_and_plays(
+    query: str, 
+    formation_type: Optional[str] = None,  # "offensive" or "defensive" 
+    category: Optional[str] = None  # "formation", "play", "coverage", etc.
+):
+    """Search across all formations, plays, and coverage packages"""
+    try:
+        results = {
+            "query": query,
+            "offensive_formations": [],
+            "defensive_formations": [],
+            "offensive_plays": [],
+            "coverage_packages": []
+        }
+        
+        query_lower = query.lower()
+        
+        # Search offensive formations if not restricted to defensive only
+        if formation_type != "defensive":
+            for formation_key, formation_data in offense_engine.formations.items():
+                formation_name = formation_data.get("formation_name", "").lower()
+                description = formation_data.get("description", "").lower()
+                
+                if query_lower in formation_name or query_lower in description:
+                    results["offensive_formations"].append({
+                        "key": formation_key,
+                        "name": formation_data.get("formation_name", ""),
+                        "description": formation_data.get("description", ""),
+                        "match_type": "formation"
+                    })
+                
+                # Search plays within this formation
+                for play_key, play_data in formation_data.get("passing_plays", {}).items():
+                    play_name = play_data.get("name", "").lower()
+                    concept = play_data.get("concept", "").lower()
+                    
+                    if query_lower in play_name or query_lower in concept:
+                        results["offensive_plays"].append({
+                            "key": play_key,
+                            "name": play_data.get("name", ""),
+                            "concept": play_data.get("concept", ""),
+                            "formation_key": formation_key,
+                            "formation_name": formation_data.get("formation_name", ""),
+                            "type": "passing",
+                            "match_type": "play"
+                        })
+                
+                for play_key, play_data in formation_data.get("running_plays", {}).items():
+                    play_name = play_data.get("name", "").lower()
+                    concept = play_data.get("concept", "").lower()
+                    
+                    if query_lower in play_name or query_lower in concept:
+                        results["offensive_plays"].append({
+                            "key": play_key,
+                            "name": play_data.get("name", ""),
+                            "concept": play_data.get("concept", ""),
+                            "formation_key": formation_key,
+                            "formation_name": formation_data.get("formation_name", ""),
+                            "type": "running",
+                            "match_type": "play"
+                        })
+        
+        # Search defensive formations if not restricted to offensive only
+        if formation_type != "offensive":
+            for formation_key, formation_data in defense_engine.formations.items():
+                formation_name = formation_data.get("formation_name", "").lower()
+                description = formation_data.get("description", "").lower()
+                
+                if query_lower in formation_name or query_lower in description:
+                    results["defensive_formations"].append({
+                        "key": formation_key,
+                        "name": formation_data.get("formation_name", ""),
+                        "description": formation_data.get("description", ""),
+                        "match_type": "formation"
+                    })
+                
+                # Search coverage packages
+                for coverage_key, coverage_data in formation_data.get("coverages", {}).items():
+                    coverage_name = coverage_data.get("name", "").lower()
+                    description = coverage_data.get("description", "").lower()
+                    
+                    if query_lower in coverage_name or query_lower in description:
+                        results["coverage_packages"].append({
+                            "key": coverage_key,
+                            "name": coverage_data.get("name", ""),
+                            "description": coverage_data.get("description", ""),
+                            "formation_key": formation_key,
+                            "formation_name": formation_data.get("formation_name", ""),
+                            "match_type": "coverage"
+                        })
+        
+        # Calculate total results
+        total_results = (
+            len(results["offensive_formations"]) + 
+            len(results["defensive_formations"]) + 
+            len(results["offensive_plays"]) + 
+            len(results["coverage_packages"])
+        )
+        
+        results["total_results"] = total_results
+        
+        return results
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error searching formations: {str(e)}")
+
 if __name__ == "__main__":
     import uvicorn
     
