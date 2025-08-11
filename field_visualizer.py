@@ -186,27 +186,26 @@ class FieldVisualizer:
         }
     
     def _get_46_alignment(self):
-        """46 Defense base alignment"""
+        """46 Defense base alignment - 4 DL, 6 LB, 1 DB"""
         return {
-            # Defensive Line
-            'DE_weak': (self.line_of_scrimmage, 19),      # Weak DE
-            'DT_weak': (self.line_of_scrimmage, 23),      # Weak DT
-            'DT_strong': (self.line_of_scrimmage, 29),    # Strong DT
-            'DE_strong': (self.line_of_scrimmage, 33),    # Strong DE
-            
-            # Linebackers (6 linebackers!)
-            'OLB_weak': (self.line_of_scrimmage - 1, 16), # Weak OLB
-            'ILB_weak': (self.line_of_scrimmage - 2, 21), # Weak ILB
-            'MLB': (self.line_of_scrimmage - 3, 26),      # Middle LB
+            # Defensive Line (4 players)
+            'DE_weak': (self.line_of_scrimmage, 19),       # Weak DE
+            'DT_weak': (self.line_of_scrimmage, 23),       # Weak DT
+            'DT_strong': (self.line_of_scrimmage, 29),     # Strong DT
+            'DE_strong': (self.line_of_scrimmage, 33),     # Strong DE
+        
+            # Linebackers (6 players)
+            'OLB_weak': (self.line_of_scrimmage - 1, 16),  # Weak OLB
+            'ILB_weak': (self.line_of_scrimmage - 2, 21),  # Weak ILB
+            'MLB': (self.line_of_scrimmage - 3, 26),       # Middle LB
             'ILB_strong': (self.line_of_scrimmage - 2, 31), # Strong ILB
             'OLB_strong': (self.line_of_scrimmage - 1, 36), # Strong OLB
-            'ROVER': (self.line_of_scrimmage - 2, 38),    # Rover LB
-            
-            # Secondary (only 1 safety!)
-            'CB_weak': (self.line_of_scrimmage - 6, 12),  # Weak CB
-            'FS': (self.line_of_scrimmage - 8, 26),       # Free Safety
-            'CB_strong': (self.line_of_scrimmage - 6, 40) # Strong CB
-        }
+            'ROVER': (self.line_of_scrimmage - 2, 38),     # Rover LB
+        
+            # Secondary (1 player only!)
+            'FS': (self.line_of_scrimmage - 8, 26),        # Free Safety (ONLY DB)
+            # Removed CB_weak and CB_strong - 46 Defense has NO cornerbacks!
+    }
     
     def _get_nickel_alignment(self):
         """Nickel Defense base alignment"""

@@ -100,22 +100,26 @@ class MobileFieldVisualizer:
         }
     
     def _get_46_alignment(self):
-        """46 Defense base alignment"""
+        """46 Defense base alignment - 4 DL, 6 LB, 1 DB"""
         return {
-            'DE_weak': (self.line_of_scrimmage, 12),
-            'DT_weak': (self.line_of_scrimmage, 15),
-            'DT_strong': (self.line_of_scrimmage, 19),
-            'DE_strong': (self.line_of_scrimmage, 22),
-            'OLB_weak': (self.line_of_scrimmage - 1, 10),
-            'ILB_weak': (self.line_of_scrimmage - 2, 13),
-            'MLB': (self.line_of_scrimmage - 3, 17),
-            'ILB_strong': (self.line_of_scrimmage - 2, 21),
-            'OLB_strong': (self.line_of_scrimmage - 1, 24),
-            'ROVER': (self.line_of_scrimmage - 2, 26),
-            'CB_weak': (self.line_of_scrimmage - 6, 8),
-            'FS': (self.line_of_scrimmage - 8, 17),
-            'CB_strong': (self.line_of_scrimmage - 6, 28)
-        }
+            # Defensive Line (4 players)
+            'DE_weak': (self.line_of_scrimmage, 12),       # Weak DE
+            'DT_weak': (self.line_of_scrimmage, 15),       # Weak DT  
+            'DT_strong': (self.line_of_scrimmage, 19),     # Strong DT
+            'DE_strong': (self.line_of_scrimmage, 22),     # Strong DE
+        
+            # Linebackers (6 players) 
+            'OLB_weak': (self.line_of_scrimmage - 1, 10),  # Weak OLB
+            'ILB_weak': (self.line_of_scrimmage - 2, 13),  # Weak ILB
+            'MLB': (self.line_of_scrimmage - 3, 17),       # Middle LB
+            'ILB_strong': (self.line_of_scrimmage - 2, 21), # Strong ILB
+            'OLB_strong': (self.line_of_scrimmage - 1, 24), # Strong OLB
+            'ROVER': (self.line_of_scrimmage - 2, 26),     # Rover LB
+        
+            # Secondary (1 player only!)
+            'FS': (self.line_of_scrimmage - 8, 17),        # Free Safety (ONLY DB)
+            # Removed CB_weak and CB_strong - 46 Defense has NO cornerbacks!
+    }
     
     def _get_nickel_alignment(self):
         """Nickel Defense base alignment"""
