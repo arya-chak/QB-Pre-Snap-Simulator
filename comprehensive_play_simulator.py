@@ -1,5 +1,5 @@
 """
-Camprehensive Play Simulator
+Comprehensive Play Simulator
 Author: Arya Chakraborty
 
 Simulates offensive plays against defensive scenarios, determining success rates and outcomes based on play appropriateness and defensive matchups.
