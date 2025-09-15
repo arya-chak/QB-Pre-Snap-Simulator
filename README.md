@@ -32,3 +32,4 @@ Will be added:
 3. Ability to rank recivers in order of progression that qb wants to throw to before the snap
 4. More detailed feedback why certain plays work or do not work
 5. Flashcards for memorizing pros and cons of certain formations
+6. Snap or Audible game mode
