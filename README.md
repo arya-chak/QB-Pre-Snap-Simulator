@@ -34,4 +34,5 @@ Will be added:
 5. Flashcards for memorizing pros and cons of certain formations
 6. Snap or Audible game mode
 7. Leverage recognition mode
-8. Dind gap based on d-line alignment mode
+8. Find gap based on d-line alignment mode
+9. Best route from tree mode
