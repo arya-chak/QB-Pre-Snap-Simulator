@@ -33,3 +33,5 @@ Will be added:
 4. More detailed feedback why certain plays work or do not work
 5. Flashcards for memorizing pros and cons of certain formations
 6. Snap or Audible game mode
+7. Leverage recognition mode
+8. Dind gap based on d-line alignment mode
