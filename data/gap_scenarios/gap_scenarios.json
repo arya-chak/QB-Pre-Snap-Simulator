@@ -1,0 +1,980 @@
+{
+  "gap_scenarios": {
+    "scenario_1": {
+      "scenario_name": "4-3 Base vs I-Formation Power",
+      "description": "Traditional power running setup with fullback lead blocker",
+      "offense": {
+        "formation": "I-Formation",
+        "personnel": "1 QB, 1 FB, 1 RB, 2 WR, 1 TE",
+        "play_concept": "Isolation Power",
+        "blocking_scheme": "power_gap_scheme",
+        "line_positions": [
+          {
+            "position": "LT",
+            "x": 120,
+            "y": 160,
+            "protection_type": "big_on_big",
+            "assignment": "DE_contain"
+          },
+          {
+            "position": "LG", 
+            "x": 160,
+            "y": 160,
+            "protection_type": "gap_protection",
+            "assignment": "A_gap_help"
+          },
+          {
+            "position": "C",
+            "x": 200,
+            "y": 160,
+            "protection_type": "back_protection",
+            "assignment": "nose_tackle"
+          },
+          {
+            "position": "RG",
+            "x": 240,
+            "y": 160,
+            "protection_type": "gap_protection", 
+            "assignment": "B_gap_help"
+          },
+          {
+            "position": "RT",
+            "x": 280,
+            "y": 160,
+            "protection_type": "big_on_big",
+            "assignment": "DE_contain"
+          },
+          {
+            "position": "TE",
+            "x": 320,
+            "y": 160,
+            "protection_type": "edge_protection",
+            "assignment": "OLB_contain"
+          }
+        ],
+        "backs": [
+          {
+            "position": "FB",
+            "x": 200,
+            "y": 120,
+            "role": "lead_blocker",
+            "assignment": "MLB_isolation"
+          },
+          {
+            "position": "RB",
+            "x": 200,
+            "y": 80,
+            "role": "ball_carrier",
+            "assignment": "follow_fb"
+          }
+        ]
+      },
+      "defense": {
+        "formation": "4-3 Base",
+        "personnel": "4 DL, 3 LB, 4 DB",
+        "front_7": {
+          "d_line": [
+            {
+              "position": "LE",
+              "x": 80,
+              "y": 180,
+              "technique": "7_technique",
+              "pressure_direction": "inside",
+              "strength": "medium",
+              "gap_responsibility": "C_gap_contain"
+            },
+            {
+              "position": "DT",
+              "x": 160,
+              "y": 180,
+              "technique": "3_technique",
+              "pressure_direction": "up_field",
+              "strength": "high",
+              "gap_responsibility": "B_gap_weak"
+            },
+            {
+              "position": "NT",
+              "x": 200,
+              "y": 180,
+              "technique": "0_technique",
+              "pressure_direction": "up_field",
+              "strength": "high",
+              "gap_responsibility": "A_gap_both"
+            },
+            {
+              "position": "RE",
+              "x": 320,
+              "y": 180,
+              "technique": "5_technique",
+              "pressure_direction": "inside",
+              "strength": "medium",
+              "gap_responsibility": "C_gap_strong"
+            }
+          ],
+          "linebackers": [
+            {
+              "position": "WLB",
+              "x": 120,
+              "y": 220,
+              "gap_responsibility": "B_gap_weak",
+              "assignment": "run_fit",
+              "coverage": "underneath_zone"
+            },
+            {
+              "position": "MLB",
+              "x": 200,
+              "y": 220,
+              "gap_responsibility": "A_gap_flow",
+              "assignment": "run_fit", 
+              "coverage": "hook_zone"
+            },
+            {
+              "position": "SLB",
+              "x": 280,
+              "y": 220,
+              "gap_responsibility": "B_gap_strong",
+              "assignment": "run_fit",
+              "coverage": "underneath_zone"
+            }
+          ]
+        },
+        "gap_analysis": {
+          "A_gap_weak": {
+            "status": "clogged",
+            "defenders": ["NT", "MLB_flow"],
+            "success_probability": 20,
+            "reason": "Nose tackle and MLB both filling A-gap"
+          },
+          "A_gap_strong": {
+            "status": "contested",
+            "defenders": ["NT"],
+            "success_probability": 40,
+            "reason": "Only nose tackle, but FB can create hole"
+          },
+          "B_gap_weak": {
+            "status": "occupied",
+            "defenders": ["DT", "WLB"],
+            "success_probability": 25,
+            "reason": "3-technique DT and WLB controlling gap"
+          },
+          "B_gap_strong": {
+            "status": "best_option",
+            "defenders": ["SLB"],
+            "success_probability": 85,
+            "reason": "FB can isolate SLB, RG can help, good angle"
+          },
+          "C_gap_weak": {
+            "status": "open",
+            "defenders": ["LE_outside"],
+            "success_probability": 60,
+            "reason": "LE playing inside, cutback opportunity"
+          },
+          "C_gap_strong": {
+            "status": "contested",
+            "defenders": ["RE", "TE_block"],
+            "success_probability": 50,
+            "reason": "RE in 5-tech, TE can handle but tight"
+          },
+          "D_gap_weak": {
+            "status": "open",
+            "defenders": ["none_immediate"],
+            "success_probability": 70,
+            "reason": "Speed sweep potential, but long develop"
+          },
+          "D_gap_strong": {
+            "status": "open",
+            "defenders": ["none_immediate"],
+            "success_probability": 65,
+            "reason": "Outside opportunity, TE kick-out available"
+          }
+        },
+        "optimal_gap": "B_gap_strong",
+        "reasoning": "Fullback can effectively isolate strong side linebacker while right guard provides additional help. This matches the designed play concept perfectly."
+      }
+    },
+    "scenario_2": {
+      "scenario_name": "46 Defense vs Shotgun Inside Zone",
+      "description": "Heavy box defense against spread formation zone concept",
+      "offense": {
+        "formation": "Shotgun",
+        "personnel": "1 QB, 1 RB, 3 WR, 1 TE",
+        "play_concept": "Inside Zone RPO",
+        "blocking_scheme": "inside_zone_blocking",
+        "line_positions": [
+          {
+            "position": "LT",
+            "x": 120,
+            "y": 160,
+            "protection_type": "zone_blocking",
+            "assignment": "vertical_set"
+          },
+          {
+            "position": "LG",
+            "x": 160,
+            "y": 160,
+            "protection_type": "zone_blocking",
+            "assignment": "combo_block"
+          },
+          {
+            "position": "C",
+            "x": 200,
+            "y": 160,
+            "protection_type": "zone_blocking",
+            "assignment": "back_block"
+          },
+          {
+            "position": "RG",
+            "x": 240,
+            "y": 160,
+            "protection_type": "zone_blocking",
+            "assignment": "combo_block"
+          },
+          {
+            "position": "RT",
+            "x": 280,
+            "y": 160,
+            "protection_type": "zone_blocking",
+            "assignment": "vertical_set"
+          },
+          {
+            "position": "TE",
+            "x": 320,
+            "y": 160,
+            "protection_type": "zone_blocking",
+            "assignment": "combo_to_backer"
+          }
+        ],
+        "backs": [
+          {
+            "position": "RB",
+            "x": 200,
+            "y": 120,
+            "role": "ball_carrier",
+            "assignment": "read_backside_end"
+          }
+        ]
+      },
+      "defense": {
+        "formation": "46 Defense",
+        "personnel": "4 DL, 6 LB, 1 DB",
+        "front_7": {
+          "d_line": [
+            {
+              "position": "LE",
+              "x": 100,
+              "y": 180,
+              "technique": "7_technique",
+              "pressure_direction": "upfield",
+              "strength": "high",
+              "gap_responsibility": "C_gap_contain"
+            },
+            {
+              "position": "LDT",
+              "x": 160,
+              "y": 180,
+              "technique": "3_technique",
+              "pressure_direction": "penetration",
+              "strength": "high",
+              "gap_responsibility": "B_gap_weak"
+            },
+            {
+              "position": "RDT",
+              "x": 240,
+              "y": 180,
+              "technique": "1_technique",
+              "pressure_direction": "penetration",
+              "strength": "high",
+              "gap_responsibility": "A_gap_strong"
+            },
+            {
+              "position": "RE",
+              "x": 300,
+              "y": 180,
+              "technique": "5_technique",
+              "pressure_direction": "upfield",
+              "strength": "high",
+              "gap_responsibility": "C_gap_strong"
+            }
+          ],
+          "linebackers": [
+            {
+              "position": "WLB",
+              "x": 120,
+              "y": 200,
+              "gap_responsibility": "B_gap_weak",
+              "assignment": "gap_control",
+              "coverage": "run_stop"
+            },
+            {
+              "position": "LLB",
+              "x": 160,
+              "y": 210,
+              "gap_responsibility": "A_gap_weak",
+              "assignment": "gap_control",
+              "coverage": "run_stop"
+            },
+            {
+              "position": "MLB",
+              "x": 200,
+              "y": 210,
+              "gap_responsibility": "A_gap_flow",
+              "assignment": "gap_control",
+              "coverage": "run_stop"
+            },
+            {
+              "position": "RLB",
+              "x": 240,
+              "y": 210,
+              "gap_responsibility": "A_gap_strong",
+              "assignment": "gap_control",
+              "coverage": "run_stop"
+            },
+            {
+              "position": "SLB",
+              "x": 280,
+              "y": 200,
+              "gap_responsibility": "B_gap_strong",
+              "assignment": "gap_control",
+              "coverage": "run_stop"
+            },
+            {
+              "position": "ROV",
+              "x": 320,
+              "y": 200,
+              "gap_responsibility": "C_gap_strong",
+              "assignment": "gap_control",
+              "coverage": "run_stop"
+            }
+          ]
+        },
+        "gap_analysis": {
+          "A_gap_weak": {
+            "status": "clogged",
+            "defenders": ["LLB", "combo_help"],
+            "success_probability": 15,
+            "reason": "Dedicated linebacker plus combo block help"
+          },
+          "A_gap_strong": {
+            "status": "clogged",
+            "defenders": ["RDT", "RLB"],
+            "success_probability": 10,
+            "reason": "1-technique DT and dedicated linebacker"
+          },
+          "B_gap_weak": {
+            "status": "occupied",
+            "defenders": ["LDT", "WLB"],
+            "success_probability": 20,
+            "reason": "3-technique and linebacker both in gap"
+          },
+          "B_gap_strong": {
+            "status": "contested",
+            "defenders": ["SLB"],
+            "success_probability": 35,
+            "reason": "Only linebacker, but 46 is gap sound"
+          },
+          "C_gap_weak": {
+            "status": "open",
+            "defenders": ["LE_wide"],
+            "success_probability": 60,
+            "reason": "LE playing wide, cutback lane available"
+          },
+          "C_gap_strong": {
+            "status": "occupied",
+            "defenders": ["RE", "ROV"],
+            "success_probability": 25,
+            "reason": "5-technique and rover both controlling"
+          },
+          "D_gap_weak": {
+            "status": "best_option",
+            "defenders": ["none_immediate"],
+            "success_probability": 75,
+            "reason": "46 defense weak vs outside zone, pursuit angles"
+          },
+          "D_gap_strong": {
+            "status": "contested",
+            "defenders": ["ROV_pursuit"],
+            "success_probability": 45,
+            "reason": "Rover can pursue, but numbers advantage outside"
+          }
+        },
+        "optimal_gap": "D_gap_weak",
+        "reasoning": "46 Defense is designed to stop inside running. The weakness is outside zones where the heavy inside focus creates pursuit angle problems. Stretch weak side away from the rover."
+      }
+    },
+    "scenario_3": {
+      "scenario_name": "Nickel Defense vs Goal Line Power",
+      "description": "Light box defense against heavy formation power concept",
+      "offense": {
+        "formation": "Goal Line",
+        "personnel": "1 QB, 2 FB, 1 RB, 2 TE, 1 WR",
+        "play_concept": "Power O",
+        "blocking_scheme": "power_gap_goal_line",
+        "line_positions": [
+          {
+            "position": "LT",
+            "x": 120,
+            "y": 160,
+            "protection_type": "big_on_big",
+            "assignment": "DE_contain"
+          },
+          {
+            "position": "LG",
+            "x": 160,
+            "y": 160,
+            "protection_type": "back_block",
+            "assignment": "back_block_DT"
+          },
+          {
+            "position": "C",
+            "x": 200,
+            "y": 160,
+            "protection_type": "back_block",
+            "assignment": "back_block_NT"
+          },
+          {
+            "position": "RG",
+            "x": 240,
+            "y": 160,
+            "protection_type": "pull_lead",
+            "assignment": "pull_and_kick"
+          },
+          {
+            "position": "RT",
+            "x": 280,
+            "y": 160,
+            "protection_type": "down_block",
+            "assignment": "down_block_DT"
+          },
+          {
+            "position": "LTE",
+            "x": 80,
+            "y": 160,
+            "protection_type": "down_block",
+            "assignment": "down_block_DE"
+          },
+          {
+            "position": "RTE",
+            "x": 320,
+            "y": 160,
+            "protection_type": "seal_block",
+            "assignment": "seal_linebacker"
+          }
+        ],
+        "backs": [
+          {
+            "position": "FB1",
+            "x": 200,
+            "y": 120,
+            "role": "lead_blocker",
+            "assignment": "lead_through_hole"
+          },
+          {
+            "position": "FB2",
+            "x": 180,
+            "y": 100,
+            "role": "secondary_blocker",
+            "assignment": "clean_up_block"
+          },
+          {
+            "position": "RB",
+            "x": 200,
+            "y": 80,
+            "role": "ball_carrier",
+            "assignment": "follow_pulling_guard"
+          }
+        ]
+      },
+      "defense": {
+        "formation": "Nickel Defense",
+        "personnel": "4 DL, 2 LB, 5 DB",
+        "front_7": {
+          "d_line": [
+            {
+              "position": "LE",
+              "x": 100,
+              "y": 180,
+              "technique": "wide_9",
+              "pressure_direction": "upfield_rush",
+              "strength": "medium",
+              "gap_responsibility": "contain"
+            },
+            {
+              "position": "DT",
+              "x": 170,
+              "y": 180,
+              "technique": "3_technique",
+              "pressure_direction": "penetration",
+              "strength": "medium",
+              "gap_responsibility": "B_gap_weak"
+            },
+            {
+              "position": "DT",
+              "x": 230,
+              "y": 180,
+              "technique": "1_technique",
+              "pressure_direction": "penetration",
+              "strength": "medium",
+              "gap_responsibility": "A_gap_strong"
+            },
+            {
+              "position": "RE",
+              "x": 300,
+              "y": 180,
+              "technique": "5_technique",
+              "pressure_direction": "penetration",
+              "strength": "medium",
+              "gap_responsibility": "C_gap_strong"
+            }
+          ],
+          "linebackers": [
+            {
+              "position": "WLB",
+              "x": 140,
+              "y": 210,
+              "gap_responsibility": "A_gap_weak",
+              "assignment": "run_fit",
+              "coverage": "underneath"
+            },
+            {
+              "position": "MLB",
+              "x": 260,
+              "y": 210,
+              "gap_responsibility": "B_gap_strong",
+              "assignment": "run_fit",
+              "coverage": "underneath"
+            }
+          ]
+        },
+        "gap_analysis": {
+          "A_gap_weak": {
+            "status": "contested",
+            "defenders": ["WLB"],
+            "success_probability": 45,
+            "reason": "Only WLB in light box, FB can handle"
+          },
+          "A_gap_strong": {
+            "status": "contested",
+            "defenders": ["DT_1tech"],
+            "success_probability": 40,
+            "reason": "1-technique DT but light box overall"
+          },
+          "B_gap_weak": {
+            "status": "occupied",
+            "defenders": ["DT_3tech"],
+            "success_probability": 30,
+            "reason": "3-technique DT in position"
+          },
+          "B_gap_strong": {
+            "status": "best_option",
+            "defenders": ["MLB_light"],
+            "success_probability": 85,
+            "reason": "Power scheme with pulling guard vs light box MLB"
+          },
+          "C_gap_weak": {
+            "status": "open",
+            "defenders": ["none"],
+            "success_probability": 70,
+            "reason": "Nickel weak vs power, cutback available"
+          },
+          "C_gap_strong": {
+            "status": "contested",
+            "defenders": ["RE_5tech"],
+            "success_probability": 55,
+            "reason": "5-technique but TE can seal, numbers advantage"
+          },
+          "D_gap_weak": {
+            "status": "open",
+            "defenders": ["none"],
+            "success_probability": 75,
+            "reason": "Nickel very weak outside, big advantage"
+          },
+          "D_gap_strong": {
+            "status": "open",
+            "defenders": ["none"],
+            "success_probability": 80,
+            "reason": "Power sweep potential, nickel can't handle edge"
+          }
+        },
+        "optimal_gap": "B_gap_strong",
+        "reasoning": "Power O is designed for this exact scenario. Pulling guard creates extra gap, light box can't handle power scheme fundamentals."
+      }
+    },
+    "scenario_4": {
+      "scenario_name": "3-4 Defense vs Shotgun Outside Zone",
+      "description": "Odd front against zone stretch to create edge",
+      "offense": {
+        "formation": "Shotgun",
+        "personnel": "1 QB, 1 RB, 3 WR, 1 TE",
+        "play_concept": "Outside Zone Stretch",
+        "blocking_scheme": "outside_zone_stretch",
+        "line_positions": [
+          {
+            "position": "LT",
+            "x": 120,
+            "y": 160,
+            "protection_type": "reach_block",
+            "assignment": "reach_DE"
+          },
+          {
+            "position": "LG",
+            "x": 160,
+            "y": 160,
+            "protection_type": "combo_reach",
+            "assignment": "combo_to_mike"
+          },
+          {
+            "position": "C",
+            "x": 200,
+            "y": 160,
+            "protection_type": "back_reach",
+            "assignment": "back_block_nose"
+          },
+          {
+            "position": "RG",
+            "x": 240,
+            "y": 160,
+            "protection_type": "combo_reach",
+            "assignment": "combo_to_will"
+          },
+          {
+            "position": "RT",
+            "x": 280,
+            "y": 160,
+            "protection_type": "reach_block",
+            "assignment": "reach_DE"
+          },
+          {
+            "position": "TE",
+            "x": 320,
+            "y": 160,
+            "protection_type": "reach_block",
+            "assignment": "reach_OLB"
+          }
+        ],
+        "backs": [
+          {
+            "position": "RB",
+            "x": 180,
+            "y": 120,
+            "role": "ball_carrier",
+            "assignment": "stretch_to_edge"
+          }
+        ]
+      },
+      "defense": {
+        "formation": "3-4 Defense",
+        "personnel": "3 DL, 4 LB, 4 DB",
+        "front_7": {
+          "d_line": [
+            {
+              "position": "LE",
+              "x": 160,
+              "y": 180,
+              "technique": "5_technique",
+              "pressure_direction": "upfield",
+              "strength": "high",
+              "gap_responsibility": "C_gap_weak"
+            },
+            {
+              "position": "NT",
+              "x": 200,
+              "y": 180,
+              "technique": "0_technique",
+              "pressure_direction": "penetration",
+              "strength": "high",
+              "gap_responsibility": "A_gap_both"
+            },
+            {
+              "position": "RE",
+              "x": 240,
+              "y": 180,
+              "technique": "5_technique",
+              "pressure_direction": "upfield",
+              "strength": "high",
+              "gap_responsibility": "C_gap_strong"
+            }
+          ],
+          "linebackers": [
+            {
+              "position": "LOLB",
+              "x": 120,
+              "y": 200,
+              "gap_responsibility": "D_gap_weak",
+              "assignment": "contain",
+              "coverage": "edge_setting"
+            },
+            {
+              "position": "LILB",
+              "x": 180,
+              "y": 220,
+              "gap_responsibility": "B_gap_weak",
+              "assignment": "run_fit",
+              "coverage": "underneath"
+            },
+            {
+              "position": "RILB",
+              "x": 220,
+              "y": 220,
+              "gap_responsibility": "B_gap_strong",
+              "assignment": "run_fit",
+              "coverage": "underneath"
+            },
+            {
+              "position": "ROLB",
+              "x": 280,
+              "y": 200,
+              "gap_responsibility": "D_gap_strong",
+              "assignment": "contain",
+              "coverage": "edge_setting"
+            }
+          ]
+        },
+        "gap_analysis": {
+          "A_gap_weak": {
+            "status": "contested",
+            "defenders": ["NT"],
+            "success_probability": 35,
+            "reason": "Nose tackle but zone scheme can create movement"
+          },
+          "A_gap_strong": {
+            "status": "contested",
+            "defenders": ["NT"],
+            "success_probability": 35,
+            "reason": "Same nose tackle coverage both A-gaps"
+          },
+          "B_gap_weak": {
+            "status": "occupied",
+            "defenders": ["LILB"],
+            "success_probability": 40,
+            "reason": "ILB in position but combo block available"
+          },
+          "B_gap_strong": {
+            "status": "occupied",
+            "defenders": ["RILB"],
+            "success_probability": 40,
+            "reason": "ILB in position but combo block available"
+          },
+          "C_gap_weak": {
+            "status": "contested",
+            "defenders": ["LE_5tech"],
+            "success_probability": 45,
+            "reason": "5-technique DE but reach block scheme"
+          },
+          "C_gap_strong": {
+            "status": "best_option",
+            "defenders": ["RE_5tech"],
+            "success_probability": 75,
+            "reason": "Zone stretch concept, TE can reach, create edge"
+          },
+          "D_gap_weak": {
+            "status": "occupied",
+            "defenders": ["LOLB_contain"],
+            "success_probability": 30,
+            "reason": "OLB set to contain, string out defense"
+          },
+          "D_gap_strong": {
+            "status": "contested",
+            "defenders": ["ROLB_contain"],
+            "success_probability": 60,
+            "reason": "OLB contain but zone stretch creates angles"
+          }
+        },
+        "optimal_gap": "C_gap_strong",
+        "reasoning": "Outside zone is designed to attack 3-4 edges. TE can reach 5-technique RE, create running lane to strong side with proper stretch technique."
+      }
+    },
+    "scenario_5": {
+      "scenario_name": "5-2 Defense vs I-Formation Dive",
+      "description": "Gap control defense vs quick hitting inside run",
+      "offense": {
+        "formation": "I-Formation", 
+        "personnel": "1 QB, 1 FB, 1 RB, 2 WR, 1 TE",
+        "play_concept": "FB Dive",
+        "blocking_scheme": "straight_ahead_dive",
+        "line_positions": [
+          {
+            "position": "LT",
+            "x": 120,
+            "y": 160,
+            "protection_type": "big_on_big",
+            "assignment": "DE_contain"
+          },
+          {
+            "position": "LG",
+            "x": 160,
+            "y": 160,
+            "protection_type": "double_team",
+            "assignment": "double_DT"
+          },
+          {
+            "position": "C",
+            "x": 200,
+            "y": 160,
+            "protection_type": "double_team",
+            "assignment": "double_NT"
+          },
+          {
+            "position": "RG",
+            "x": 240,
+            "y": 160,
+            "protection_type": "double_team", 
+            "assignment": "double_DT"
+          },
+          {
+            "position": "RT",
+            "x": 280,
+            "y": 160,
+            "protection_type": "big_on_big",
+            "assignment": "DE_contain"
+          },
+          {
+            "position": "TE",
+            "x": 320,
+            "y": 160,
+            "protection_type": "linebacker_block",
+            "assignment": "seal_OLB"
+          }
+        ],
+        "backs": [
+          {
+            "position": "FB",
+            "x": 200,
+            "y": 120,
+            "role": "ball_carrier",
+            "assignment": "hit_A_gap_hard"
+          },
+          {
+            "position": "RB", 
+            "x": 200,
+            "y": 80,
+            "role": "fake_handoff",
+            "assignment": "sell_fake"
+          }
+        ]
+      },
+      "defense": {
+        "formation": "5-2 Defense",
+        "personnel": "5 DL, 2 LB, 4 DB",
+        "front_7": {
+          "d_line": [
+            {
+              "position": "LE",
+              "x": 120,
+              "y": 180,
+              "technique": "7_technique",
+              "pressure_direction": "contain",
+              "strength": "medium",
+              "gap_responsibility": "C_gap_contain"
+            },
+            {
+              "position": "LDT",
+              "x": 160,
+              "y": 180,
+              "technique": "2i_technique",
+              "pressure_direction": "penetration",
+              "strength": "high",
+              "gap_responsibility": "A_gap_weak"
+            },
+            {
+              "position": "NT",
+              "x": 200,
+              "y": 180,
+              "technique": "0_technique",
+              "pressure_direction": "penetration",
+              "strength": "high",
+              "gap_responsibility": "A_gap_both"
+            },
+            {
+              "position": "RDT",
+              "x": 240,
+              "y": 180,
+              "technique": "2i_technique",
+              "pressure_direction": "penetration", 
+              "strength": "high",
+              "gap_responsibility": "A_gap_strong"
+            },
+            {
+              "position": "RE",
+              "x": 280,
+              "y": 180,
+              "technique": "7_technique",
+              "pressure_direction": "contain",
+              "strength": "medium",
+              "gap_responsibility": "C_gap_contain"
+            }
+          ],
+          "linebackers": [
+            {
+              "position": "WLB",
+              "x": 160,
+              "y": 210,
+              "gap_responsibility": "B_gap_weak",
+              "assignment": "gap_control",
+              "coverage": "run_stop"
+            },
+            {
+              "position": "SLB",
+              "x": 240,
+              "y": 210,
+              "gap_responsibility": "B_gap_strong",
+              "assignment": "gap_control",
+              "coverage": "run_stop"
+            }
+          ]
+        },
+        "gap_analysis": {
+          "A_gap_weak": {
+            "status": "clogged",
+            "defenders": ["LDT_2i", "NT_help"],
+            "success_probability": 15,
+            "reason": "2i-technique DT and nose tackle both in A-gap"
+          },
+          "A_gap_strong": {
+            "status": "clogged",
+            "defenders": ["RDT_2i", "NT_help"],
+            "success_probability": 15,
+            "reason": "2i-technique DT and nose tackle both in A-gap"
+          },
+          "B_gap_weak": {
+            "status": "occupied",
+            "defenders": ["WLB"],
+            "success_probability": 25,
+            "reason": "Linebacker in gap control but no D-line help"
+          },
+          "B_gap_strong": {
+            "status": "occupied",
+            "defenders": ["SLB"],
+            "success_probability": 25,
+            "reason": "Linebacker in gap control but no D-line help"
+          },
+          "C_gap_weak": {
+            "status": "best_option",
+            "defenders": ["LE_outside"],
+            "success_probability": 70,
+            "reason": "5-2 vulnerable outside, LE playing wide contain"
+          },
+          "C_gap_strong": {
+            "status": "contested",
+            "defenders": ["RE_outside", "TE_block"],
+            "success_probability": 60,
+            "reason": "RE in contain, TE can seal, good angle"
+          },
+          "D_gap_weak": {
+            "status": "open",
+            "defenders": ["none"],
+            "success_probability": 75,
+            "reason": "5-2 very weak outside, no immediate help"
+          },
+          "D_gap_strong": {
+            "status": "open",
+            "defenders": ["none"],
+            "success_probability": 65,
+            "reason": "Outside open but longer developing"
+          }
+        },
+        "optimal_gap": "C_gap_weak",
+        "reasoning": "5-2 Defense dedicates interior D-line to A-gap control. The weakness is outside where DEs play wide. Quick-hitting FB dive should bounce outside weak side."
+      }
+    }
+  }
+}
